@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  spread: 1.5
+  result: 1
+  game_id: 1
+  pick_set_id: 1
+  team_id: 1
+  over_under: 1.5
+  is_over: false
+
+two:
+  spread: 1.5
+  result: 1
+  game_id: 1
+  pick_set_id: 1
+  team_id: 1
+  over_under: 1.5
+  is_over: false

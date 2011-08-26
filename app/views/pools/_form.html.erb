@@ -1,0 +1,61 @@
+<%= form_for(@pool) do |f| %>
+  <% if @pool.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pool.errors.count, "error") %> prohibited this pool from being saved:</h2>
+
+      <ul>
+      <% @pool.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pool_type_id %><br />
+    <%= f.select :pool_type_id, PoolType.all.collect { |p| [p.name, p.id] }, :include_blank => true %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :min_players %><br />
+    <%= f.number_field :min_players %>
+  </div>
+  <div class="field">
+    <%= f.label :max_players %><br />
+    <%= f.number_field :max_players %>
+  </div>
+  <div class="field">
+    <%= f.label :private %><br />
+    <%= f.check_box :private %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.text_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :free %><br />
+    <%= f.check_box :free %>
+  </div>
+  <div class="field">
+    <%= f.label :cost %><br />
+    <%= f.number_field :cost %>
+  </div>
+  <div class="field">
+    <%= f.label :first_place_payout %><br />
+    <%= f.number_field :first_place_payout %>
+  </div>
+  <div class="field">
+    <%= f.label :second_place_payout %><br />
+    <%= f.number_field :second_place_payout %>
+  </div>
+  <div class="field">
+    <%= f.label :third_place_payout %><br />
+    <%= f.number_field :third_place_payout %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  sport: MyString
+
+two:
+  name: MyString
+  sport: MyString

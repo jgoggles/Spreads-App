@@ -1,0 +1,32 @@
+<% title "Game" %>
+
+<p>
+  <strong>Date:</strong>
+  <%= @game.date %>
+</p>
+<p>
+  <strong>Home:</strong>
+  <%= @game.home.nickname %>
+</p>
+<p>
+  <strong>Away:</strong>
+  <%= @game.away.nickname %>
+</p>
+<p>
+  <strong>Home Score:</strong>
+  <%= @game.home_score %>
+</p>
+<p>
+  <strong>Away Score:</strong>
+  <%= @game.away_score %>
+</p>
+<p>
+  <strong>Week:</strong>
+  <%= @game.week_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_game_path(@game) %> |
+  <%= link_to "Destroy", @game, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", games_path %>
+</p>

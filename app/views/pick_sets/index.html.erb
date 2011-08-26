@@ -1,0 +1,28 @@
+<h1>Listing pick_sets</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Pool</th>
+    <th>Week</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pick_sets.each do |pick_set| %>
+  <tr>
+    <td><%= pick_set.user_id %></td>
+    <td><%= pick_set.pool_id %></td>
+    <td><%= pick_set.week_id %></td>
+    <td><%= link_to 'Show', [@pool, pick_set] %></td>
+    <td><%= link_to 'Edit', edit_pool_pick_set_path(@pool, pick_set) %></td>
+    <%# raise "fu" %>
+    <td><%= link_to 'Destroy', [@pool, pick_set], confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pick set', new_pool_pick_set_path %>

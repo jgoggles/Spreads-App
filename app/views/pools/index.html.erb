@@ -1,0 +1,35 @@
+<h1>Listing pools</h1>
+
+<table>
+  <tr>
+    <th>Pool type</th>
+    <th>Name</th>
+    <th>Free</th>
+    <th>Cost</th>
+    <th>First place payout</th>
+    <th>Second place payout</th>
+    <th>Third place payout</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pools.each do |pool| %>
+  <tr>
+    <td><%= pool.pool_type_id %></td>
+    <td><%= pool.name %></td>
+    <td><%= pool.free %></td>
+    <td><%= pool.cost %></td>
+    <td><%= pool.first_place_payout %></td>
+    <td><%= pool.second_place_payout %></td>
+    <td><%= pool.third_place_payout %></td>
+    <td><%= link_to 'Show', pool %></td>
+    <td><%= link_to 'Edit', edit_pool_path(pool) %></td>
+    <td><%= link_to 'Destroy', pool, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pool', new_pool_path %>

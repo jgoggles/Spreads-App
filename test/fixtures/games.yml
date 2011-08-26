@@ -1,0 +1,15 @@
+one:
+  date: 2011-08-21 18:50:20
+  home: MyString
+  away: MyString
+  home_score: 1
+  away_score: 1
+  week_id: 1
+
+two:
+  date: 2011-08-21 18:50:20
+  home: MyString
+  away: MyString
+  home_score: 1
+  away_score: 1
+  week_id: 1

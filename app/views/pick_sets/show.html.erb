@@ -1,0 +1,18 @@
+<p>
+  <b>User:</b>
+  <%= @pick_set.user_id %>
+</p>
+
+<p>
+  <b>Pool:</b>
+  <%= @pick_set.pool_id %>
+</p>
+
+<p>
+  <b>Week:</b>
+  <%= @pick_set.week_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_pool_pick_set_path(@pool, @pick_set) %> |
+<%= link_to 'Back', pool_pick_sets_path %>

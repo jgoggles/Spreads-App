@@ -1,0 +1,10 @@
+<% if current_user %>
+  <% if can? :create, Pool %>
+    <%= link_to 'New Pool', new_pool_path %>
+  <% end %>
+  <ul>
+    <% @pools. each do |p| %>
+      <li><%= link_to p.name, p %></li>
+    <% end %>
+  </ul>
+<% end %>

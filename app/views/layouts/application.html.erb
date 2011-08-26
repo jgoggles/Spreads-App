@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Spreads - <%= @title || controller.controller_name.humanize %></title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= yield :head %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="wrapper" class="group">
+    <header id="header" class="group">
+      <h1><%= link_to "Home", root_path %></h1>
+      <nav id="nav" class="group">
+      <ul class="primaryNav group">
+        <% if current_user %>
+          <li><%= link_to "Account", edit_user_registration_path %></li>
+          <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
+        <% else %>
+          <li><%= link_to "Login/Signup", authentications_path %></li>
+        <% end %>
+      </ul>
+      </nav>
+    </header>
+
+    <section id="content" class="group">
+    <body>
+      <article>
+        <% flash.each do |key, msg| %>
+          <%= content_tag :div, msg, :class => [key, "message"], :id => "notice_#{key}" %>
+        <% end %>
+
+        <%= yield %>
+
+      </article>
+    </section>
+  </div>
+</body>
+</html>

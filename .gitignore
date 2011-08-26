@@ -1,0 +1,8 @@
+.bundle
+config/database.yml
+log/*.log
+tmp/
+.sass-cache/
+*.swp
+*.swo
+todo

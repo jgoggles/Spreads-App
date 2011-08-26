@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  city: MyString
+  nickname: MyString
+  league_id: 1
+  conference_id: 1
+  division_id: 1
+
+two:
+  city: MyString
+  nickname: MyString
+  league_id: 1
+  conference_id: 1
+  division_id: 1

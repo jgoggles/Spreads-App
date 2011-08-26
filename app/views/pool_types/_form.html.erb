@@ -1,0 +1,41 @@
+<%= form_for(@pool_type) do |f| %>
+  <% if @pool_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pool_type.errors.count, "error") %> prohibited this pool_type from being saved:</h2>
+
+      <ul>
+      <% @pool_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :max_picks %><br />
+    <%= f.number_field :max_picks %>
+  </div>
+  <div class="field">
+    <%= f.label :min_picks %><br />
+    <%= f.number_field :min_picks %>
+  </div>
+  <div class="field">
+    <%= f.label :spreads %><br />
+    <%= f.check_box :spreads %>
+  </div>
+  <div class="field">
+    <%= f.label :over_under %><br />
+    <%= f.check_box :over_under %>
+  </div>
+  <div class="field">
+    <%= f.label :is_tiebreaker %><br />
+    <%= f.check_box :is_tiebreaker %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

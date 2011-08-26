@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  max_picks: 1
+  min_picks: 1
+  min_players: 1
+  max_players: 1
+  spreads: false
+  over_under: false
+  is_tiebreaker: false
+
+two:
+  name: MyString
+  max_picks: 1
+  min_picks: 1
+  min_players: 1
+  max_players: 1
+  spreads: false
+  over_under: false
+  is_tiebreaker: false

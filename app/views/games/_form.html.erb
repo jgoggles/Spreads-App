@@ -1,0 +1,41 @@
+<%= form_for @game do |f| %>
+  <% if @game.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+      <ul>
+        <% @game.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :date %><br />
+    <%= f.datetime_select :date %>
+  </p>
+
+  <%= f.fields_for :game_details do |builder| %>
+    <p>
+      <%= builder.label :team_id %><br />
+      <%= builder.select :team_id, Team.order("nickname").collect { |t| [t.nickname, t.id] }, :include_blank => true %> 
+    </p>
+
+    <p>
+      <%= builder.label :is_home %><br />
+      <%= builder.select :is_home, [true, false], :include_blank => true %>
+    </p>
+
+    <p>
+      <%= builder.label :score %><br />
+      <%= builder.number_field :score %>
+    </p>
+  <% end %>
+
+  <p>
+    <%= f.label :week_id %><br />
+    <%= f.number_field :week_id %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

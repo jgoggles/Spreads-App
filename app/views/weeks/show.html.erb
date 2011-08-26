@@ -1,0 +1,20 @@
+<% title "Week" %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @week.name %>
+</p>
+<p>
+  <strong>Start Date:</strong>
+  <%= @week.start_date %>
+</p>
+<p>
+  <strong>End Date:</strong>
+  <%= @week.end_date %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_week_path(@week) %> |
+  <%= link_to "Destroy", @week, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", weeks_path %>
+</p>

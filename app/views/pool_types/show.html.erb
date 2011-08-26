@@ -1,0 +1,33 @@
+<p>
+  <b>Name:</b>
+  <%= @pool_type.name %>
+</p>
+
+<p>
+  <b>Max picks:</b>
+  <%= @pool_type.max_picks %>
+</p>
+
+<p>
+  <b>Min picks:</b>
+  <%= @pool_type.min_picks %>
+</p>
+
+<p>
+  <b>Spreads:</b>
+  <%= @pool_type.spreads %>
+</p>
+
+<p>
+  <b>Over under:</b>
+  <%= @pool_type.over_under %>
+</p>
+
+<p>
+  <b>Is tiebreaker:</b>
+  <%= @pool_type.is_tiebreaker %>
+</p>
+
+
+<%= link_to 'Edit', edit_pool_type_path(@pool_type) %> |
+<%= link_to 'Back', pool_types_path %>

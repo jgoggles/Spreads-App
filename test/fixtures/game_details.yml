@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  game_id: 1
+  team_id: 1
+  is_home: false
+  score: 1
+
+two:
+  game_id: 1
+  team_id: 1
+  is_home: false
+  score: 1

@@ -1,0 +1,83 @@
+<% if can? :read, @pool %>
+  <%= render "pool_nav", locals: { pool: @pool } %>
+  <p>
+  <b>Pool type:</b>
+  <%= @pool.pool_type.name %>
+  </p>
+
+  <p>
+  <b>Name:</b>
+  <%= @pool.name %>
+  </p>
+
+  <p>
+  <b>Pool admin(s):</b>
+  <%= @pool.admins  %>
+  </p>
+
+  <p>
+  <b>Total players:</b>
+  <%= @pool.total_players %>
+  </p>
+
+  <p>
+  <b>Min players:</b>
+  <%= @pool.min_players %>
+  </p>
+
+  <p>
+  <b>Max players:</b>
+  <%= @pool.max_players %>
+  </p>
+
+  <p>
+  <b>Free:</b>
+  <%= @pool.free %>
+  </p>
+
+  <p>
+  <b>Cost:</b>
+  <%= @pool.cost %>
+  </p>
+
+  <p>
+  <b>First place payout:</b>
+  <%= @pool.first_place_payout %>
+  </p>
+
+  <p>
+  <b>Second place payout:</b>
+  <%= @pool.second_place_payout %>
+  </p>
+
+  <p>
+  <b>Third place payout:</b>
+  <%= @pool.third_place_payout %>
+  </p>
+
+
+  <% if can? :update, @pool %>
+    <%= link_to 'Edit', edit_pool_path(@pool) %> |
+    <%= link_to 'Back', pools_path %>
+  <% end %>
+<% else %>
+  <%= form_for @pool_user do |f| %>
+    <% if @pool_user.errors.any? %>
+      <div id="error_explanation">
+
+        <ul>
+        <% @pool_user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if @pool.private? %>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    <% end %>
+    <%= f.hidden_field :pool_id, :value => @pool.hashed_id %>
+    <%= f.submit "Join This Pool", :disable_with => 'loading...' %>
+  <% end %>
+<% end %>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  pool_type_id: 1
+  name: MyString
+  free: false
+  cost: 1
+  first_place_payout: 1
+  second_place_payout: 1
+  third_place_payout: 1
+
+two:
+  pool_type_id: 1
+  name: MyString
+  free: false
+  cost: 1
+  first_place_payout: 1
+  second_place_payout: 1
+  third_place_payout: 1

@@ -1,0 +1,2 @@
+module PoolTypesHelper
+end
