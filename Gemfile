@@ -24,6 +24,12 @@ gem 'nokogiri'
 gem 'chronic'
 gem 'mongrel', '1.2.0.pre2'
 
+gem 'thin'
+
+group :production do
+  gem 'pg'
+end
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -36,5 +42,5 @@ gem 'mongrel', '1.2.0.pre2'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+  gem "mocha"
 end
-gem "mocha", :group => :test
