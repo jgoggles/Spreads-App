@@ -38,7 +38,7 @@ NFL[:conferences].each do |c|
 end
 
 ## Teams
-Team.connection.execute("TRUNCATE TABLE 'teams' RESTART IDENTITY;")
+Team.connection.execute("TRUNCATE teams")
 NFL[:conferences].each do |c|
   c[:divisions].each do |d|
     d[:teams].each do |t|
