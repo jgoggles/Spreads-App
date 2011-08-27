@@ -56,11 +56,13 @@ Game.connection.execute("TRUNCATE game_details")
 # CSV.foreach("db/NFL_2011_Complete.csv") do |row|
 CSV.foreach(NFL_SCHEDULE) do |row|
   home = Team.find_by_nickname(row[15])
+  puts home
   away = Team.find_by_nickname(row[16])
+  puts away
   date = Chronic.parse("#{row[0]} #{row[5]}")
+  puts date
   week_id = Week.where("start_date <= ?", date).where("end_date >= ?", date).first.id
   game = Game.create!(:week_id => week_id, :date => date)
-  raise StandardErrors, game.errors
   GameDetail.create!(:game_id => game.id, :team_id => home.id, :is_home => true)
   GameDetail.create!(:game_id => game.id, :team_id => away.id, :is_home => false)
 end
