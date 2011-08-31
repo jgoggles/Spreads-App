@@ -1,10 +1,13 @@
 Spreads::Application.routes.draw do
+
   match "/dashboard"=> 'dashboard#index'
 
   resources :pools do
     resources :pick_sets
     get '/standings' => 'standings#index'
     match '/standings/:week_id' => 'standings#show'
+    match '/players' => 'pools/players#index', :as => "players"
+    match 'update_pool_users' => 'pools/players#update_pool_users', :as => "update_players"
   end
 
   match '/auth/:provider/callback' => 'authentications#create'

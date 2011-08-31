@@ -8,7 +8,6 @@ class PoolUsersController < ApplicationController
       if @pool_user.save
         format.html { redirect_to pool_path(@pool_user.pool), notice: 'Successfully joined pool.' }
       else
-        # format.html { redirect_to :back, notice: "Incorrect password" }
         format.html { render :template => "pools/show", :locals => { :id => @pool, :pool_user => @pool_user } }
       end
     end

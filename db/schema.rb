@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110825033914) do
+ActiveRecord::Schema.define(:version => 20110831011924) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20110825033914) do
     t.integer  "week_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "hashed_id"
   end
 
   create_table "picks", :force => true do |t|
@@ -80,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20110825033914) do
     t.boolean  "is_over"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "over_under_result"
   end
 
   create_table "pool_types", :force => true do |t|
@@ -99,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20110825033914) do
     t.boolean  "pool_admin"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "paid"
   end
 
   create_table "pools", :force => true do |t|

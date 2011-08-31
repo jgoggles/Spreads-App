@@ -1,3 +1,17 @@
-// Place all the styles related to the PickSets controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+li .teamLine {font-size: 24px;}
+li .teamLine {padding: 16px; 
+  -webkit-transition-property:color, background; 
+  -webkit-transition-duration: .25s, .10s; 
+  -webkit-transition-timing-function: linear, ease-in;
+}
+li .teamLine:hover { box-shadow:inset 0 0 4px #666;
+  color:green;
+  background:#eee;
+  cursor: pointer;
+}
+
+.picked {
+  box-shadow:inset 0 0 4px #666;
+  color:green;
+  background:#CCFFCC;
+}

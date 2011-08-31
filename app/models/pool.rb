@@ -4,7 +4,7 @@ class Pool < ActiveRecord::Base
   belongs_to :pool_type
   has_many :pick_sets
   has_many :pool_users, :dependent => :destroy
-  has_many :user, :through => :pool_users
+  has_many :users, :through => :pool_users
   has_many :standings
   has_and_belongs_to_many :leagues
 
@@ -14,7 +14,7 @@ class Pool < ActiveRecord::Base
   validate :password_if_private
 
   def cost_if_not_free
-    if free and cost.nil?
+    if !free and cost.nil?
       errors[:base] << "You must enter a cost for your paid league"
     end
   end
@@ -27,6 +27,14 @@ class Pool < ActiveRecord::Base
 
   def total_players
     self.pool_users.size
+  end
+
+  def max_picks
+    pool_type.max_picks.nil? ? "Unlimited" : pool_type.max_picks
+  end
+
+  def min_picks
+    pool_type.min_picks
   end
 
   def admins

@@ -1,29 +1,54 @@
-<%= form_for([@pool, @pick_set]) do |f| %>
-  <% if @pick_set.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pick_set.errors.count, "error") %> prohibited this pick_set from being saved:</h2>
+<% if @games %>
 
-      <ul>
-      <% @pick_set.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+  <%= form_for([@pool, @pick_set]) do |f| %>
+    <% if @pick_set.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@pick_set.errors.count, "error") %> prohibited this pick_set from being saved:</h2>
+
+        <ul>
+          <% @pick_set.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <ul id="gameList">
+      <% @games.each do |game| %>
+        <li id="<%= game.id %>" class="<%= cycle('shade', ' ') %>">
+        <% if game.spread != :off and game.has_not_started %>
+          <%= f.fields_for(:picks, Pick.new) do |p| %>
+            <%= render partial: 'spreads', locals: { game: game } %>
+            <%= render partial: 'over_under', locals: { game: game } %>
+            <%= p.hidden_field :spread, :class => 'set_spread' %>
+            <%= p.hidden_field :is_over, :class => 'set_is_over' %>
+            <%= p.hidden_field :over_under, :class => 'set_over_under' %>
+            <%= p.hidden_field :team_id, :class => 'set_team' %>
+            <%= p.hidden_field :game_id, :value => game.id %>
+          <% end %>
+        <% else %>
+          <div class="gameOff"><h2>OFF</h2></div>
+          <div class="teamLine">
+            <%= game.away.team.nickname %>
+          </div>
+          <div class="teamLine">
+            <%= game.home.team.nickname %>
+          </div>
+        <% end %>
+        <hr />
+        </li>
       <% end %>
-      </ul>
+    </ul>
+
+    <div class="actions" style="margin:12px 0">
+      <%= f.submit 'Submit', :onclick => 'return confirm("Are you sure you want to submit these picks? Once submitted they cannot be changed.")' %>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.number_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :pool_id %><br />
-    <%= f.number_field :pool_id %>
-  </div>
-  <div class="field">
-    <%= f.label :week_id %><br />
-    <%= f.number_field :week_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% else %>
+  <h2>Problem connecting to data source, please check back later.</h2>
 <% end %>
+
+<% comment do %>
+  <p>Lines will be available shortly...</p>
+<% end %>
+

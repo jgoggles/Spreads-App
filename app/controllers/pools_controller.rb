@@ -6,7 +6,7 @@ class PoolsController < ApplicationController
   # GET /pools
   # GET /pools.json
   def index
-    @pools = Pool.all
+    @pools = current_user.pools
 
     respond_to do |format|
       format.html # index.html.erb
@@ -51,7 +51,7 @@ class PoolsController < ApplicationController
 
     respond_to do |format|
       if @pool.save
-        current_user.join_pool(@pool, is_admin=true)
+        current_user.pool_users.create(pool_id: @pool.id, pool_admin: true, password: @pool.password)
         format.html { redirect_to @pool, notice: 'Pool was successfully created.' }
         format.json { render json: @pool, status: :created, location: @pool }
       else

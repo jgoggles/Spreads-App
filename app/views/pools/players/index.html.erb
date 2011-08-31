@@ -1,0 +1,31 @@
+<%= form_for :pool_user, :url => {:action => 'update_pool_users'} do -%>
+  <table>
+    <tr>
+      <th>Player</th>
+      <% unless @pool.free? %>
+        <th>Paid</th>
+      <% end %>
+      <th>Admin</th>
+    </tr>
+    <% @pool.pool_users.each do |pu| %>
+      <%= fields_for "pool_user[]", pu do |pu_fields| %>
+    <tr>
+      <td><%= pu.user.email %></td>
+      <% unless @pool.free? %>
+        <td><%= pu_fields.check_box :paid %></td>
+      <% end %>
+      <% if pu.user == current_user %>
+        <td><%= pu_fields.check_box :pool_admin, :disabled => true  %></td>
+      <% else %>
+        <td><%= pu_fields.check_box :pool_admin %></td>
+      <% end %>
+    </tr>
+      <% end %>
+    <% end %>
+    <tr><td></td><td>
+   <%= submit_tag 'Update' %>
+ </td></tr>
+  </table>
+<% end %>
+
+

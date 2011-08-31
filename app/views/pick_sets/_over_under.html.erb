@@ -1,0 +1,11 @@
+<% if @has_over_under %>
+  <% unless game.over_under == :picked %>
+    <div class="over_under_container">
+      Over/Under: <span class="over_under"><%= game.over_under %></span><br />
+      <%= check_box_tag("pick_ou_#{game.id}_0", '1', false, :class => 'over_under_pick') %>
+      <span class="over">Over</span><br />
+      <%= check_box_tag("pick_ou_#{game.id}_1", '1', false, :class => 'over_under_pick') %>
+      <span class="under">Under</span>
+    </div>
+  <% end %>
+<% end %>

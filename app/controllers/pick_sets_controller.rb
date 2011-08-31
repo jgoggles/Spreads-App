@@ -1,12 +1,17 @@
 class PickSetsController < ApplicationController
+  before_filter :authenticate_user!
+  before_filter :load_current_week
   load_and_authorize_resource
 
-  before_filter :get_pool
+  before_filter :load_pool_and_title
+  before_filter :load_pool_rules
+  before_filter :check_for_current_week_pick_set, :only => :new
+  before_filter :check_for_paid
 
   # GET /pick_sets
   # GET /pick_sets.json
   def index
-    @pick_sets = PickSet.all
+    @pick_sets = current_user.pick_sets.where("pool_id = ?", @pool.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -29,6 +34,7 @@ class PickSetsController < ApplicationController
   # GET /pick_sets/new.json
   def new
     @pick_set = PickSet.new
+    @games = Game.with_spreads
 
     respond_to do |format|
       format.html # new.html.erb
@@ -39,12 +45,16 @@ class PickSetsController < ApplicationController
   # GET /pick_sets/1/edit
   def edit
     @pick_set = PickSet.find(params[:id])
+    @games = Game.with_spreads(current_user, @pool)
   end
 
   # POST /pick_sets
   # POST /pick_sets.json
   def create
-    @pick_set = PickSet.new(params[:pick_set])
+    @pick_set = current_user.pick_sets.build(params[:pick_set])
+    @pick_set.week_id = @week.id
+    @pick_set.pool_id = @pool.id
+    @games = Game.with_spreads
 
     respond_to do |format|
       if @pick_set.save
@@ -61,6 +71,7 @@ class PickSetsController < ApplicationController
   # PUT /pick_sets/1.json
   def update
     @pick_set = PickSet.find(params[:id])
+    @games = Game.with_spreads(current_user, @pool)
 
     respond_to do |format|
       if @pick_set.update_attributes(params[:pick_set])
@@ -86,7 +97,31 @@ class PickSetsController < ApplicationController
   end
 
   private
-  def get_pool
+  def load_pool_and_title
     @pool = Pool.find(params[:pool_id])
+    @title = "Week #{@week.name} picks"
+  end
+
+  def load_pool_rules
+    @has_over_under = @pool.pool_type.over_under
+    @has_spreads = @pool.pool_type.spreads
+    @max_picks = @pool.pool_type.max_picks
+    @min_picks = @pool.pool_type.min_picks
+  end
+
+  def check_for_current_week_pick_set
+    unless current_user.pick_sets_for_this_week(@pool).empty?
+      pick_set = current_user.pick_sets_for_this_week(@pool).first
+      redirect_to edit_pool_pick_set_path(@pool, pick_set)
+    end
+  end
+
+  def check_for_paid
+    if !@pool.free? and !current_user.pool_admin?(@pool)
+      if !@pool.pool_users.where("user_id = ?", current_user.id).first.paid?
+        redirect_to pool_path(@pool)
+        flash[:notice] = "You need to pay your pool entry fee before being able to make picks."
+      end
+    end
   end
 end

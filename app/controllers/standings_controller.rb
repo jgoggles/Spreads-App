@@ -4,6 +4,7 @@ class StandingsController < ApplicationController
   before_filter :get_pool
 
   def index
+    @standings = @pool.standings
   end
 
   def show

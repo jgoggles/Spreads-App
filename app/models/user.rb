@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :authentications, :dependent => :destroy
   has_many :pool_users, :dependent => :destroy
   has_many :pools, :through => :pool_users
-  has_many :pick_sets
+  has_many :pick_sets, :dependent => :destroy
   has_many :standings
 
   # Include default devise modules. Others available are:
@@ -22,8 +22,18 @@ class User < ActiveRecord::Base
     [first_name, last_name].join(" ")
   end
 
+  def display_name
+    if !first_name.blank? or !last_name.blank?
+      [first_name, last_name].join(" ").strip
+    else
+      email
+    end
+  end
+
   def apply_omniauth(omniauth)
     self.email = omniauth['user_info']['email'] if email.blank?
+    self.first_name = omniauth['user_info']['first_name'] if first_name.blank?
+    self.last_name = omniauth['user_info']['last_name'] if last_name.blank?
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
 
@@ -45,14 +55,64 @@ class User < ActiveRecord::Base
     return !!self.roles.find_by_name(role.to_s.camelize)
   end
 
-  def join_pool(pool, options = { :admin => false, :pool_password => nil })
-    if pool.private?
-      if options[:pool_password] != pool.password
-        return false
+  def pool_admin?(pool)
+    if pools.include?(pool)
+      # (role?(:pool_admin) or role?(:admin)) and pool_users.where("pool_id = ?", pool.id).first.pool_admin?
+      role?(:pool_admin) and pool_users.where("pool_id = ?", pool.id).first.pool_admin?
+    else
+      return false
+    end
+  end
+
+  def pick_sets_for_this_week(pool)
+    pick_sets.where('week_id = ?', Week.current).where('pool_id = ?', pool.id)
+  end
+
+  def process_non_picks(pool, options = { :week => Week.previous })
+    week = options[:week]
+    min_picks = pool.min_picks
+    week_pick_sets = pick_sets.where("week_id = ?", week.id).where("pool_id = ?", pool.id)
+
+    if !pool.pool_type.over_under?
+      o_u = nil
+      o_u_result = nil
+    else
+      o_u = 0
+      o_u_result = -1
+    end
+
+    if week_pick_sets.empty?
+      pick_set = pick_sets.create(:week_id => week.id, :pool_id => pool.id)
+      min_picks.times do
+        pick_set.picks.create(:spread => 0, :result => -1, :team_id => 0, :game_id => 0, :over_under => o_u, :over_under_result => o_u_result)
+      end
+    else
+      week_pick_sets.each do |ps|
+        # if ps.week.end_date < Week.current.start_date
+          if ps.picks.size < min_picks
+            losses = min_picks - ps.picks.size
+            losses.times { ps.picks.create(:spread => 0, :result => -1, :team_id => 0, :game_id => 0, :over_under => o_u, :over_under_result => o_u_result)}
+          end
+
+          if pool.pool_type.over_under?
+            ps.picks.each do |p|
+              unless p.complete?
+                if p.spread.nil?
+                  p.spread = 0
+                  p.result = -1
+                else
+                  p.over_under = 0
+                  pover_under_result = -1
+                end
+                p.save
+              end
+            end
+          end
+        # end
       end
     end
-    PoolUser.create!(pool_id: pool.id, user_id: id, pool_admin: options[:admin])
   end
+
   private
   def add_default_role
     self.roles << Role.find_or_create_by_name("Member")

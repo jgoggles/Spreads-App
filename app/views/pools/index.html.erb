@@ -23,13 +23,21 @@
     <td><%= pool.first_place_payout %></td>
     <td><%= pool.second_place_payout %></td>
     <td><%= pool.third_place_payout %></td>
-    <td><%= link_to 'Show', pool %></td>
-    <td><%= link_to 'Edit', edit_pool_path(pool) %></td>
-    <td><%= link_to 'Destroy', pool, confirm: 'Are you sure?', method: :delete %></td>
+    <% if can? :read, pool %>
+      <td><%= link_to 'Show', pool %></td>
+    <% end %>
+    <% if can? :update, pool %>
+      <td><%= link_to 'Edit', edit_pool_path(pool) %></td>
+    <% end %>
+    <% if can? :destroy, pool %>
+      <td><%= link_to 'Destroy', pool, confirm: 'Are you sure?', method: :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Pool', new_pool_path %>
+<% if can? :create, Pool %>
+  <%= link_to 'New Pool', new_pool_path %>
+<% end %>

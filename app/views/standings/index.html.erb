@@ -1,2 +1,20 @@
 <h1>Standings#index</h1>
 <%= @pool.name %>
+<table>
+  <tr>
+    <th>Player</th>
+    <th>Wins</th>
+    <th>Losses</th>
+    <th>Pushes</th>
+    <th>Points</th>
+  </tr>
+<% @standings.each do |standing| %>
+  <tr>
+    <td><%= standing.user.display_name %></td>
+    <td><%= standing.wins %></td>
+    <td><%= standing.losses %></td>
+    <td><%= standing.pushes %></td>
+    <td><%= standing.points %></td>
+  <tr>
+<% end %>
+</table>
