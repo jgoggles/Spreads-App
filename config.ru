@@ -2,3 +2,11 @@
 
 require ::File.expand_path('../config/environment',  __FILE__)
 run Spreads::Application
+
+# require ::File.expand_path('../config/environment',  __FILE__)
+
+# require 'resque/server'
+# run Rack::URLMap.new \
+#   "/"       => Spreads::Application,
+#   "/resque" => Resque::Server.new
+

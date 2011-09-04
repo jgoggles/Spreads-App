@@ -1,2 +1,34 @@
-<h1>Standings#show</h1>
-<%= @week %>
+<h1>Results for Week <%= @week.name %></h1>
+
+<table>
+  <thead>
+    <th>Player</th>
+    <th>Record</th>
+    <th>Team</th>
+    <th>Spread</th>
+    <th>Result</th>
+  </thead>
+  <tbody>
+    <tr>
+    <% @pick_sets.each do |pick_set| %>
+      <tr>
+        <td><%= pick_set.user.display_name %></td>
+        <td><%= pick_set.record %></td>
+        <% pick_set.picks.each do |pick| %>
+          <tr>
+            <td></td>
+            <td></td>
+            <% if pick.team.nil? %>
+              <td>No pick</td>
+              <td>n/a</td>
+            <% else %>
+              <td><%= pick.team.nickname %><span>&nbsp;<%= pick.display_opponent %></span></td>
+              <td><%= pick.spread %></td>
+            <% end %>
+            <td class="<%= pick.result_in_words.downcase %>"><%= pick.result_in_words %></td>
+          </tr>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -5,7 +5,7 @@ Spreads::Application.routes.draw do
   resources :pools do
     resources :pick_sets
     get '/standings' => 'standings#index'
-    match '/standings/:week_id' => 'standings#show'
+    match '/standings/:week_id' => 'standings#show', :as => "standings_for_week"
     match '/players' => 'pools/players#index', :as => "players"
     match 'update_pool_users' => 'pools/players#update_pool_users', :as => "update_players"
   end
@@ -15,6 +15,8 @@ Spreads::Application.routes.draw do
   resources :authentications, :games, :weeks, :pool_types, :pool_users
 
   devise_for :users, :controllers => { :registrations => "users/registrations" }
+
+  mount Resque::Server, :at => "/resque"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

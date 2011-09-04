@@ -1,0 +1,5 @@
+nfl:
+  cron: "*/5 * * * *"
+  class: Scraper
+  description: Gets NFL lines
+

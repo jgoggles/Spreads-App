@@ -41,4 +41,18 @@ class Pool < ActiveRecord::Base
     pool_users.where("pool_admin = ?", true).collect { |a| a.user.email }.join(", ")
   end
 
+  def all_picks_in
+    if pool_type.max_picks.nil?
+      return false
+    else
+      pick_total = Pick.joins(:pick_set).where("pool_id = ?", id).size
+      users = PoolUser.paid.where('pool_id = ?', id).size
+      max_picks = pool_type.max_picks
+      if pick_total >= users * max_picks
+        return true
+      else
+        return false
+      end
+    end
+  end
 end

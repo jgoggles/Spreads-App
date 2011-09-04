@@ -8,17 +8,6 @@ class PickSetsController < ApplicationController
   before_filter :check_for_current_week_pick_set, :only => :new
   before_filter :check_for_paid
 
-  # GET /pick_sets
-  # GET /pick_sets.json
-  def index
-    @pick_sets = current_user.pick_sets.where("pool_id = ?", @pool.id)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @pick_sets }
-    end
-  end
-
   # GET /pick_sets/1
   # GET /pick_sets/1.json
   def show
@@ -110,8 +99,8 @@ class PickSetsController < ApplicationController
   end
 
   def check_for_current_week_pick_set
-    unless current_user.pick_sets_for_this_week(@pool).empty?
-      pick_set = current_user.pick_sets_for_this_week(@pool).first
+    unless current_user.pick_set_for_this_week(@pool).nil?
+      pick_set = current_user.pick_set_for_this_week(@pool)
       redirect_to edit_pool_pick_set_path(@pool, pick_set)
     end
   end

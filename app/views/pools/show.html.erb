@@ -1,5 +1,17 @@
 <% if can? :read, @pool %>
   <%= render "pool_nav", locals: { pool: @pool } %>
+  <h2>Your picks for this week</h2>
+
+  <ul>
+  <% current_user.pick_set_for_this_week(@pool).picks.each do |pick| %>
+    <li>
+      <span><%= pick.team.nickname %></span>
+      <span><%= pick.spread %></span>
+      <span><%= pick.display_opponent %></span>
+    </li>
+  <% end %>
+  </ul>
+
   <p>
   <b>Pool type:</b>
   <%= @pool.pool_type.name %>

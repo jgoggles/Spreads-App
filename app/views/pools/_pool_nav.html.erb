@@ -1,6 +1,10 @@
 <ul>
   <li><%= link_to "Standings", pool_standings_path(@pool) %></li>
-  <li><%= link_to "Make Picks", new_pool_pick_set_path(@pool) %></li>
+  <% if current_user.pick_set_for_this_week(@pool).has_max_picks %>
+    <li><%= link_to "View", pool_pick_set_path(@pool, current_user.pick_set_for_this_week(@pool)) %></li>
+  <% else %>
+    <li><%= link_to "Make Picks", new_pool_pick_set_path(@pool) %></li>
+  <% end %>
   <% if can? :update, @pool %>
     <li><%= link_to "Players", pool_players_path(@pool) %></li>
   <% end %>

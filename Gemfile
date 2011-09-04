@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', :git => "git://github.com/rails/rails.git", :branch => "3-1-stable"
+# gem 'rails', :git => "git://github.com/rails/rails.git", :branch => "3-1-stable"
+gem 'rails', '3.1.0'
 
 group :development do
   gem 'mysql2'
@@ -25,6 +26,9 @@ gem 'chronic'
 gem 'mongrel', '1.2.0.pre2'
 
 gem 'thin'
+
+gem 'resque', :require => 'resque/server'
+gem 'resque-scheduler'
 
 group :production do
   gem 'pg'

@@ -18,4 +18,22 @@ class PickSet < ActiveRecord::Base
     end
   end
 
+  def has_max_picks
+    max = pool.pool_type.max_picks
+    if max.nil?
+      picks.size >= week.games.size
+    else
+      picks.size >= max
+    end
+  end
+
+  def record
+    standing = Standing.where("week_id = ?", week_id).where("user_id = ?", user_id).first
+    if standing
+      [standing.wins, standing.losses, standing.pushes].join("-")
+    else
+      "0-0-0"
+    end
+  end
+
 end

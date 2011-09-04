@@ -64,8 +64,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def pick_sets_for_this_week(pool)
-    pick_sets.where('week_id = ?', Week.current).where('pool_id = ?', pool.id)
+  def pick_set_for_this_week(pool)
+    pick_sets.where('week_id = ?', Week.current).where('pool_id = ?', pool.id).first
   end
 
   def process_non_picks(pool, options = { :week => Week.previous })

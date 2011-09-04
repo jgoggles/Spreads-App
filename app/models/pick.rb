@@ -52,8 +52,36 @@ class Pick < ActiveRecord::Base
     GameDetail.where("game_id = ?", game_id).where("team_id = ?", team_id).first.is_home?
   end
 
-  def complete?
-    !self.spread.nil? && !self.over_under.nil?
+  def opponent
+    if is_home?
+      game.away.team
+    else
+      game.home.team
+    end
   end
 
+  def display_opponent
+    is_home? ? "vs #{opponent.nickname}" : "at #{opponent.nickname}"
+  end
+
+  def complete?
+    if pick_set.pool.pool_type.over_under?
+      !self.spread.nil? && !self.over_under.nil?
+    else
+      !self.spread.nil?
+    end
+  end
+
+  def result_in_words
+    case result
+    when 1
+      "Win"
+    when -1
+      "Loss"
+    when 0
+      "Push"
+    else
+      ""
+    end
+  end
 end

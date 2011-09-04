@@ -8,6 +8,8 @@ class PoolUser < ActiveRecord::Base
 
   after_save :process_admins
 
+  scope :paid, :conditions => {:paid => true}
+
   def check_password
     if pool.private? and password != pool.password and new_record?
       errors[:base] << "Incorrect password"

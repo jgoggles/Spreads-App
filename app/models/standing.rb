@@ -46,9 +46,9 @@ class Standing < ActiveRecord::Base
       record['player'] = u
       wins, losses, pushes, points, over_under_points = 0, 0, 0, 0, 0
       if pool
-        standings = u.standings.where("week_id >= #{start_week_id}").where("week_id <= #{end_week_id}").where("pool_id = ?", pool.id).each
+        standings = u.standings.where("week_id >= #{start_week_id}").where("week_id <= #{end_week_id}").where("pool_id = ?", pool.id)
       else
-        standings = u.standings.where("week_id >= #{start_week_id}").where("week_id <= #{end_week_id}").each
+        standings = u.standings.where("week_id >= #{start_week_id}").where("week_id <= #{end_week_id}")
       end
       standings.each do |s|
         wins += s.wins
@@ -79,6 +79,5 @@ class Standing < ActiveRecord::Base
     end
     return season_standings
   end
-
 
 end
