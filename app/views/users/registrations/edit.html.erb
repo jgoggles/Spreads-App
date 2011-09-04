@@ -12,6 +12,11 @@
   <p><%= f.label :email %><br />
   <%= f.email_field :email %></p>
 
+  <p>
+    <%= f.label :favorite_nfl_team_id %><br />
+    <%= f.select :favorite_nfl_team_id, Team.order("nickname").collect { |t| [t.nickname, t.id] }, :include_blank => true %> 
+  </p>
+
   <% if current_user.authentications.empty? %>
     <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
     <%= f.password_field :password %></p>
