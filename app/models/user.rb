@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :pools, :through => :pool_users
   has_many :pick_sets, :dependent => :destroy
   has_many :standings
+  has_many :topics
+  has_many :messages
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable

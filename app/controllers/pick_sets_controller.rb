@@ -1,7 +1,8 @@
 class PickSetsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_current_week
-  load_and_authorize_resource
+  load_and_authorize_resource :pool
+  load_and_authorize_resource :pick_set, :through => :pool, :except => [:show, :edit, :update]
 
   before_filter :load_pool_and_title
   before_filter :load_pool_rules
@@ -12,6 +13,7 @@ class PickSetsController < ApplicationController
   # GET /pick_sets/1.json
   def show
     @pick_set = PickSet.find(params[:id])
+    authorize! :read, @pick_set
 
     respond_to do |format|
       format.html # show.html.erb
@@ -35,6 +37,7 @@ class PickSetsController < ApplicationController
   def edit
     @pick_set = PickSet.find(params[:id])
     @games = Game.with_spreads(current_user, @pool)
+    authorize! :update, @pick_set
   end
 
   # POST /pick_sets
@@ -61,6 +64,7 @@ class PickSetsController < ApplicationController
   def update
     @pick_set = PickSet.find(params[:id])
     @games = Game.with_spreads(current_user, @pool)
+    authorize! :update, @pick_set
 
     respond_to do |format|
       if @pick_set.update_attributes(params[:pick_set])

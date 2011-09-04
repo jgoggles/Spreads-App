@@ -1,4 +1,9 @@
 module ApplicationHelper
+  def markdown(text)
+    options = [:hard_wrap, :autolink]
+    Redcarpet.new(text, *options).to_html.html_safe
+  end
+
   def title(page_title, show_title = true)
     content_for(:title) { h(page_title.to_s) }
     @show_title = show_title

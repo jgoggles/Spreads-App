@@ -6,6 +6,7 @@ class Pool < ActiveRecord::Base
   has_many :pool_users, :dependent => :destroy
   has_many :users, :through => :pool_users
   has_many :standings
+  has_many :topics
   has_and_belongs_to_many :leagues
 
   validates_presence_of :pool_type_id, :name

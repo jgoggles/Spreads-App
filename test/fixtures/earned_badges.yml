@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  badge_id: 1
+  user_id: 1
+  pool_id: 1
+  week_id: 1
+  pick_set_id: 1
+  pick_id: 1
+
+two:
+  badge_id: 1
+  user_id: 1
+  pool_id: 1
+  week_id: 1
+  pick_set_id: 1
+  pick_id: 1

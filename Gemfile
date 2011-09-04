@@ -24,6 +24,7 @@ gem 'omniauth', '>= 0.2.6'
 gem 'nokogiri'
 gem 'chronic'
 gem 'mongrel', '1.2.0.pre2'
+gem 'redcarpet'
 
 gem 'thin'
 

@@ -11,12 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110831011924) do
+ActiveRecord::Schema.define(:version => 20110904185705) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "badges", :force => true do |t|
+    t.string   "name"
+    t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -30,6 +37,17 @@ ActiveRecord::Schema.define(:version => 20110831011924) do
 
   create_table "divisions", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "earned_badges", :force => true do |t|
+    t.integer  "badge_id"
+    t.integer  "user_id"
+    t.integer  "pool_id"
+    t.integer  "week_id"
+    t.integer  "pick_set_id"
+    t.integer  "pick_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,6 +78,14 @@ ActiveRecord::Schema.define(:version => 20110831011924) do
   create_table "leagues_pools", :id => false, :force => true do |t|
     t.integer "league_id"
     t.integer "pool_id"
+  end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "topic_id"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "pick_sets", :force => true do |t|
@@ -151,6 +177,14 @@ ActiveRecord::Schema.define(:version => 20110831011924) do
     t.integer  "league_id"
     t.integer  "conference_id"
     t.integer  "division_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "topics", :force => true do |t|
+    t.integer  "pool_id"
+    t.integer  "user_id"
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

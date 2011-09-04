@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  pool_id: 1
+  user_id: 1
+  title: MyString
+
+two:
+  pool_id: 1
+  user_id: 1
+  title: MyString

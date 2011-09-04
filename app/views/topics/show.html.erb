@@ -1,0 +1,34 @@
+<p>
+  <b>Title:</b>
+  <%= @topic.title %>, created by <%= @topic.user.display_name %>
+</p>
+<% if can? :update, @topic %>
+  <%= link_to 'Edit', edit_pool_topic_path(@pool, @topic) %> |
+<% end %>
+<%= link_to 'Back', pool_topics_path %>
+
+<%= form_for @message do |f| %>
+  <% if @message.errors.any? %>
+    <div id="error_explanation">
+
+      <ul>
+      <% @message.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.text_area :body, :rows => 3 %>
+  <%= f.hidden_field :topic_id, :value => @topic.id %>
+  <%= f.submit "Post", :disable_with => 'loading...' %>
+<% end %>
+
+
+<% @messages.each do |message| %>
+  <p><%= message.user.display_name %> says:
+  <%= markdown message.body %>
+  <p><%= time_ago_in_words(message.created_at) %> ago </p>
+<% end %>
+
+

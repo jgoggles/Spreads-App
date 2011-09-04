@@ -1,9 +1,14 @@
 Spreads::Application.routes.draw do
 
+  resources :badges
+
+  get "messages/create"
+
   match "/dashboard"=> 'dashboard#index'
 
   resources :pools do
     resources :pick_sets
+    resources :topics
     get '/standings' => 'standings#index'
     match '/standings/:week_id' => 'standings#show', :as => "standings_for_week"
     match '/players' => 'pools/players#index', :as => "players"
@@ -12,7 +17,7 @@ Spreads::Application.routes.draw do
 
   match '/auth/:provider/callback' => 'authentications#create'
 
-  resources :authentications, :games, :weeks, :pool_types, :pool_users
+  resources :authentications, :games, :weeks, :pool_types, :pool_users, :messages
 
   devise_for :users, :controllers => { :registrations => "users/registrations" }
 
