@@ -1,5 +1,17 @@
-nfl:
+parse_nfl_lines:
   cron: "*/5 * * * *"
   class: Scraper
+  args: "parse_nfl_lines"
   description: Gets NFL lines
 
+parse_nfl_scores:
+  cron: "* 2 * * 1,2"
+  class: Scraper
+  args: "parse_nfl_scores"
+  description: Gets NFL scores
+
+generate_standings:
+  cron: "5 2 * * 1,2"
+  class: StandingGenerator
+  args: generate_standings
+  description: Generates standings

@@ -64,7 +64,7 @@ class Game < ActiveRecord::Base
   end
 
   def has_scores
-    game_details.any? { |g| !g.score.nil? }
+    !home.score.nil? and !away.score.nil?
   end
 
 end

@@ -30,6 +30,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  def to_json(options = {})
+    {
+      id: self.id,
+      display_name: self.display_name
+    }
+  end
+
   def apply_omniauth(omniauth)
     self.email = omniauth['user_info']['email'] if email.blank?
     self.first_name = omniauth['user_info']['first_name'] if first_name.blank?
@@ -57,7 +64,6 @@ class User < ActiveRecord::Base
 
   def pool_admin?(pool)
     if pools.include?(pool)
-      # (role?(:pool_admin) or role?(:admin)) and pool_users.where("pool_id = ?", pool.id).first.pool_admin?
       role?(:pool_admin) and pool_users.where("pool_id = ?", pool.id).first.pool_admin?
     else
       return false
@@ -88,7 +94,7 @@ class User < ActiveRecord::Base
       end
     else
       week_pick_sets.each do |ps|
-        # if ps.week.end_date < Week.current.start_date
+        if ps.week.end_date < Week.current.start_date
           if ps.picks.size < min_picks
             losses = min_picks - ps.picks.size
             losses.times { ps.picks.create(:spread => 0, :result => -1, :team_id => 0, :game_id => 0, :over_under => o_u, :over_under_result => o_u_result)}
@@ -108,7 +114,7 @@ class User < ActiveRecord::Base
               end
             end
           end
-        # end
+        end
       end
     end
   end

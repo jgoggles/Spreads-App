@@ -6,7 +6,7 @@ class StandingsController < ApplicationController
   before_filter :check_pick_total
 
   def index
-    @standings = Standing.for_season(@pool.users, @pool)
+    @standings = JSON.parse(Resque.redis.get("season_standings_#{@pool.id}"))
     @pick_sets = current_user.pick_sets.where('pool_id = ?', @pool.id)
   end
 

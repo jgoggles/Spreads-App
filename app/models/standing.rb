@@ -43,7 +43,7 @@ class Standing < ActiveRecord::Base
     season_standings = []
     users.each do |u|
       record = {}
-      record['player'] = u
+      record['player'] = u.to_json
       wins, losses, pushes, points, over_under_points = 0, 0, 0, 0, 0
       if pool
         standings = u.standings.where("week_id >= #{start_week_id}").where("week_id <= #{end_week_id}").where("pool_id = ?", pool.id)
