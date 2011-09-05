@@ -48,7 +48,7 @@ class Pool < ActiveRecord::Base
       return false
     else
       pick_total = Pick.joins(:pick_set).where("pool_id = ?", id).size
-      users = PoolUser.paid.where('pool_id = ?', id).size
+      users = PoolUser.where('pool_id = ?', id).size
       max_picks = pool_type.max_picks
       if pick_total >= users * max_picks
         return true
