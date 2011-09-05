@@ -5,7 +5,7 @@ class Week < ActiveRecord::Base
 
   def self.current
     if Time.now < Week.first.start_date
-      find(1)
+      first
     else
       where("start_date <= ?", Time.now).where(["end_date >= ?", Time.now]).first
     end
