@@ -3,7 +3,9 @@ class Badging
 
   class <<  self
     def perform(klass, record_id)
+      puts record_id
       record = Kernel.const_get(klass.to_s.capitalize).find(record_id)
+      puts "first"
       self.instance_methods(false).grep(/#{klass}_check*/).each { |m| self.new.send(m, record) }
     end
 
@@ -30,6 +32,7 @@ class Badging
   end
 
   def pick_check_for_drunk_driver(pick)
+    puts "drunk"
     badge = Badge.find_by_name("Drunk Driver")
     b = Team.find_by_nickname("Bengals")
     if pick.game.teams.include?(b)
