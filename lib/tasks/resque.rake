@@ -11,3 +11,5 @@ end
 task "resque:scheduler_setup" => :environment
 
 
+# had in procfile
+# worker: QUEUE=* bundle exec rake resque:work
