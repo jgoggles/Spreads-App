@@ -27,3 +27,5 @@ Spreads::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end
+
+ENV["REDISTOGO_URL"] = 'redis://redistogo:58a4c99e7b26cc1b68388fb11d3be646@icefish.redistogo.com:9417/'

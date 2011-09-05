@@ -48,6 +48,10 @@ class Pick < ActiveRecord::Base
     end
   end
 
+  def is_non_pick?
+    game_id == 0 and team_id == 0
+  end
+
   def is_home?
     GameDetail.where("game_id = ?", game_id).where("team_id = ?", team_id).first.is_home?
   end

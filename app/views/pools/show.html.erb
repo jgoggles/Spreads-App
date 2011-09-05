@@ -5,11 +5,13 @@
 
     <ul>
     <% current_user.pick_set_for_this_week(@pool).picks.each do |pick| %>
-      <li>
-        <span><%= pick.team.nickname %></span>
-        <span><%= pick.spread %></span>
-        <span><%= pick.display_opponent %></span>
-      </li>
+      <% unless pick.is_non_pick? %>
+        <li>
+          <span><%= pick.team.nickname %></span>
+          <span><%= pick.spread %></span>
+          <span><%= pick.display_opponent %></span>
+        </li>
+      <% end %>
     <% end %>
     </ul>
   <% end %>

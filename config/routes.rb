@@ -21,8 +21,6 @@ Spreads::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => "users/registrations" }
 
-  mount Resque::Server, :at => "/resque"
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

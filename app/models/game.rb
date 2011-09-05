@@ -29,7 +29,7 @@ class Game < ActiveRecord::Base
   end
 
   def self.with_spreads(user=nil, pool=nil)
-    lines = JSON.parse(Resque.redis.get("lines"))
+    lines = JSON.parse(REDIS.get("lines"))
     puts lines
     week = Week.current
     games = []
