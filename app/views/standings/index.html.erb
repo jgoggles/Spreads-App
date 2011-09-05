@@ -9,33 +9,35 @@
   </ul>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Player</th>
-      <th>Record</th>
-      <th>Last Week</th>
-      <th>Points</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @standings.each do |s| %>
-      <% if s['player']['id'] == current_user.id %>
-        <tr class="user standing standingRow <%= cycle('shade', ' ') %>">
-      <% else %>
-        <tr class="standing standingRow <%= cycle('shade', ' ') %>">
+<% if @standings %>
+  <table>
+    <thead>
+      <tr>
+        <th>Player</th>
+        <th>Record</th>
+        <th>Last Week</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @standings.each do |s| %>
+        <% if s['player']['id'] == current_user.id %>
+          <tr class="user standing standingRow <%= cycle('shade', ' ') %>">
+        <% else %>
+          <tr class="standing standingRow <%= cycle('shade', ' ') %>">
+        <% end %>
+          <tr>
+            <td><%= s['player']['display_name'] %></td>
+            <td><%= "#{s['wins']}-#{s['losses']}-#{s['pushes']}" %></td>
+            <td><%= s['last_week'] %></td>
+            <td><%= s['points'] %></td>
+          <tr>
+        </ul>
       <% end %>
-        <tr>
-          <td><%= s['player']['display_name'] %></td>
-          <td><%= "#{s['wins']}-#{s['losses']}-#{s['pushes']}" %></td>
-          <td><%= s['last_week'] %></td>
-          <td><%= s['points'] %></td>
-        <tr>
-      </ul>
-    <% end %>
 
-  </tbody>
-</table>
+    </tbody>
+  </table>
+<% end %>
 
 <table>
   <thead>

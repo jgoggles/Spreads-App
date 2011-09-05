@@ -18,6 +18,7 @@ class PoolsController < ApplicationController
   # GET /pools/1.json
   def show
     @pool = Pool.find(params[:id])
+    @badges = current_user.earned_badges.where("pool_id = ?", @pool.id)
     if !current_user.pools.include?(@pool)
       @pool_user = PoolUser.new
     end

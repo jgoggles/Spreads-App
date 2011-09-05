@@ -7,6 +7,7 @@ class Pool < ActiveRecord::Base
   has_many :users, :through => :pool_users
   has_many :standings
   has_many :topics
+  has_many :earned_badges
   has_and_belongs_to_many :leagues
 
   validates_presence_of :pool_type_id, :name

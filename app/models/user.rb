@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :standings
   has_many :topics
   has_many :messages
+  has_many :earned_badges, :dependent => :destroy
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable

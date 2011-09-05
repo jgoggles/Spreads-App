@@ -2,6 +2,7 @@ class Week < ActiveRecord::Base
   has_many :games
   has_many :pick_sets
   has_many :standings
+  has_many :earned_badges
 
   def self.current
     if Time.now < Week.first.start_date

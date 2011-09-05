@@ -6,7 +6,9 @@ class StandingsController < ApplicationController
   before_filter :check_pick_total
 
   def index
-    @standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}"))
+    unless Week.current.name == "1"
+      @standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}"))
+    end
     @pick_sets = current_user.pick_sets.where('pool_id = ?', @pool.id)
   end
 

@@ -3,16 +3,33 @@
   <% if current_user.pick_set_for_this_week(@pool) %>
     <h2>Your picks for this week</h2>
 
+    <% if current_user.pick_set_for_this_week(@pool).picks.empty? %>
+      <p>You haven't made any picks yet this week.</p>
+    <% else %>
+      <ul>
+      <% current_user.pick_set_for_this_week(@pool).picks.each do |pick| %>
+        <% unless pick.is_non_pick? %>
+          <li>
+            <span><%= pick.team.nickname %></span>
+            <span><%= pick.spread %></span>
+            <span><%= pick.display_opponent %></span>
+          </li>
+        <% end %>
+      <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+
+  <h2>Your badges</h2>
+  <% if @badges.empty? %>
+    <p>You haven't earned any badges yet because you suck.</p>
+  <% else %>
     <ul>
-    <% current_user.pick_set_for_this_week(@pool).picks.each do |pick| %>
-      <% unless pick.is_non_pick? %>
+      <% @badges.each do |badge| %>
         <li>
-          <span><%= pick.team.nickname %></span>
-          <span><%= pick.spread %></span>
-          <span><%= pick.display_opponent %></span>
+          <%= badge.badge.name %>
         </li>
       <% end %>
-    <% end %>
     </ul>
   <% end %>
 

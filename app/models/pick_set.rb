@@ -5,6 +5,7 @@ class PickSet < ActiveRecord::Base
   belongs_to :user
   belongs_to :week
   has_many :picks, :dependent => :destroy
+  has_many :earned_badges
 
   attr_accessible :picks_attributes, :week_id, :pool_id
 

@@ -2,6 +2,7 @@ class Pick < ActiveRecord::Base
   belongs_to :pick_set
   belongs_to :game
   belongs_to :team
+  has_many :earned_badges
 
   def generate_result
     unless game_id == 0
