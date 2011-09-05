@@ -30,7 +30,9 @@ class StandingsController < ApplicationController
     if @pool.all_picks_in
       @week_list = Week.current
     else
-      @week_list = Week.previous
+      unless Week.current.name == "1"
+        @week_list = Week.previous
+      end
     end
   end
 
