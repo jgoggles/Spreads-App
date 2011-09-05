@@ -4,7 +4,6 @@ class Badging
   class <<  self
     def perform(klass, record_id)
       record = Kernel.const_get(klass.to_s.capitalize).find(record_id)
-      # Badging.instance_methods(false).each { |m| self.new.send(m, pick) }
       self.instance_methods(false).grep(/#{klass}_check*/).each { |m| self.new.send(m, record) }
     end
 
