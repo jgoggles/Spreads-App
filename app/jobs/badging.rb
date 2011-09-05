@@ -47,48 +47,48 @@ class Badging
     end
   end
 
-  def pick_check_for_toxic(pick)
-    badge = Badge.find_by_name("Toxic")
-    unless pick.pick_set.user.favorite_nfl_team_id.nil?
-      fav = Team.find(pick.pick_set.user.favorite_nfl_team_id)
-      if pick.opponent == fav
-        Badging.create_for_pick(badge, pick)
-      end
-    end
-  end
+  # def pick_check_for_toxic(pick)
+  #   badge = Badge.find_by_name("Toxic")
+  #   unless pick.pick_set.user.favorite_nfl_team_id.nil?
+  #     fav = Team.find(pick.pick_set.user.favorite_nfl_team_id)
+  #     if pick.opponent == fav
+  #       Badging.create_for_pick(badge, pick)
+  #     end
+  #   end
+  # end
 
-  def pick_check_for_tough_luck(pick)
-    badge = Badge.find_by_name("Tough Luck")
-    team_picked = pick.is_home? ? pick.game.home : pick.game.away
-    pick_opp = pick.is_home? ? pick.game.away : pick.game.home
-    if !pick.result.nil? and pick.result == 1
-      if pick.game.has_scores
-        diff = (team_picked.score + pick.spread) - pick_opp.score
-        if diff > -3 and diff < 0
-          Badging.create_for_pick(badge, pick)
-        end
-      end
-    end
-  end
+  # def pick_check_for_tough_luck(pick)
+  #   badge = Badge.find_by_name("Tough Luck")
+  #   team_picked = pick.is_home? ? pick.game.home : pick.game.away
+  #   pick_opp = pick.is_home? ? pick.game.away : pick.game.home
+  #   if !pick.result.nil? and pick.result == 1
+  #     if pick.game.has_scores
+  #       diff = (team_picked.score + pick.spread) - pick_opp.score
+  #       if diff > -3 and diff < 0
+  #         Badging.create_for_pick(badge, pick)
+  #       end
+  #     end
+  #   end
+  # end
 
-  def pick_check_for_skin_of_your_teeth(pick)
-    badge = Badge.find_by_name("Skin of Your Teeth")
-    team_picked = pick.is_home? ? pick.game.home : pick.game.away
-    pick_opp = pick.is_home? ? pick.game.away : pick.game.home
-    if !pick.result.nil? and pick.result == 1
-      if pick.game.has_scores
-        diff = (team_picked.score + pick.spread) - pick_opp.score
-        if diff < 3 and diff > 0
-          Badging.create_for_pick(badge, pick)
-        end
-      end
-    end
-  end
+  # def pick_check_for_skin_of_your_teeth(pick)
+  #   badge = Badge.find_by_name("Skin of Your Teeth")
+  #   team_picked = pick.is_home? ? pick.game.home : pick.game.away
+  #   pick_opp = pick.is_home? ? pick.game.away : pick.game.home
+  #   if !pick.result.nil? and pick.result == 1
+  #     if pick.game.has_scores
+  #       diff = (team_picked.score + pick.spread) - pick_opp.score
+  #       if diff < 3 and diff > 0
+  #         Badging.create_for_pick(badge, pick)
+  #       end
+  #     end
+  #   end
+  # end
 
-  def pick_check_for_pusher(pick)
-    badge = Badge.find_by_name("Pusher")
-    if !pick.result.nil? and pick.result == 0
-      Badging.create_for_pick(badge, pick)
-    end
-  end
+  # def pick_check_for_pusher(pick)
+  #   badge = Badge.find_by_name("Pusher")
+  #   if !pick.result.nil? and pick.result == 0
+  #     Badging.create_for_pick(badge, pick)
+  #   end
+  # end
 end
