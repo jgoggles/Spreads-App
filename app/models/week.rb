@@ -13,7 +13,7 @@ class Week < ActiveRecord::Base
   end
 
   def self.previous
-    if current.id > 1
+    if current.name.to_i > 1
       week = find(current.id - 1)
     else
       self.current
