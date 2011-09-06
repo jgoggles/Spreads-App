@@ -1,5 +1,5 @@
 <% if @games %>
-  <p class="pick-instructions">Picks will not be finalized until you click "Submit" at the bottom of the page.<p>
+  <p class="pick-instructions">Click on the team you wish to select then click "Submit" at the bottom of the page.<p>
   <%= form_for([@pool, @pick_set]) do |f| %>
     <% if @pick_set.errors.any? %>
       <div id="error_explanation">
