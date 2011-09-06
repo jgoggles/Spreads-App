@@ -196,6 +196,7 @@ caption {background:#ffc;}
 .pick-instructions { color: $dark-blue; font-size: 10px; text-transform: uppercase; }
 #game-list {font-size: 18px;
   li { border-bottom: 1px solid #ccc; padding: 4px 0; }
+  .at { color: $dark-blue; font-size: 10px; margin-left: 35px; text-transform: uppercase; }
   .game-off { float: right; }
   .game-off h3 { color: red; }
   .click-to-pick { color: $dark-blue; display: none; float:right; font-size: 10px; text-transform: uppercase; }
