@@ -193,6 +193,7 @@ caption {background:#ffc;}
 .win {color:green;}
 .loss {color:red;}
 
+.pick-instructions { color: $dark-blue; font-size: 10px; text-transform: uppercase; }
 #game-list {font-size: 18px;
   li { border-bottom: 1px solid #ccc; padding: 4px 0; }
   .game-off { float: right; }

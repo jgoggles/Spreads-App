@@ -1,9 +1,9 @@
 <% if @games %>
-
+  <p class="pick-instructions">Picks will not be finalized until you click "Submit" at the bottom of the page.<p>
   <%= form_for([@pool, @pick_set]) do |f| %>
     <% if @pick_set.errors.any? %>
       <div id="error_explanation">
-        <h2><%= pluralize(@pick_set.errors.count, "error") %> prohibited this pick_set from being saved:</h2>
+        <h3><%= pluralize(@pick_set.errors.count, "error") %> prohibited your picks from being saved:</h3>
 
         <ul>
           <% @pick_set.errors.full_messages.each do |msg| %>
