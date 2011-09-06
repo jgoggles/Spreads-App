@@ -13,29 +13,28 @@
       </div>
     <% end %>
 
-    <ul id="gameList">
+    <ul id="game-list">
       <% @games.each do |game| %>
         <li id="<%= game.id %>" class="<%= cycle('shade', ' ') %>">
-        <% if game.spread != :off and game.has_not_started %>
+        <% if game.spread != "off" and game.has_not_started %>
           <%= f.fields_for(:picks, Pick.new) do |p| %>
             <%= render partial: 'spreads', locals: { game: game } %>
             <%= render partial: 'over_under', locals: { game: game } %>
-            <%= p.hidden_field :spread, :class => 'set_spread' %>
-            <%= p.hidden_field :is_over, :class => 'set_is_over' %>
-            <%= p.hidden_field :over_under, :class => 'set_over_under' %>
-            <%= p.hidden_field :team_id, :class => 'set_team' %>
+            <%= p.hidden_field :spread, :class => 'set-spread' %>
+            <%= p.hidden_field :is_over, :class => 'set-is-over' %>
+            <%= p.hidden_field :over_under, :class => 'set-over-under' %>
+            <%= p.hidden_field :team_id, :class => 'set-team' %>
             <%= p.hidden_field :game_id, :value => game.id %>
           <% end %>
         <% else %>
-          <div class="gameOff"><h2>OFF</h2></div>
-          <div class="teamLine">
+          <div class="game-off"><h3>OFF</h3></div>
+          <div class="team-off">
             <%= game.away.team.nickname %>
           </div>
-          <div class="teamLine">
+          <div class="team-off">
             <%= game.home.team.nickname %>
           </div>
         <% end %>
-        <hr />
         </li>
       <% end %>
     </ul>

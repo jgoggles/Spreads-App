@@ -13,6 +13,9 @@ Spreads::Application.routes.draw do
     match '/standings/:week_id' => 'standings#show', :as => "standings_for_week"
     match '/players' => 'pools/players#index', :as => "players"
     match 'update_pool_users' => 'pools/players#update_pool_users', :as => "update_players"
+    member do
+      get 'achievements', :as => 'achievements'
+    end
   end
 
   match '/auth/:provider/callback' => 'authentications#create'

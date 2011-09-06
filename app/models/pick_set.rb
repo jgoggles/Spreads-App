@@ -29,7 +29,7 @@ class PickSet < ActiveRecord::Base
   end
 
   def record
-    standing = Standing.where("week_id = ?", week_id).where("user_id = ?", user_id).first
+    standing = Standing.where("pool_id = ?", pool.id).where("week_id = ?", week_id).where("user_id = ?", user_id).first
     if standing
       [standing.wins, standing.losses, standing.pushes].join("-")
     else

@@ -18,7 +18,8 @@ class PoolsController < ApplicationController
   # GET /pools/1.json
   def show
     @pool = Pool.find(params[:id])
-    @badges = current_user.earned_badges.where("pool_id = ?", @pool.id)
+    @badges = current_user.earned_badges.where("pool_id = ?", @pool.id).select("DISTINCT(badge_id)")
+    @messages = @pool.topics.order("created_at DESC")
     if !current_user.pools.include?(@pool)
       @pool_user = PoolUser.new
     end
@@ -88,5 +89,11 @@ class PoolsController < ApplicationController
       format.html { redirect_to pools_url }
       format.json { head :ok }
     end
+  end
+
+  def achievements
+    @pool = Pool.find(params[:id])
+    # @badges = current_user.earned_badges.where("pool_id = ?", @pool.id).select("DISTINCT(badge_id)")
+    @badges = current_user.earned_badges.where("pool_id = ?", @pool.id)
   end
 end

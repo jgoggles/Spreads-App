@@ -1,44 +1,47 @@
-<% if @week_list %>
-  <ul id="weekList">
-    <li>Choose week:</li>
-    <% Week.all.each do |w| %>
-      <% if w.id <= @week_list.id %>
-        <li><%= link_to w.name, pool_standings_for_week_path(@pool, w.id) %></li>
-      <% end %>
-    <% end %>
-  </ul>
-<% end %>
-
-<% if @standings %>
-  <table>
-    <thead>
-      <tr>
-        <th>Player</th>
-        <th>Record</th>
-        <th>Last Week</th>
-        <th>Points</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @standings.each do |s| %>
-        <% if s['player']['id'] == current_user.id %>
-          <tr class="user standing standingRow <%= cycle('shade', ' ') %>">
-        <% else %>
-          <tr class="standing standingRow <%= cycle('shade', ' ') %>">
+<% unless Week.current.name == "1" %>
+  <% if @week_list %>
+    <ul id="week-list" class="group">
+      <li>Choose week:</li>
+      <% Week.all.each do |w| %>
+        <% if w.id <= @week_list.id %>
+          <li><%= link_to w.name, pool_standings_for_week_path(@pool, w.id) %></li>
         <% end %>
-          <tr>
-            <td><%= s['player']['display_name'] %></td>
-            <td><%= "#{s['wins']}-#{s['losses']}-#{s['pushes']}" %></td>
-            <td><%= s['last_week'] %></td>
-            <td><%= s['points'] %></td>
-          <tr>
-        </ul>
       <% end %>
+    </ul>
+  <% end %>
 
-    </tbody>
-  </table>
+  <% if @standings %>
+    <h3>Season Standings</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Record</th>
+          <th>Last Week</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @standings.each do |s| %>
+          <% if s['player']['id'] == current_user.id %>
+            <tr class="user <%= cycle('shade', ' ') %>">
+          <% else %>
+            <tr class="<%= cycle('shade', ' ') %>">
+          <% end %>
+              <td><%= s['player']['display_name'] %></td>
+              <td><%= "#{s['wins']}-#{s['losses']}-#{s['pushes']}" %></td>
+              <td><%= s['last_week'] %></td>
+              <td><%= s['points'] %></td>
+            <tr>
+          </ul>
+        <% end %>
+
+      </tbody>
+    </table>
+  <% end %>
 <% end %>
 
+<h3>Your Picks</h3>
 <table>
   <thead>
     <tr>
@@ -51,27 +54,33 @@
     </tr>
   </thead>
   <tbody>
-  <% @pick_sets.each do |pick_set| %>
-    <tr>
-      <td><%= pick_set.week.name %></td>
-      <td><%= pick_set.record %></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <% pick_set.picks.each do |pick| %>
-      <tr>
+  <% if @pick_sets.empty? %>
+    <tr><td colspan=6>You don't have any picks yet.</td></tr>
+  <% else %>
+    <% @pick_sets.each do |pick_set| %>
+      <tr class="shade">
+        <td><%= pick_set.week.name %></td>
+        <td><%= pick_set.record %></td>
         <td></td>
         <td></td>
-        <% if pick.team.nil? %>
-          <td>No pick</td>
-          <td>n/a</td>
-        <% else %>
-          <td><%= pick.team.nickname %><span>&nbsp;<%= pick.display_opponent %></span></td>
-          <td><%= pick.spread %></td>
-        <% end %>
-        <td class="<%= pick.result_in_words.downcase %>"><%= pick.result_in_words %></td>
+        <td></td>
+        <td></td>
       </tr>
+      <% pick_set.picks.each do |pick| %>
+        <tr>
+          <td></td>
+          <td></td>
+          <% if pick.team.nil? %>
+            <td>No pick</td>
+            <td>n/a</td>
+          <% else %>
+            <td><%= pick.team.nickname %><span>&nbsp;<%= pick.display_opponent %></span></td>
+            <td><%= pick.spread %></td>
+          <% end %>
+          <td class="<%= pick.result_in_words.downcase %>"><%= pick.result_in_words %></td>
+          <td></td>
+        </tr>
+      <% end %>
     <% end %>
   <% end %>
   </tbody>

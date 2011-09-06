@@ -70,10 +70,13 @@ Role.connection.execute("TRUNCATE roles")
 %w{Admin Member PoolAdmin}.each { |r| Role.create(name: r) }
 
 ## Badges
-# Badge.connection.execute("TRUNCATE badges")
-# Bagde.create!(name: "Drunk Driver", desc: "Picking a game in which the Cincinnati Bengals are involved.")
-# Badge.create!(name: "Homer", desc: "Picking your favorite team.")
-# Badge.create!(name: "Toxic", desc: "Picking against your favorite team.")
+Badge.connection.execute("TRUNCATE badges")
+Bagde.create!(name: "Drunk Driver", desc: "Picking a game in which the Cincinnati Bengals are involved.", image: "drunk_driver")
+Badge.create!(name: "Homer", desc: "Picking your favorite team.", image: "homer")
+Badge.create!(name: "Toxic", desc: "Picking against your favorite team.", image: "traitor")
+Badge.create!(name: "Skin of Your Teeth", desc: "Winning by less than 3 point ATS.", image: "skin_of_your_teeth")
+Badge.create!(name: "Tough Luck", desc: "Losing by less than 3 points ATS", image: "tough_luck")
+Badge.create!(name: "Pusher", desc: "Pushing is hard.", image: "pusher")
 
 
 ###############

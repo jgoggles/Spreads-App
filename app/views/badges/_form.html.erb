@@ -11,14 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :desc %><br />
-    <%= f.text_area :desc %>
-  </div>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :image %>
+  <%= f.text_field :image %>
+
+  <%= f.label :desc %>
+  <%= f.text_area :desc %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

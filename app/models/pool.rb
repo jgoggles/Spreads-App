@@ -40,7 +40,7 @@ class Pool < ActiveRecord::Base
   end
 
   def admins
-    pool_users.where("pool_admin = ?", true).collect { |a| a.user.email }.join(", ")
+    pool_users.where("pool_admin = ?", true).collect { |a| a.user.display_name }
   end
 
   def all_picks_in

@@ -1,11 +1,10 @@
-<h1>Listing topics</h1>
+<h3>Listing topics</h3>
 
 <table>
   <tr>
     <th>Title</th>
     <th>Created By</th>
-    <th></th>
-    <th></th>
+    <th>Posted</th>
     <th></th>
   </tr>
 
@@ -13,7 +12,8 @@
   <tr>
     <td><%= topic.title %></td>
     <td><%= topic.user.display_name %></td>
-    <td><%= link_to 'Show', pool_topic_path(@pool, topic) %></td>
+    <td><%= time_ago_in_words(topic.created_at) %> ago</td>
+    <td><%= link_to 'Read/Reply', pool_topic_path(@pool, topic) %></td>
     <% if can? :update, topic %>
       <td><%= link_to 'Edit', edit_pool_topic_path(@pool, topic) %></td>
     <% end %>

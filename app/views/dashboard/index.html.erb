@@ -1,8 +1,8 @@
-<% if current_user %>
-  <% if can? :create, Pool %>
-    <%= link_to 'New Pool', new_pool_path %>
-  <% end %>
-  <ul>
+<% if @pools.empty? %>
+  <p>You haven't joined any pools yet.</p>
+<% else %>
+  <h2>Your Pools</h2>
+  <ul id="dashboard-pools">
     <% @pools. each do |p| %>
       <li><%= link_to p.name, p %></li>
     <% end %>

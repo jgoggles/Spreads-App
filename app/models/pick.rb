@@ -6,8 +6,7 @@ class Pick < ActiveRecord::Base
 
   def generate_result
     unless game_id == 0
-      # if game.has_scores and game.has_started
-      if game.has_scores
+      if game.has_scores and game.has_started
         if is_home?
           determine_winner((game.home.score + spread), game.away.score)
         else
@@ -32,8 +31,7 @@ class Pick < ActiveRecord::Base
   def generate_over_under_result
     unless self.game_id == 0 || self.over_under.nil?
       game = Game.find(self.game_id)
-      # if game.has_scores and game.has_started
-      if game.has_scores
+      if game.has_scores and game.has_started
         over = self.over_under < game.home.score + game.away.score
         even = self.over_under == game.home.score + game.away.score
         if self.is_over? && over || !self.is_over? && !over

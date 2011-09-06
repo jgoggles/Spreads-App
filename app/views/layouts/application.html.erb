@@ -1,39 +1,61 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
   <title>Spreads - <%= @title || controller.controller_name.humanize %></title>
+  <meta name="description" content="Spreads in your face.">
+  <meta name="author" content="Supernatural Feat">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
+  <script type="text/javascript" src="http://use.typekit.com/ora6wnw.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
   <%= yield :head %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div id="wrapper" class="group">
+  <div id="header-container">
     <header id="header" class="group">
-      <h1><%= link_to "Home", root_path %></h1>
-      <nav id="nav" class="group">
-      <ul class="primaryNav group">
-        <% if current_user %>
-          <li><%= link_to "Account", edit_user_registration_path %></li>
-          <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
-        <% else %>
-          <li><%= link_to "Login/Signup", authentications_path %></li>
-        <% end %>
-      </ul>
+      <h1 id="header-home"><%= link_to "Spreads +/-", root_path %></h1>
+      <nav id="primary-nav" class="group">
+        <ul class="primaryNav group">
+          <% if current_user %>
+            <li><%= link_to "Account", edit_user_registration_path %></li>
+            <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
+          <% else %>
+            <li><%= link_to "Login/Signup", authentications_path %></li>
+          <% end %>
+        </ul>
       </nav>
     </header>
-
-    <section id="content" class="group">
-    <body>
-      <article>
-        <% flash.each do |key, msg| %>
-          <%= content_tag :div, msg, :class => [key, "message"], :id => "notice_#{key}" %>
-        <% end %>
-
-        <%= yield %>
-
-      </article>
-    </section>
   </div>
+  <div id="container">
+    <% if (controller.controller_name == "pools" and controller.action_name =~ /show|achievements/ ) or !params[:pool_id].nil? %>
+      <%= render 'pool_nav' %>
+    <% end %>
+
+    <div id="main" class="group" role="main">
+      <% flash.each do |key, msg| %>
+        <%= content_tag :div, msg, :class => [key, "message"], :id => "notice_#{key}" %>
+      <% end %>
+
+      <%= yield %>
+    </div>
+
+    <footer>
+
+    </footer>
+  </div>
+
 </body>
 </html>
+

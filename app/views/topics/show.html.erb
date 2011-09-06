@@ -1,11 +1,11 @@
-<p>
-  <b>Title:</b>
-  <%= @topic.title %>, created by <%= @topic.user.display_name %>
-</p>
-<% if can? :update, @topic %>
-  <%= link_to 'Edit', edit_pool_topic_path(@pool, @topic) %> |
-<% end %>
-<%= link_to 'Back', pool_topics_path %>
+<h2><%= @topic.title %></h2>
+<h3>posted by <%= @topic.user.display_name %></h3>
+<div class="topic-tools">
+  <% if can? :update, @topic %>
+    <%= link_to 'Edit', edit_pool_topic_path(@pool, @topic) %> |
+  <% end %>
+  <%= link_to 'Back', pool_topics_path %>
+</div>
 
 <%= form_for @message do |f| %>
   <% if @message.errors.any? %>
@@ -21,14 +21,18 @@
 
   <%= f.text_area :body, :rows => 3 %>
   <%= f.hidden_field :topic_id, :value => @topic.id %>
-  <%= f.submit "Post", :disable_with => 'loading...' %>
+  <%= f.submit "Reply", :disable_with => 'loading...' %>
 <% end %>
 
 
 <% @messages.each do |message| %>
-  <p><%= message.user.display_name %> says:
-  <%= markdown message.body %>
-  <p><%= time_ago_in_words(message.created_at) %> ago </p>
+  <div class="reply-container <%= cycle('shade', ' ') %>">
+    <p class="author"><%= message.user.display_name %> says:</p>
+    <p class="reply-date"><%= time_ago_in_words(message.created_at) %> ago </p>
+    <div class="user-reply">
+      <%= markdown message.body %>
+    </div>
+  </div>
 <% end %>
 
 

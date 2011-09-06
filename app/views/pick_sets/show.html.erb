@@ -1,12 +1,5 @@
-<p>
-  <b>Pool:</b>
-  <%= @pick_set.pool.name %>
-</p>
+<h3>Week <%= @pick_set.week.name %> Picks for <%= @pick_set.pool.name %></h3>
 
-<p>
-  <b>Week:</b>
-  <%= @pick_set.week.name %>
-</p>
 <table>
   <thead>
     <th>Record</th>
@@ -15,9 +8,12 @@
     <th>Result</th>
   </thead>
   <tbody>
-    <tr>
-    <tr>
+    <tr class="shade">
       <td><%= @pick_set.record %></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
       <% @pick_set.picks.each do |pick| %>
         <tr>
           <td></td>
@@ -31,7 +27,6 @@
           <td class="<%= pick.result_in_words.downcase %>"><%= pick.result_in_words %></td>
         </tr>
       <% end %>
-    </tr>
   </tbody>
 </table>
 

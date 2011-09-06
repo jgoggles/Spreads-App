@@ -1,0 +1,18 @@
+<h3>Your Achievements for <%= @pool.name %></h3>
+
+<% if @badges.empty? %>
+  <p>You haven't earned any badges yet because you suck.</p>
+<% else %>
+  <% @badges.select("DISTINCT(badge_id)").each do |b| %>
+    <div class="badge-container">
+      <h3 class="badge-name">
+        <%= b.badge.name %>
+        <span class="badge-count"><%= @badges.where("badge_id = ?", b.badge_id).size %>x</span>
+      </h3>
+      <%= image_tag "badges/#{b.badge.image}_128.png" %>
+      <p class="badge-desc">
+        <%= b.badge.desc %>
+      </p>
+    </div>
+  <% end %>
+<% end %>

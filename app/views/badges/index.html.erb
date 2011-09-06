@@ -4,7 +4,7 @@
   <tr>
     <th>Name</th>
     <th>Desc</th>
-    <th></th>
+    <th>Image</th>
     <th></th>
     <th></th>
   </tr>
@@ -13,6 +13,7 @@
   <tr>
     <td><%= badge.name %></td>
     <td><%= badge.desc %></td>
+    <td><%= badge.image %></td>
     <td><%= link_to 'Show', badge %></td>
     <td><%= link_to 'Edit', edit_badge_path(badge) %></td>
     <td><%= link_to 'Destroy', badge, confirm: 'Are you sure?', method: :delete %></td>

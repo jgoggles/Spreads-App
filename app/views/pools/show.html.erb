@@ -1,107 +1,116 @@
 <% if can? :read, @pool %>
-  <%= render "pool_nav", locals: { pool: @pool } %>
-  <% if current_user.pick_set_for_this_week(@pool) %>
-    <h2>Your picks for this week</h2>
+  <section class="left">
+    <div class="sub-container">
+      <h3>Your picks for this week</h3>
 
-    <% if current_user.pick_set_for_this_week(@pool).picks.empty? %>
-      <p>You haven't made any picks yet this week.</p>
-    <% else %>
-      <ul>
-      <% current_user.pick_set_for_this_week(@pool).picks.each do |pick| %>
-        <% unless pick.is_non_pick? %>
-          <li>
-            <span><%= pick.team.nickname %></span>
-            <span><%= pick.spread %></span>
-            <span><%= pick.display_opponent %></span>
-          </li>
+      <% if current_user.pick_set_for_this_week(@pool).nil? or current_user.pick_set_for_this_week(@pool).picks.empty? %>
+        <p>You haven't made any picks yet this week.</p>
+      <% else %>
+        <ul>
+        <% current_user.pick_set_for_this_week(@pool).picks.each do |pick| %>
+          <% unless pick.is_non_pick? %>
+            <li>
+              <span><%= pick.team.nickname %></span>
+              <span><%= pick.spread %></span>
+              <span><%= pick.display_opponent %></span>
+            </li>
+          <% end %>
+        <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+    <div class="sub-container">
+      <h3>Pool Information</h3>
+      <p>
+      <b>Pool type:</b>
+      <%= @pool.pool_type.name %>
+      </p>
+
+      <p>
+      <b>Name:</b>
+      <%= @pool.name %>
+      </p>
+
+      <p>
+      <b>Pool admin(s):</b><br />
+      <% @pool.admins.each do |a| %>
+        <%= a %><br />
+      <% end %>
+      </p>
+
+      <p>
+      <b>Total players:</b>
+      <%= @pool.total_players %>
+      </p>
+      <p>
+
+      <b>Min picks:</b>
+      <%= @pool.min_picks %>
+      </p>
+
+      <p>
+      <b>Max picks:</b>
+      <%= @pool.max_picks %>
+      </p>
+
+      <% unless @pool.free? %>
+        <p>
+        <b>Cost:</b>
+        <%= @pool.cost %>
+        </p>
+
+        <p>
+        <b>First place payout:</b>
+        <%= @pool.first_place_payout %>
+        </p>
+
+        <p>
+        <b>Second place payout:</b>
+        <%= @pool.second_place_payout %>
+        </p>
+
+        <p>
+        <b>Third place payout:</b>
+        <%= @pool.third_place_payout %>
+        </p>
+      <% end %>
+
+      <% if can? :update, @pool %>
+        <%= link_to 'Edit', edit_pool_path(@pool) %>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="left">
+    <div class="sub-container">
+      <h3>Your Achievements</h3>
+      <% if @badges.empty? %>
+        <p>You haven't earned any badges yet because you suck.</p>
+      <% else %>
+        <% @badges.each do |badge| %>
+            <%= link_to (image_tag "badges/#{badge.badge.image}_64.png"),achievements_pool_path %>
         <% end %>
       <% end %>
-      </ul>
-    <% end %>
-  <% end %>
+    </div>
 
-  <h2>Your badges</h2>
-  <% if @badges.empty? %>
-    <p>You haven't earned any badges yet because you suck.</p>
-  <% else %>
-    <ul>
-      <% @badges.each do |badge| %>
-        <li>
-          <%= badge.badge.name %>
-        </li>
+    <div class="sub-container">
+      <h3>Latest Message Board Activity</h3>
+      <% if @messages.empty? %>
+        <p>No messages have been posted yet.</p>
+      <% else %>
+        <ul>
+          <% @messages.each do |message| %>
+            <li>
+              <%= link_to message.title, pool_topic_path(@pool, message) %>
+              from <%= message.user.display_name %>
+            </li>
+          <% end %>
+        </ul>
       <% end %>
-    </ul>
-  <% end %>
+    </div>
+  </section>
 
-  <p>
-  <b>Pool type:</b>
-  <%= @pool.pool_type.name %>
-  </p>
-
-  <p>
-  <b>Name:</b>
-  <%= @pool.name %>
-  </p>
-
-  <p>
-  <b>Pool admin(s):</b>
-  <%= @pool.admins  %>
-  </p>
-
-  <p>
-  <b>Total players:</b>
-  <%= @pool.total_players %>
-  </p>
-
-  <p>
-
-  <b>Min picks:</b>
-  <%= @pool.min_picks %>
-  </p>
-
-  <p>
-  <b>Max picks:</b>
-  <%= @pool.max_picks %>
-  </p>
-  <b>Min players:</b>
-  <%= @pool.min_players %>
-  </p>
-
-  <p>
-  <b>Max players:</b>
-  <%= @pool.max_players %>
-  </p>
-
-  <p>
-  <b>Free:</b>
-  <%= @pool.free %>
-  </p>
-
-  <p>
-  <b>Cost:</b>
-  <%= @pool.cost %>
-  </p>
-
-  <p>
-  <b>First place payout:</b>
-  <%= @pool.first_place_payout %>
-  </p>
-
-  <p>
-  <b>Second place payout:</b>
-  <%= @pool.second_place_payout %>
-  </p>
-
-  <p>
-  <b>Third place payout:</b>
-  <%= @pool.third_place_payout %>
-  </p>
-
-
-  <% if can? :update, @pool %>
-    <%= link_to 'Edit', edit_pool_path(@pool) %> |
-    <%= link_to 'Back', pools_path %>
-  <% end %>
 <% else %>
   <%= form_for @pool_user do |f| %>
     <% if @pool_user.errors.any? %>
@@ -120,6 +129,6 @@
       <%= f.password_field :password %>
     <% end %>
     <%= f.hidden_field :pool_id, :value => @pool.hashed_id %>
-    <%= f.submit "Join This Pool", :disable_with => 'loading...' %>
+    <div><%= f.submit "Join This Pool", :disable_with => 'loading...' %></div>
   <% end %>
 <% end %>
