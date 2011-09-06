@@ -2,6 +2,7 @@
   <table>
     <tr>
       <th>Player</th>
+      <th>Favorite Team</th>
       <% unless @pool.free? %>
         <th>Paid</th>
       <% end %>
@@ -11,6 +12,11 @@
       <%= fields_for "pool_user[]", pu do |pu_fields| %>
     <tr>
       <td><%= pu.user.email %></td>
+      <% if pu.user.favorite_nfl_team_id.nil? %>
+        <td>---</td>
+      <% else %>
+        <td><%= Team.find(pu.user.favorite_nfl_team_id).nickname %></td>
+      <% end %>
       <% unless @pool.free? %>
         <td><%= pu_fields.check_box :paid %></td>
       <% end %>
