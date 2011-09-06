@@ -1,10 +1,12 @@
 <h3>Listing topics</h3>
 
-<table>
+<table class="topics-container">
   <tr>
     <th>Title</th>
     <th>Created By</th>
     <th>Posted</th>
+    <th>Reply Count</th>
+    <th>Last Reply</th>
     <th></th>
   </tr>
 
@@ -13,6 +15,12 @@
     <td><%= topic.title %></td>
     <td><%= topic.user.display_name %></td>
     <td><%= time_ago_in_words(topic.created_at) %> ago</td>
+    <td><%= topic.messages.size %></td>
+    <% if topic.messages.empty? %>
+      <td>---</td>
+    <% else %>
+      <td><%= topic.messages.last.user.display_name %>&nbsp;<%= time_ago_in_words(topic.messages.last.created_at) %> ago</td>
+    <% end %>
     <td><%= link_to 'Read/Reply', pool_topic_path(@pool, topic) %></td>
     <% if can? :update, topic %>
       <td><%= link_to 'Edit', edit_pool_topic_path(@pool, topic) %></td>
