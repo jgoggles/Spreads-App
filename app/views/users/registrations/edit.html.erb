@@ -17,13 +17,13 @@
   <%= f.select :favorite_nfl_team_id, Team.order("nickname").collect { |t| [t.nickname, t.id] }, :include_blank => true %> 
 
   <% if current_user.authentications.empty? %>
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
+    <label>Password <i>(leave blank if you don't want to change it)</i></label>
     <%= f.password_field :password %>
 
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation %>
 
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
+    <label>Current password<i>(we need your current password to confirm your changes)</i></label>
     <%= f.password_field :current_password %>
   <% end %>
 
