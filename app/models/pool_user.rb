@@ -7,6 +7,7 @@ class PoolUser < ActiveRecord::Base
   validate :check_password
 
   after_save :process_admins
+  after_create :mark_as_paid
 
   scope :paid, :conditions => {:paid => true}
 
@@ -17,6 +18,13 @@ class PoolUser < ActiveRecord::Base
   end
 
   private
+  def mark_as_paid
+    if !pool.free?
+      self.paid = true
+      self.save
+    end
+  end
+
   def process_admins
     role = Role.find_by_name("PoolAdmin")
     unless user.roles.include?(role) && user.pool_users.where("pool_admin = ?", true).size >= 1
