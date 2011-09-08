@@ -1,5 +1,5 @@
 class PoolsController < ApplicationController
-  load_and_authorize_resource :except => :show
+  load_and_authorize_resource :except => [:show, :achievements]
 
   before_filter :authenticate_user!
 
