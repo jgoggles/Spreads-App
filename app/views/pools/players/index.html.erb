@@ -11,7 +11,7 @@
     <% @pool.pool_users.each do |pu| %>
       <%= fields_for "pool_user[]", pu do |pu_fields| %>
     <tr>
-      <td><%= pu.user.email %></td>
+      <td><%= pu.user.display_name %></td>
       <% if pu.user.favorite_nfl_team_id.nil? %>
         <td>---</td>
       <% else %>
