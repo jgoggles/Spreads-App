@@ -110,7 +110,7 @@ a:hover { color: $grey-blue; }
   @include box-shadow(0px, 3px, 5px, #666);
   margin-bottom: 14px;
   header { margin: 0 auto; padding: 3px 0; width: $width;
-    #header-home a { padding: 2px 4px; text-transform: uppercase; }
+    #header-home a { font-weight: 400; letter-spacing: 5px; padding: 2px 4px; text-transform: uppercase; }
     #header-home a:hover { background: $dark-blue; }
   }
   #primary-nav {
