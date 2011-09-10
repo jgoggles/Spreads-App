@@ -49,7 +49,7 @@ class Game < ActiveRecord::Base
       if user and pool
         user_picks = user.pick_sets.where("week_id = ?", week.id).where("pool_id = ?", pool.id).first.picks
         user_picks.each do |p|
-          unless p.game_id == 0
+          unless p.game_id == 0 or p.game.has_started
             game = games.find { |g| g[:id] == p.game_id }
             game.spread = :picked if p.spread
             game.over_under = :picked if p.over_under
