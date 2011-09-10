@@ -1,7 +1,7 @@
 class BadgeObserver < ActiveRecord::Observer
-  observe :pick
+  # observe :pick
 
-  def after_create(pick)
-    Resque.enqueue(Badging, pick.id)
-  end
+  # def after_create(pick)
+  #   Resque.enqueue(Badging, pick.id)
+  # end
 end

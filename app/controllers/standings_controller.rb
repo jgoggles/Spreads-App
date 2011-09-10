@@ -7,7 +7,7 @@ class StandingsController < ApplicationController
 
   def index
     unless Week.current.name == "1"
-      @standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}"))
+      @standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}_#{Rails.env}"))
     end
     @pick_sets = current_user.pick_sets.where('pool_id = ?', @pool.id)
   end

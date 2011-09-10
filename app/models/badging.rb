@@ -107,4 +107,7 @@ class Badging
       end
     end
   end
+
+  def standing_check_for_undefeated(standing)
+  end
 end
