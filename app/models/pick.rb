@@ -87,4 +87,25 @@ class Pick < ActiveRecord::Base
       ""
     end
   end
+
+  def favorite?
+    spread < 1
+  end
+
+  def underdog?
+    spread > 1
+  end
+
+  def loss?
+   result == -1
+  end
+
+  def win?
+    result == 1
+  end
+
+  def push?
+    result == 0
+  end
+
 end

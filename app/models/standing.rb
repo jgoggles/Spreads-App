@@ -3,6 +3,7 @@ class Standing < ActiveRecord::Base
   belongs_to :user
   belongs_to :pool
   belongs_to :week
+  belongs_to :pick_set
 
   def self.generate(pick_sets)
     pick_sets.each do |ps|
@@ -31,9 +32,9 @@ class Standing < ActiveRecord::Base
       ou_points = ou_wins - ou_losses
       standing = Standing.where("user_id = ?", ps.user_id).where("week_id = ?", ps.week_id).where("pool_id = ?", ps.pool_id)
       if !standing.exists?
-        Standing.create!(:user_id => ps.user_id, :week_id => ps.week_id, :pool_id => ps.pool_id, :wins => wins, :losses => losses, :pushes => pushes, :points => points, :over_under_points => ou_points)
+        Standing.create!(:user_id => ps.user_id, :week_id => ps.week_id, :pool_id => ps.pool_id, :pick_set_id => ps.id, :wins => wins, :losses => losses, :pushes => pushes, :points => points, :over_under_points => ou_points)
       else
-        standing.first.update_attributes(:user_id => ps.user_id, :week_id => ps.week_id, :wins => wins, :losses => losses, :pushes => pushes, :points => points, :over_under_points => ou_points)
+        standing.first.update_attributes(:wins => wins, :losses => losses, :pushes => pushes, :points => points, :over_under_points => ou_points)
         puts "standing exists"
       end
     end

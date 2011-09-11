@@ -4,6 +4,7 @@ class PickSet < ActiveRecord::Base
   belongs_to :pool
   belongs_to :user
   belongs_to :week
+  has_one :standing
   has_many :picks, :dependent => :destroy
   has_many :earned_badges
 
@@ -26,6 +27,13 @@ class PickSet < ActiveRecord::Base
     else
       picks.size >= max
     end
+  end
+
+  def all_results_in
+    picks.each do |p|
+      return false if p.result.nil?
+    end
+    return true
   end
 
   def record

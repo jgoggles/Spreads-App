@@ -3,6 +3,7 @@ class Pool < ActiveRecord::Base
 
   belongs_to :pool_type
   has_many :pick_sets
+  has_many :picks, :through => :pick_sets
   has_many :pool_users, :dependent => :destroy
   has_many :users, :through => :pool_users
   has_many :standings

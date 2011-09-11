@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110906032447) do
+ActiveRecord::Schema.define(:version => 20110910225127) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -185,6 +185,7 @@ ActiveRecord::Schema.define(:version => 20110906032447) do
     t.integer  "over_under_points"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "pick_set_id"
   end
 
   create_table "teams", :force => true do |t|
