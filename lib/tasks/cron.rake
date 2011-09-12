@@ -5,11 +5,15 @@ task :cron => :environment do
   puts "done."
 
   if Time.now.monday? and Time.now.hour == 3
+    puts "Parsing scores.."
+    Scraper.parse_nfl_scores
     puts "Generating standings and badges..."
     StandingGenerator.generate_standings
   end
 
   if Time.now.tuesday? and Time.now.hour == 3
+    puts "Parsing scores.."
+    Scraper.parse_nfl_scores(Week.previous)
     puts "Generating standings and badges..."
     StandingGenerator.generate_standings(process_non_picks = true)
   end
