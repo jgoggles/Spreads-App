@@ -38,7 +38,7 @@
 
 
       <% if can? :update, @pick_set %>
-        <% if @pick_set.has_max_picks %>
+        <% unless @pick_set.has_max_picks %>
           <%= link_to 'Add picks for this week', edit_pool_pick_set_path(@pool, @pick_set) %>
         <% end %>
       <% end %>
