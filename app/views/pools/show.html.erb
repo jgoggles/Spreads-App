@@ -1,114 +1,140 @@
 <% if can? :read, @pool %>
   <section class="left">
-    <div class="sub-container">
-      <h3>Your picks for this week</h3>
+  <div class="sub-container pick_set">
+    <% if @pick_set.nil? or @pick_set.picks.empty? %>
+      <p>You haven't made any picks yet this week.</p>
+    <% else %>
+      <h3>Week <%= @pick_set.week.name %> Picks for <%= @pick_set.pool.name %></h3>
 
-      <% if current_user.pick_set_for_this_week(@pool).nil? or current_user.pick_set_for_this_week(@pool).picks.empty? %>
-        <p>You haven't made any picks yet this week.</p>
-      <% else %>
-        <ul>
-        <% current_user.pick_set_for_this_week(@pool).picks.each do |pick| %>
-          <% unless pick.is_non_pick? %>
-            <li>
-              <span><%= pick.team.nickname %></span>
-              <span><%= pick.spread %></span>
-              <span><%= pick.display_opponent %></span>
-            </li>
+      <table>
+        <thead>
+          <th>Record</th>
+          <th>Team</th>
+          <th>Spread</th>
+          <th>Result</th>
+        </thead>
+        <tbody>
+          <tr class="shade">
+            <td><%= @pick_set.record %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <% @pick_set.picks.each do |pick| %>
+            <tr>
+              <td></td>
+              <% if pick.team.nil? %>
+                <td>No pick</td>
+                <td>n/a</td>
+              <% else %>
+                <td><%= pick.team.nickname %><span>&nbsp;<%= pick.display_opponent %></span></td>
+                <td><%= pick.spread %></td>
+              <% end %>
+              <td class="<%= pick.result_in_words.downcase %>"><%= pick.result_in_words %></td>
+            </tr>
           <% end %>
+        </tbody>
+      </table>
+
+
+      <% if can? :update, @pick_set %>
+        <% if @pick_set.has_max_picks %>
+          <%= link_to 'Add picks for this week', edit_pool_pick_set_path(@pool, @pick_set) %>
         <% end %>
-        </ul>
       <% end %>
-    </div>
+    <% end %>
 
-    <div class="sub-container">
-      <h3>Pool Information</h3>
+  </div>
+
+  <div class="sub-container">
+    <h3>Pool Information</h3>
+    <p>
+    <b>Pool type:</b>
+    <%= @pool.pool_type.name %>
+    </p>
+
+    <p>
+    <b>Name:</b>
+    <%= @pool.name %>
+    </p>
+
+    <p>
+    <b>Pool admin(s):</b><br />
+    <% @pool.admins.each do |a| %>
+      <%= a %><br />
+    <% end %>
+    </p>
+
+    <p>
+    <b>Total players:</b>
+    <%= @pool.total_players %>
+    </p>
+    <p>
+
+    <b>Min picks:</b>
+    <%= @pool.min_picks %>
+    </p>
+
+    <p>
+    <b>Max picks:</b>
+    <%= @pool.max_picks %>
+    </p>
+
+    <% unless @pool.free? %>
       <p>
-      <b>Pool type:</b>
-      <%= @pool.pool_type.name %>
+      <b>Cost:</b>
+      <%= @pool.cost %>
       </p>
 
       <p>
-      <b>Name:</b>
-      <%= @pool.name %>
+      <b>First place payout:</b>
+      <%= @pool.first_place_payout %>
       </p>
 
       <p>
-      <b>Pool admin(s):</b><br />
-      <% @pool.admins.each do |a| %>
-        <%= a %><br />
-      <% end %>
+      <b>Second place payout:</b>
+      <%= @pool.second_place_payout %>
       </p>
 
       <p>
-      <b>Total players:</b>
-      <%= @pool.total_players %>
+      <b>Third place payout:</b>
+      <%= @pool.third_place_payout %>
       </p>
-      <p>
+    <% end %>
 
-      <b>Min picks:</b>
-      <%= @pool.min_picks %>
-      </p>
-
-      <p>
-      <b>Max picks:</b>
-      <%= @pool.max_picks %>
-      </p>
-
-      <% unless @pool.free? %>
-        <p>
-        <b>Cost:</b>
-        <%= @pool.cost %>
-        </p>
-
-        <p>
-        <b>First place payout:</b>
-        <%= @pool.first_place_payout %>
-        </p>
-
-        <p>
-        <b>Second place payout:</b>
-        <%= @pool.second_place_payout %>
-        </p>
-
-        <p>
-        <b>Third place payout:</b>
-        <%= @pool.third_place_payout %>
-        </p>
-      <% end %>
-
-      <% if can? :update, @pool %>
-        <%= link_to 'Edit', edit_pool_path(@pool) %>
-      <% end %>
-    </div>
+    <% if can? :update, @pool %>
+      <%= link_to 'Edit', edit_pool_path(@pool) %>
+    <% end %>
+  </div>
   </section>
 
   <section class="left">
-    <div class="sub-container">
-      <h3>Your Achievements</h3>
-      <% if @badges.empty? %>
-        <p>You haven't earned any badges yet because you suck.</p>
-      <% else %>
-        <% @badges.each do |badge| %>
-            <%= link_to (image_tag "badges/#{badge.badge.image}_64.png"),achievements_pool_path %>
-        <% end %>
+  <div class="sub-container">
+    <h3>Your Achievements</h3>
+    <% if @badges.empty? %>
+      <p>You haven't earned any badges yet because you suck.</p>
+    <% else %>
+      <% @badges.each do |badge| %>
+        <%= link_to (image_tag "badges/#{badge.badge.image}_64.png"),achievements_pool_path %>
       <% end %>
-    </div>
+    <% end %>
+  </div>
 
-    <div class="sub-container">
-      <h3>Latest Message Board Activity</h3>
-      <% if @messages.empty? %>
-        <p>No messages have been posted yet.</p>
-      <% else %>
-        <ul>
-          <% @messages.each do |message| %>
-            <li>
-              <%= link_to message.title, pool_topic_path(@pool, message) %>
-              from <%= message.user.display_name %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
+  <div class="sub-container">
+    <h3>Latest Message Board Activity</h3>
+    <% if @messages.empty? %>
+      <p>No messages have been posted yet.</p>
+    <% else %>
+      <ul>
+        <% @messages.each do |message| %>
+          <li>
+          <%= link_to message.title, pool_topic_path(@pool, message) %>
+          from <%= message.user.display_name %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
   </section>
 
 <% else %>
@@ -117,9 +143,9 @@
       <div id="error_explanation">
 
         <ul>
-        <% @pool_user.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
+          <% @pool_user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
         </ul>
       </div>
     <% end %>

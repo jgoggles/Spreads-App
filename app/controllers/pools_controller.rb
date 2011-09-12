@@ -20,6 +20,7 @@ class PoolsController < ApplicationController
     @pool = Pool.find(params[:id])
     @badges = current_user.earned_badges.where("pool_id = ?", @pool.id).select("DISTINCT(badge_id)")
     @messages = @pool.topics.order("created_at DESC")
+    @pick_set = current_user.pick_set_for_this_week(@pool)
     if !current_user.pools.include?(@pool)
       @pool_user = PoolUser.new
     end
