@@ -13,10 +13,10 @@ class StandingsController < ApplicationController
   end
 
   def show
-    if params[:week_id].to_i > Week.current.id or !@pool.all_picks_in
+    if params[:week_id].to_i > Week.current.name.to_i or !@pool.all_picks_in
       raise ActionController::RoutingError.new('Not Found')
     else
-      @week = Week.find(params[:week_id])
+      @week = Week.find_by_name(params[:week_id])
       @pick_sets = @pool.pick_sets.where("week_id = ?", @week.id)
     end
   end

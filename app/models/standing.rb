@@ -67,7 +67,7 @@ class Standing < ActiveRecord::Base
       record['over_under_points'] = over_under_points
 
       if Week.current.id > 1
-        last_week = u.standings.where("week_id = #{Week.previous.id}")
+        last_week = u.standings.where("week_id = #{Week.previous.id}").where("pool_id = ?", pool.id)
         if !last_week.empty?
           record['last_week'] = "#{last_week[0].wins}-#{last_week[0].losses}-#{last_week[0].pushes}"
         else
