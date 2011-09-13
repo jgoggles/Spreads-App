@@ -7,13 +7,13 @@ class StandingsController < ApplicationController
 
   def index
     unless Week.current.name == "1"
-      @standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}_#{Rails.env}"))
+      @standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}_#{Rails.env}")).sort_by {|i| -i['points']}
     end
     @pick_sets = current_user.pick_sets.where('pool_id = ?', @pool.id)
   end
 
   def show
-    if params[:week_id].to_i > Week.current.name.to_i or !@pool.all_picks_in
+    if params[:week_id].to_i >= Week.current.name.to_i
       raise ActionController::RoutingError.new('Not Found')
     else
       @week = Week.find_by_name(params[:week_id])
