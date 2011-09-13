@@ -1,10 +1,10 @@
 <% if can? :read, @pool %>
   <section class="left">
   <div class="sub-container pick_set">
+    <h3>Week <%= Week.current.name %> Picks for <%= @pool.name %></h3>
     <% if @pick_set.nil? or @pick_set.picks.empty? %>
       <p>You haven't made any picks yet this week.</p>
     <% else %>
-      <h3>Week <%= @pick_set.week.name %> Picks for <%= @pick_set.pool.name %></h3>
 
       <table>
         <thead>
