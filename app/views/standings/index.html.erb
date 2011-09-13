@@ -3,8 +3,8 @@
     <ul id="week-list" class="group">
       <li>Choose week:</li>
       <% Week.all.each do |w| %>
-        <% if w.id <= @week_list.id %>
-          <li><%= link_to w.name, pool_standings_for_week_path(@pool, w.id) %></li>
+        <% if w.name <= @week_list.name %>
+          <li><%= link_to w.name, pool_standings_for_week_path(@pool, w.name) %></li>
         <% end %>
       <% end %>
     </ul>
