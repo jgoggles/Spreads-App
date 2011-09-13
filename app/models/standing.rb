@@ -40,16 +40,16 @@ class Standing < ActiveRecord::Base
     end
   end
 
-  def self.for_season(users, pool=nil, start_week_id=1, end_week_id=17)
+  def self.for_season(users, pool=nil)
     season_standings = []
     users.each do |u|
       record = {}
       record['player'] = u.to_json
       wins, losses, pushes, points, over_under_points = 0, 0, 0, 0, 0
       if pool
-        standings = u.standings.where("week_id >= #{start_week_id}").where("week_id <= #{end_week_id}").where("pool_id = ?", pool.id)
+        standings = u.standings.where("pool_id = ?", pool.id)
       else
-        standings = u.standings.where("week_id >= #{start_week_id}").where("week_id <= #{end_week_id}")
+        standings = u.standings
       end
       standings.each do |s|
         wins += s.wins
