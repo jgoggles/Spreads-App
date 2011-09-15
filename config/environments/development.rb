@@ -9,6 +9,8 @@ Spreads::Application.configure do
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
@@ -27,5 +29,14 @@ Spreads::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end
+
+ActionMailer::Base.smtp_settings = {
+  :address        => "smtp.sendgrid.net",
+  :port           => "25",
+  :authentication => :plain,
+  :user_name      => "app856603@heroku.com",
+  :password       => "vnwqz1s4",
+  :domain         => "heroku.com"
+}
 
 ENV["REDISTOGO_URL"] = 'redis://redistogo:58a4c99e7b26cc1b68388fb11d3be646@icefish.redistogo.com:9417/'
