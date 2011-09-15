@@ -64,7 +64,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td><%= pick_set.standing.points  unless pick_set.standing.nil? %></td>
       </tr>
       <% pick_set.picks.each do |pick| %>
         <tr>
