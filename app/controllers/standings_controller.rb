@@ -9,7 +9,7 @@ class StandingsController < ApplicationController
     unless Week.current.name == "1"
       @standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}_#{Rails.env}")).sort_by {|i| -i['points']}
     end
-    @pick_sets = current_user.pick_sets.where('pool_id = ?', @pool.id)
+    @pick_sets = current_user.pick_sets.where('pool_id = ?', @pool.id).order("created_at ASC")
   end
 
   def show
