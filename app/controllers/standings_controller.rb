@@ -17,7 +17,7 @@ class StandingsController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     else
       @week = Week.find_by_name(params[:week_id])
-      @pick_sets = @pool.pick_sets.where("week_id = ?", @week.id)
+      @pick_sets = @pool.pick_sets.where("week_id = ?", @week.id).sort_by { |ps| ps.user.display_name }
     end
   end
 
