@@ -83,9 +83,9 @@ class PickSet < ActiveRecord::Base
       end
     end
     freq = game_ids.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    max = freq.sort_by { |k,v| v }
+    max = freq.sort_by { |k,v| v }; max.reverse!
     most_action = []
-    max[0..2].each do |m|
+    max.each do |m|
       game = {}
       game[:game] = Game.find(m[0])
       game[:freq] = m[1]
@@ -122,9 +122,9 @@ class PickSet < ActiveRecord::Base
       end
     end
     freq = team_ids.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    max = freq.sort_by { |k,v| v }
+    max = freq.sort_by { |k,v| v }; max.reverse!
     most_picked = []
-    max[0..2].each do |m|
+    max.each do |m|
       team = {}
       team[:team] = Team.find(m[0])
       team[:freq] = m[1]
