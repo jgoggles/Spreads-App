@@ -18,6 +18,10 @@ class StandingsController < ApplicationController
     else
       @week = Week.find_by_name(params[:week_id])
       @pick_sets = @pool.pick_sets.where("week_id = ?", @week.id).sort_by { |ps| ps.user.display_name }
+      @home_vs_away = PickSet.home_vs_away(@pick_sets)
+      @favorite_vs_underdog = PickSet.favorite_vs_underdog(@pick_sets)
+      @most_action = PickSet.most_action(@pick_sets)
+      @most_picked = PickSet.most_picked(@pick_sets)
     end
   end
 

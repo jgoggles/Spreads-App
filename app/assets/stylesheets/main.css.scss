@@ -97,7 +97,8 @@ body { font-family: helvetica,sans-serif; font-size: 14px; margin-bottom: 56px; 
 h1 { font-family: futura-pt, sans-serif; font-size: 38px; }
 h2 { font-family: futura-pt, sans-serif; font-size: 24px; }
 h3 { font-family: futura-pt, sans-serif; font-size: 16px; margin-bottom: 10px; text-transform: uppercase; }
-ul, li { list-style: none; margin: 0; padding: 0; }
+ul { list-style: none; margin: 0; padding: 0; }
+li { margin: 0; padding: 0; }
 a, a:visited, a:active { text-decoration: none; color: $dark-blue;
   -moz-transition: all $trans-speed ease-out;
   -o-transition: all $trans-speed ease-out;
@@ -181,6 +182,12 @@ a:hover { color: $grey-blue; }
   margin-bottom: 12px;
   padding: 4px;
   li { float: left; margin-right: 8px; }
+}
+
+#stats {
+  margin-bottom: 12px;
+  table { float: left; font-size: 12px; margin-right: 24px; }
+  th, td  { padding: 6px 20px; }
 }
 
 table {font-size: 14px; margin-bottom:1.4em;}

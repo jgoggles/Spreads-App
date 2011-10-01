@@ -1,5 +1,58 @@
 <%= render 'week_list' %>
 
+<div id="stats" class="group">
+  <h3>Stats for Week <%= @week.name %></h3>
+  <table>
+    <thead>
+      <th></th>
+      <th>Picks</th>
+    </thead>
+    <tr>
+      <td>Home</td>
+      <td><%= @home_vs_away[:home] %></td>
+    </tr>
+    <tr>
+      <td>Away</td>
+      <td><%= @home_vs_away[:away] %></td>
+    </tr>
+    <tr>
+      <td>Favorites</td>
+      <td><%= @favorite_vs_underdog[:favorite] %></td>
+    </tr>
+    <tr>
+      <td>Underdogs</td>
+      <td><%= @favorite_vs_underdog[:underdog] %></td>
+    </tr>
+  </table>
+
+  <table>
+    <thead>
+      <th>Most Action</th>
+      <th>Picks</th>
+    </thead>
+    <% @most_action[0..3].each do |ma| %>
+      <tr>
+        <td><%= ma[:game].away.team.nickname %> at <%= ma[:game].home.team.nickname %></td>
+        <td><%= ma[:freq] %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <table>
+    <thead>
+      <th>Most Picked</th>
+      <th>Picks</th>
+    </thead>
+    <% @most_picked[0..3].each do |mp| %>
+      <tr>
+        <td><%= mp[:team].nickname %></td>
+        <td><%= mp[:freq] %></td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>
+
 <h3>Results for Week <%= @week.name %></h3>
 
 <table>
