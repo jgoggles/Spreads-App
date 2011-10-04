@@ -94,26 +94,6 @@ class PickSet < ActiveRecord::Base
     return most_action
   end
 
-  # def self.most_action(pick_sets)
-  #   game_ids = []
-  #   pick_sets.each do |ps|
-  #     ps.picks.each do |p|
-  #       game_ids.push(p.game_id) unless p.is_non_pick?
-  #     end
-  #   end
-  #   freq = game_ids.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-  #   max = freq.values.max
-  #   max_games = freq.select { |k, f| f == max }
-  #   most_action = []
-  #   max_games.each do |mg|
-  #     game = {}
-  #     game[:game] = Game.find(mg[0])
-  #     game[:freq] = mg[1]
-  #     most_action.push(game)
-  #   end
-  #   return most_action
-  # end
-
   def self.most_picked(pick_sets)
     team_ids = []
     pick_sets.each do |ps|
@@ -133,23 +113,4 @@ class PickSet < ActiveRecord::Base
     return most_picked
   end
 
-  # def self.most_picked(pick_sets)
-  #   team_ids = []
-  #   pick_sets.each do |ps|
-  #     ps.picks.each do |p|
-  #       team_ids.push(p.team_id) unless p.is_non_pick?
-  #     end
-  #   end
-  #   freq = team_ids.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-  #   max = freq.values.max
-  #   max_teams = freq.select { |k, f| f == max }
-  #   most_picked = []
-  #   max_teams.each do |mg|
-  #     team = {}
-  #     team[:team] = Team.find(mg[0])
-  #     team[:freq] = mg[1]
-  #     most_picked.push(team)
-  #   end
-  #   return most_picked
-  # end
 end
