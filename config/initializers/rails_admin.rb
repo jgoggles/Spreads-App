@@ -720,7 +720,8 @@ RailsAdmin.config do |config|
   #  - has_many/has_one associations in list section (hidden by default for performance reasons)
   # Fields may also be marked as read_only (and thus not editable) if they are not mass-assignable by current_user
 
-  # config.model User do
+  config.model User do
+    object_label_method :email     # Name of the method called for pretty printing an *instance* of ModelName
   #   # Found associations: 
   #   field :roles, :has_and_belongs_to_many_association
   #   field :authentications, :has_many_association
@@ -757,7 +758,7 @@ RailsAdmin.config do |config|
   #   edit do; end
   #   create do; end
   #   update do; end
-  #  end
+   end
 
   # All fields marked as 'hidden' won't be shown anywhere in the rails_admin unless you mark them as visible.
   # There can be different reasons for that:
