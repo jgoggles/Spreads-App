@@ -1,3 +1,12 @@
+GIT
+  remote: git://github.com/sferik/rails_admin.git
+  revision: c8f497fda44530a4178ebad14b8c33d733122ac7
+  specs:
+    rails_admin (0.0.1)
+      builder (~> 3.0.0)
+      haml (>= 3.1.0, < 3.3.0)
+      rails (~> 3.1.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -61,6 +70,7 @@ GEM
       multipart-post (~> 1.1.0)
       rack (< 2, >= 1.1.0)
     gem_plugin (0.2.3)
+    haml (3.1.3)
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.13)
@@ -205,6 +215,7 @@ DEPENDENCIES
   omniauth (>= 0.2.6)
   pg
   rails (= 3.1.0)
+  rails_admin!
   redcarpet
   redis
   sass-rails (~> 3.1.0.rc)

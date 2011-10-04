@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 # gem 'rails', :git => "git://github.com/rails/rails.git", :branch => "3-1-stable"
 gem 'rails', '3.1.0'
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 group :development do
   gem 'mysql2'

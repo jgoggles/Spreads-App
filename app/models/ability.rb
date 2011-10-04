@@ -6,6 +6,7 @@ class Ability
 
     if user.role? :admin
       can :manage, :all
+      can :access, :rails_admin
     elsif user.role? :pool_admin
       can :update, Pool do |pool|
         !pool.pool_users.where('user_id = ?', user.id).where('pool_admin = ?', true).empty?
