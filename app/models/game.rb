@@ -33,7 +33,7 @@ class Game < ActiveRecord::Base
     puts lines
     week = Week.current
     games = []
-    begin
+    # begin
       lines.each do |line|
         if line['game']['home'] == "New York Jets"
           game = Team.find_by_nickname("Jets").games.where("week_id = ?", week.id).first
@@ -42,8 +42,10 @@ class Game < ActiveRecord::Base
         else
           game = Team.find_by_city(line['game']['home']).games.where("week_id = ?", week.id).first
         end
-        game.update_attributes(:spread => line['game']['line'], :over_under => line['game']['over_under'])
-        games << game
+        unless game.nil?
+          game.update_attributes(:spread => line['game']['line'], :over_under => line['game']['over_under'])
+          games << game
+        end
       end
 
       if user and pool
@@ -58,9 +60,9 @@ class Game < ActiveRecord::Base
         end
       end
       return games
-    rescue
-      return false
-    end
+    # rescue
+    #   return false
+    # end
   end
 
   def has_scores
