@@ -15,9 +15,9 @@ class Scraper
       if rows
         rows.each do |a|
           if !a.at_css('div ul[2] li[2] span span.handicap').nil?
-            matchup = a.at_css('span.title a').content.match(/(.*)\sat\s(.*)/)
+            matchup = a.at_css('span.title a').content.match(/(.*)\s(at|v)\s(.*)/)
             away = $1.strip!
-            home = $2.strip!
+            home = $3.strip!
 
             away.gsub!("NY", "New York")
             away.gsub!(".", "")
@@ -26,6 +26,9 @@ class Scraper
 
             line = a.at_css('div ul[2] li[2] span span.handicap').content
             over_under = a.at_css('div ul.twoWay[3] li[2] span span.handicap').content
+            # puts "home: #{home}"
+            # puts "away: #{away}"
+            # puts "line: #{line}"
 
             lines.push(Hash.new)
             lines[rows.index(a)]['game'] = {}
