@@ -12,11 +12,29 @@ class PickSet < ActiveRecord::Base
 
   accepts_nested_attributes_for :picks, :reject_if => lambda { |a| a[:is_home].blank? && a[:spread].blank? && a[:over_under].blank? && a[:is_over].blank? }
   validate :number_of_picks
+  validate :spread
 
   def number_of_picks
     max = pool.pool_type.max_picks
     unless max.nil?
       errors.add(:base, "You cannot have more than #{max} picks in a week for this pool") if picks.size > max
+    end
+  end
+
+  def spread
+    games = Game.with_spreads
+    self.picks.each do |pick|
+      if pick.new_record?
+        games.each do |game|
+          if game.id == pick.game.id
+            @spread = game.spread.to_f
+          end
+        end
+        unless pick.is_home?
+          @spread = -@spread
+        end
+        errors.add(:base, "One or more of your picks were not saved because the spread has changed") if @spread != pick.spread
+      end
     end
   end
 
