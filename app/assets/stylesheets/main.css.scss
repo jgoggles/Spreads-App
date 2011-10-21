@@ -210,6 +210,7 @@ caption {background:#ffc;}
   .click-to-pick { color: $dark-blue; display: none; float:right; font-size: 10px; text-transform: uppercase; }
   .picked-notice { color: $dark-blue; float: right; font-size: 10px; text-transform: uppercase; }
   .game-off, .team-off, .picked-notice, .picked-team { padding: 10px; }
+  img.team_logo { margin-right: 12px; vertical-align: middle; } 
   .team-line {padding: 10px;
     -moz-transition: all $trans-speed ease-out;
     -o-transition: all $trans-speed ease-out;
