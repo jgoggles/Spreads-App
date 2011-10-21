@@ -2,7 +2,7 @@ $dark-blue: #009ACD;
 $grey-blue: #B7C3D0;
 $sky-blue: #00B2EE;
 $trans-speed: 0.5s;
-$width: 1024px;
+$width: 960px;
 
 html, body, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -164,10 +164,10 @@ a:hover { color: $grey-blue; }
 }
 
 .left { float: left; }
-.pick_set table { margin: 0 auto; width: 460px; }
+.pick_set table { margin: 0 auto; width: 420px; }
 .sub-container {
   border: 1px solid #ccc;
-  width: 460px;
+  width: 420px;
   margin: 12px;
   padding: 12px;
   p {
@@ -255,7 +255,7 @@ caption {background:#ffc;}
   margin: 12px 12px;
   padding: 10px;
   text-align: center;
-  width: 200px;
+  width: 180px;
   .badge-desc {font-size: 12px; padding: 8px;}
 }
 
