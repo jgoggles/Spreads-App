@@ -29,10 +29,10 @@
         <% else %>
           <div class="game-off"><h3>OFF</h3></div>
           <div class="team-off">
-            <%= game.away.team.nickname %>
+            <%= image_tag game.away.team.logo, :class => "team_logo" %><%= game.away.team.nickname %>
           </div>
           <div class="team-off">
-            <%= game.home.team.nickname %>
+            <%= image_tag game.home.team.logo, :class => "team_logo" %><%= game.home.team.nickname %>
           </div>
         <% end %>
         </li>
