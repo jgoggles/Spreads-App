@@ -70,7 +70,7 @@ class Badging
   end
 
   def pick_check_for_toxic(pick)
-    badge = Badge.find_by_name("Traitor")
+    badge = Badge.find_by_name("Toxic")
     unless pick.pick_set.user.favorite_nfl_team_id.nil?
       fav = Team.find(pick.pick_set.user.favorite_nfl_team_id)
       if pick.opponent == fav
