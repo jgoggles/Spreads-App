@@ -40,7 +40,7 @@ class Game < ActiveRecord::Base
         elsif line['game']['home'] == "New York Giants"
           game = Team.find_by_nickname("Giants").games.where("week_id = ?", week.id).first
         else
-          game = Team.find_by_city(line['game']['home']).games.where("week_id = ?", week.id).first
+          game = (Team.find_by_city(line['game']['home']).games.where("week_id = ?", week.id).first) rescue nil
         end
         unless game.nil?
           game.update_attributes(:spread => line['game']['line'], :over_under => line['game']['over_under'])
