@@ -48,7 +48,7 @@ class Game < ActiveRecord::Base
         end
       end
 
-      if user and pool
+      if user and pool and !pool.pool_type.allow_same_game
         user_picks = user.pick_sets.where("week_id = ?", week.id).where("pool_id = ?", pool.id).first.picks
         user_picks.each do |p|
           unless p.game_id == 0 or p.game.has_started

@@ -12,12 +12,20 @@ class PickSet < ActiveRecord::Base
 
   accepts_nested_attributes_for :picks, :reject_if => lambda { |a| a[:is_home].blank? && a[:spread].blank? && a[:over_under].blank? && a[:is_over].blank? }
   validate :number_of_picks
+  validate :number_of_units
   # validate :spread
 
   def number_of_picks
     max = pool.pool_type.max_picks
     unless max.nil?
       errors.add(:base, "You cannot have more than #{max} picks in a week for this pool") if picks.size > max
+    end
+  end
+
+  def number_of_units
+    max = pool.pool_type.max_picks
+    unless max.nil?
+      errors.add(:base, "You cannot have more than #{max} units in a week for this pool") if self.unit_size > max
     end
   end
 
@@ -41,10 +49,26 @@ class PickSet < ActiveRecord::Base
   def has_max_picks
     max = pool.pool_type.max_picks
     if max.nil?
-      picks.size >= week.games.size
+      picks.size >= week.games.size || self.unit_size >= week.games.size
     else
-      picks.size >= max
+      picks.size >= max || self.unit_size >= max
     end
+  end
+
+  def picks_remaining
+    max = pool.pool_type.max_picks
+    max - self.picks.size
+  end
+
+  def units_remaining
+    max = pool.pool_type.max_picks
+    max - self.unit_size
+  end
+
+  def unit_size
+    units = 0
+    self.picks.each { |p| units += p.count }
+    units
   end
 
   def all_results_in

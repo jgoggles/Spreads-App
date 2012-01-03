@@ -26,6 +26,7 @@ class PickSetsController < ApplicationController
   def new
     @pick_set = PickSet.new
     @games = Game.with_spreads
+    @units_remaining = @pool.pool_type.max_picks
 
     respond_to do |format|
       format.html # new.html.erb
@@ -37,6 +38,7 @@ class PickSetsController < ApplicationController
   def edit
     @pick_set = PickSet.find(params[:id])
     @games = Game.with_spreads(current_user, @pool)
+    @units_remaining = @pick_set.units_remaining
     authorize! :update, @pick_set
   end
 
@@ -47,9 +49,12 @@ class PickSetsController < ApplicationController
     @pick_set.week_id = @week.id
     @pick_set.pool_id = @pool.id
     @games = Game.with_spreads
+    @units_remaining = @pool.pool_type.max_picks
 
     respond_to do |format|
       if @pick_set.save
+        if @pool.pool_type.allow_same_game
+        end
         format.html { redirect_to [@pool, @pick_set], notice: 'Pick set was successfully created.' }
         format.json { render json: @pick_set, status: :created, location: @pick_set }
       else
@@ -65,6 +70,7 @@ class PickSetsController < ApplicationController
     @pick_set = PickSet.find(params[:id])
     @games = Game.with_spreads(current_user, @pool)
     authorize! :update, @pick_set
+    @units_remaining = @pick_set.units_remaining
 
     respond_to do |format|
       if @pick_set.update_attributes(params[:pick_set])

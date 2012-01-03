@@ -9,23 +9,24 @@ class Standing < ActiveRecord::Base
     pick_sets.each do |ps|
       wins, losses, pushes, ou_wins, ou_losses, ou_pushes  = 0, 0, 0, 0, 0, 0
       ps.picks.each do |p|
+        count = p.count.nil ? 1 : p.count
         p.generate_result
         case p.result
         when 1
-          wins += 1
+          wins += count
         when -1
-          losses += 1
+          losses += count
         when 0
-          pushes +=1
+          pushes += count
         end
         p.generate_over_under_result
         case p.over_under_result
         when 1
-          ou_wins += 1
+          ou_wins += count
         when -1
-          ou_losses += 1
+          ou_losses += count
         when 0
-          ou_pushes +=1
+          ou_pushes += count
         end
       end
       points = wins - losses
@@ -66,7 +67,7 @@ class Standing < ActiveRecord::Base
       record['points'] = points
       record['over_under_points'] = over_under_points
 
-      if Week.current.id > 1
+      if Week.current.name.to_i > 1
         last_week = u.standings.where("week_id = #{Week.previous.id}").where("pool_id = ?", pool.id)
         if !last_week.empty?
           record['last_week'] = "#{last_week[0].wins}-#{last_week[0].losses}-#{last_week[0].pushes}"

@@ -3,6 +3,7 @@ class Pick < ActiveRecord::Base
   belongs_to :game
   belongs_to :team
   has_many :earned_badges
+  before_create :set_count
 
   def generate_result
     unless game_id == 0
@@ -106,6 +107,14 @@ class Pick < ActiveRecord::Base
 
   def push?
     result == 0
+  end
+
+  private
+  def set_count
+    if self.count.nil?
+      raise StandardError, self.count
+      self.count = 1
+    end
   end
 
 end

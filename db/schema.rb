@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111021175910) do
+ActiveRecord::Schema.define(:version => 20111220203926) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -124,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20111021175910) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "over_under_result"
+    t.integer  "count"
   end
 
   create_table "pool_types", :force => true do |t|
@@ -135,6 +136,7 @@ ActiveRecord::Schema.define(:version => 20111021175910) do
     t.boolean  "is_tiebreaker"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "allow_same_game"
   end
 
   create_table "pool_users", :force => true do |t|
