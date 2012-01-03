@@ -17,8 +17,10 @@
     <span class="spread"><%= game.spread.to_f > 0 ? '+' : '' %><%= game.spread.to_f %></span>
   </div>
   <% if pool.pool_type.allow_same_game? %>
-    <%= pick.select :count, (1..@units_remaining).collect{ |n| [n, n] } %>
-    <span style="font-size: 10px">Select the number of units</span>
+    <div style="margin: 0 12px">
+      <%= pick.select :count, (1..@units_remaining).collect{ |n| [n, n] } %>
+      <span style="font-size: 10px">Select the number of units</span>
+    </div>
   <% end %>
 <% else %>
   <div class="picked-notice">
