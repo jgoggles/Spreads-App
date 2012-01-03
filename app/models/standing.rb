@@ -9,7 +9,7 @@ class Standing < ActiveRecord::Base
     pick_sets.each do |ps|
       wins, losses, pushes, ou_wins, ou_losses, ou_pushes  = 0, 0, 0, 0, 0, 0
       ps.picks.each do |p|
-        count = p.count.nil ? 1 : p.count
+        count = p.count.nil? ? 1 : p.count
         p.generate_result
         case p.result
         when 1

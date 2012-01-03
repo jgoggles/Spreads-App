@@ -112,7 +112,6 @@ class Pick < ActiveRecord::Base
   private
   def set_count
     if self.count.nil?
-      raise StandardError, self.count
       self.count = 1
     end
   end
