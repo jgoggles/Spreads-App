@@ -15,6 +15,8 @@ RailsAdmin.config do |config|
 
   config.main_app_name { ['Spreads', 'Admin'] } # auto-generated
 
+  config.audit_with :history, User
+
   #  ==> Authentication (before_filter)
   # This is run inside the controller instance so you can setup any authentication you need to.
   # By default, the authentication will run via warden if available.
