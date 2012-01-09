@@ -48,7 +48,8 @@ class Pool < ActiveRecord::Base
     if pool_type.max_picks.nil?
       return false
     else
-      pick_total = Pick.joins(:pick_set).where("pool_id = ?", id).where("week_id = ?", Week.current.id).size
+      pick_total = 0
+      Pick.joins(:pick_set).where("pool_id = ?", id).where("week_id = ?", Week.current.id).each { |p| (pick_total += p.count) rescue pick_total += 1 }
       users = PoolUser.where('pool_id = ?', id).size
       max_picks = pool_type.max_picks
       if pick_total >= users * max_picks
