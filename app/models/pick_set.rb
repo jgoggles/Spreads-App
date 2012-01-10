@@ -67,7 +67,7 @@ class PickSet < ActiveRecord::Base
 
   def unit_size
     units = 0
-    self.picks.each { |p| units += p.count }
+    self.picks.each { |p| (units += p.count) rescue units += 1 }
     units
   end
 
