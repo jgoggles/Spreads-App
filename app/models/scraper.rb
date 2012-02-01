@@ -5,7 +5,8 @@ class Scraper
 
   class << self
     def parse_nfl_lines
-      url = 'http://www.sportsinteraction.com/football/nfl-betting-lines/'
+      # url = 'http://www.sportsinteraction.com/football/nfl-betting-lines/'
+      url = 'http://www.sportsinteraction.com/football/super-bowl-betting/'
 
       doc = Nokogiri::HTML(open(url))
 
@@ -15,7 +16,8 @@ class Scraper
       if rows
         rows.each do |a|
           if !a.at_css('div ul[2] li[2] span span.handicap').nil?
-            matchup = a.at_css('span.title a').content.match(/(.*)\s(at|v)\s(.*)/)
+            # matchup = a.at_css('span.title a').content.match(/(.*)\s(at|v)\s(.*)/)
+            matchup = a.at_css('span.title').content.match(/(.*)\s(at|v)\s(.*)/)
             away = $1.strip!
             home = $3.strip!
 
