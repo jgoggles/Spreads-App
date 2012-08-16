@@ -1,7 +1,7 @@
 <% if can? :read, @pool %>
   <section class="left">
   <div class="sub-container pick_set">
-    <h3>Week <%= Week.current.name %> Picks for <%= @pool.name %></h3>
+    <h3>Week <%= Week.current.name rescue 'Offseason'%> Picks for <%= @pool.name %></h3>
     <% if @pick_set.nil? or @pick_set.picks.empty? %>
       <p>You haven't made any picks yet this week.</p>
     <% else %>

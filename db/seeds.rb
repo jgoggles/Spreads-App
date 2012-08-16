@@ -2,18 +2,18 @@ require 'csv'
 require 'chronic'
 require 'nfl'
 
-NFL_SCHEDULE = 'db/NFL_2011_Complete.csv'
+NFL_SCHEDULE = 'db/NFL_2012_Complete.csv'
 
 ############
 # all envs #
 ############
 ## Pool Types
-PoolType.connection.execute("TRUNCATE pool_types")
-PoolType.create!(name: "Kamikaze", max_picks: nil, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
-PoolType.create!(name: "3 Pick Standard", max_picks: 3, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
+# PoolType.connection.execute("TRUNCATE pool_types")
+# PoolType.create!(name: "Kamikaze", max_picks: nil, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
+# PoolType.create!(name: "3 Pick Standard", max_picks: 3, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
 
 ## Weeks
-Week.connection.execute("TRUNCATE weeks")
+# Week.connection.execute("TRUNCATE weeks")
 t = Chronic.parse("Sept 6, 2011") - 12.hours
 w = 0
 22.times do
@@ -22,38 +22,37 @@ w = 0
 end
 
 ## Leagues
-League.connection.execute("TRUNCATE leagues")
-League.create!(:name => NFL[:name], :sport => NFL[:sport])
+# League.connection.execute("TRUNCATE leagues")
+# League.create!(:name => NFL[:name], :sport => NFL[:sport])
 
-## Conferences
-Conference.connection.execute("TRUNCATE conferences")
-NFL[:conferences].each { |c| Conference.create!(:name => c[:name], :league_id => League.find_by_name(NFL[:name]).id) }
+# ## Conferences
+# Conference.connection.execute("TRUNCATE conferences")
+# NFL[:conferences].each { |c| Conference.create!(:name => c[:name], :league_id => League.find_by_name(NFL[:name]).id) }
 
-## Divisions
-Division.connection.execute("TRUNCATE divisions")
-NFL[:conferences].each do |c|
-  c[:divisions].each do |d|
-    Division.create!(:name => d[:name]) unless !Division.find_by_name(d[:name]).nil?
-  end
-end
+# ## Divisions
+# Division.connection.execute("TRUNCATE divisions")
+# NFL[:conferences].each do |c|
+#   c[:divisions].each do |d|
+#     Division.create!(:name => d[:name]) unless !Division.find_by_name(d[:name]).nil?
+#   end
+# end
 
-## Teams
-Team.connection.execute("TRUNCATE teams")
-NFL[:conferences].each do |c|
-  c[:divisions].each do |d|
-    d[:teams].each do |t|
-      Team.create!(:city => t[:city], :nickname => t[:nickname],
-                   :league_id => League.find_by_name(NFL[:name]),
-                   :conference_id => Conference.find_by_name(c[:name]).id,
-                   :division_id => Division.find_by_name(d[:name]).id)
-    end
-  end
-end
+# ## Teams
+# Team.connection.execute("TRUNCATE teams")
+# NFL[:conferences].each do |c|
+#   c[:divisions].each do |d|
+#     d[:teams].each do |t|
+#       Team.create!(:city => t[:city], :nickname => t[:nickname],
+#                    :league_id => League.find_by_name(NFL[:name]),
+#                    :conference_id => Conference.find_by_name(c[:name]).id,
+#                    :division_id => Division.find_by_name(d[:name]).id)
+#     end
+#   end
+# end
 
 ## Games
 Game.connection.execute("TRUNCATE games")
 Game.connection.execute("TRUNCATE game_details")
-# CSV.foreach("db/NFL_2011_Complete.csv") do |row|
 CSV.foreach(NFL_SCHEDULE) do |row|
   home = Team.find_by_nickname(row[15])
   away = Team.find_by_nickname(row[16].strip)
@@ -66,17 +65,17 @@ end
 
 
 ## Roles
-Role.connection.execute("TRUNCATE roles")
-%w{Admin Member PoolAdmin}.each { |r| Role.create(name: r) }
+# Role.connection.execute("TRUNCATE roles")
+# %w{Admin Member PoolAdmin}.each { |r| Role.create(name: r) }
 
-## Badges
-Badge.connection.execute("TRUNCATE badges")
-Badge.create!(name: "Drunk Driver", desc: "Picking a game in which the Cincinnati Bengals are involved.", image: "drunk_driver")
-Badge.create!(name: "Homer", desc: "Picking your favorite team.", image: "homer")
-Badge.create!(name: "Toxic", desc: "Picking against your favorite team.", image: "traitor")
-Badge.create!(name: "Skin of Your Teeth", desc: "Winning by less than 3 point ATS.", image: "skin_of_your_teeth")
-Badge.create!(name: "Tough Luck", desc: "Losing by less than 3 points ATS", image: "tough_luck")
-Badge.create!(name: "Pusher", desc: "Pushing is hard.", image: "pusher")
+# ## Badges
+# Badge.connection.execute("TRUNCATE badges")
+# Badge.create!(name: "Drunk Driver", desc: "Picking a game in which the Cincinnati Bengals are involved.", image: "drunk_driver")
+# Badge.create!(name: "Homer", desc: "Picking your favorite team.", image: "homer")
+# Badge.create!(name: "Toxic", desc: "Picking against your favorite team.", image: "traitor")
+# Badge.create!(name: "Skin of Your Teeth", desc: "Winning by less than 3 point ATS.", image: "skin_of_your_teeth")
+# Badge.create!(name: "Tough Luck", desc: "Losing by less than 3 points ATS", image: "tough_luck")
+# Badge.create!(name: "Pusher", desc: "Pushing is hard.", image: "pusher")
 
 
 ###############
