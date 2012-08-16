@@ -64,9 +64,6 @@ CSV.foreach(NFL_SCHEDULE, {:headers=>:first_row}) do |row|
   away = Team.find_by_nickname(row[15].strip)
   date = Chronic.parse("#{row[0]} #{row[5]}")
   week = Week.where("start_date <= ?", date).where("end_date >= ?", date).first
-  if week.nil?
-    binding.pry
-  end
   week_id = week.id
   game = Game.create!(:week_id => week_id, :date => date)
   GameDetail.create!(:game_id => game.id, :team_id => home.id, :is_home => true)
