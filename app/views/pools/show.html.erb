@@ -6,7 +6,7 @@
     <% else %>
       <h3>Week <%= Week.current.name %> Picks for <%= @pool.name %></h3>
       <% if @pick_set.nil? or @pick_set.picks.empty? %>
-        <p>You haven't made any picks yet this week.</p>
+        <p>You haven't made any picks this week</p>
       <% else %>
 
         <table>
@@ -147,7 +147,7 @@
   <div class="sub-container">
     <h3>Your Achievements</h3>
     <% if @badges.empty? %>
-      <p>You haven't earned any badges yet because you suck.</p>
+      <p>You haven't earned any badges because you suck</p>
     <% else %>
       <% @badges.each do |badge| %>
         <%= link_to (image_tag "badges/#{badge.badge.image}_64.png"),achievements_pool_path %>
@@ -158,7 +158,7 @@
   <div class="sub-container">
     <h3>Latest Message Board Activity</h3>
     <% if @messages.empty? %>
-      <p>No messages have been posted yet.</p>
+      <p>No messages have been posted</p>
     <% else %>
       <ul>
         <% @messages.each do |message| %>

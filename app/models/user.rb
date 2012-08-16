@@ -81,8 +81,7 @@ class User < ActiveRecord::Base
   end
 
   def picks_made(pool)
-    return 0 if pick_set_for_this_week(pool).nil?
-    pick_set_for_this_week(pool).picks.size
+    pick_set_for_this_week(pool).picks.size rescue 0
   end
 
   def pick_set_for_this_week(pool)
