@@ -2,6 +2,7 @@ class Pool < ActiveRecord::Base
   include Obfuscatable
 
   belongs_to :pool_type
+  belongs_to :year
   has_many :pick_sets
   has_many :picks, :through => :pick_sets
   has_many :pool_users, :dependent => :destroy

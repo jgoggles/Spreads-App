@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111220203926) do
+ActiveRecord::Schema.define(:version => 20120816174633) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(:version => 20111220203926) do
     t.string   "password"
     t.integer  "max_players"
     t.integer  "min_players"
+    t.integer  "year_id"
   end
 
   create_table "rails_admin_histories", :force => true do |t|
@@ -250,6 +251,14 @@ ActiveRecord::Schema.define(:version => 20111220203926) do
     t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "year_id"
+  end
+
+  create_table "years", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "current"
   end
 
 end
