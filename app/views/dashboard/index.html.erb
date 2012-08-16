@@ -3,7 +3,7 @@
 <% else %>
   <h2>Your Pools</h2>
   <ul id="dashboard-pools">
-    <% @pools. each do |p| %>
+    <% @pools.sort { |a, b| b.created_at <=> a.created_at }.each do |p| %>
       <li><%= link_to p.name, p %></li>
     <% end %>
   </ul>

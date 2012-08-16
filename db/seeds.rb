@@ -12,12 +12,16 @@ NFL_SCHEDULE = 'db/NFL_2012_Complete.csv'
 # PoolType.create!(name: "Kamikaze", max_picks: nil, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
 # PoolType.create!(name: "3 Pick Standard", max_picks: 3, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
 
-## Weeks
-# Week.connection.execute("TRUNCATE weeks")
-t = Chronic.parse("Sept 6, 2011") - 12.hours
+## Years
+Year.find_or_create_by_name(name: '2012', current: true)
+Year.previous.update_attribute(:current, false)
+
+# ## Weeks
+# # Week.connection.execute("TRUNCATE weeks")
+t = Chronic.parse("Sept 4, 2012") - 12.hours
 w = 0
-22.times do
-  Week.create!(:name => w += 1, :start_date => t, :end_date => t + 1.week - 1.second)
+17.times do
+  Week.create!(:name => w += 1, :start_date => t, :end_date => t + 1.week - 1.second, year_id: Year.last.id)
   t += 1.week
 end
 
@@ -51,13 +55,19 @@ end
 # end
 
 ## Games
-Game.connection.execute("TRUNCATE games")
-Game.connection.execute("TRUNCATE game_details")
-CSV.foreach(NFL_SCHEDULE) do |row|
-  home = Team.find_by_nickname(row[15])
-  away = Team.find_by_nickname(row[16].strip)
+# Game.connection.execute("TRUNCATE games")
+# Game.connection.execute("TRUNCATE game_details")
+CSV.foreach(NFL_SCHEDULE, {:headers=>:first_row}) do |row|
+  puts row[16].strip
+  home = Team.find_by_nickname(row[16].strip)
+  puts row[15].strip
+  away = Team.find_by_nickname(row[15].strip)
   date = Chronic.parse("#{row[0]} #{row[5]}")
-  week_id = Week.where("start_date <= ?", date).where("end_date >= ?", date).first.id
+  week = Week.where("start_date <= ?", date).where("end_date >= ?", date).first
+  if week.nil?
+    binding.pry
+  end
+  week_id = week.id
   game = Game.create!(:week_id => week_id, :date => date)
   GameDetail.create!(:game_id => game.id, :team_id => home.id, :is_home => true)
   GameDetail.create!(:game_id => game.id, :team_id => away.id, :is_home => false)

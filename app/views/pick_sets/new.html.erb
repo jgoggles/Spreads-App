@@ -1,5 +1,9 @@
-<h3>
-Picks for Week <%= @week.name %> in <%= @pool.name %><br />
-</h3>
+<% if Time.now < Year.current.weeks.first.start_date %>
+  Season hasn't started yet, bro.
+<% else %>
+  <h3>
+    Picks for Week <%= @week.name %> in <%= @pool.name %><br />
+  </h3>
 
-<%= render 'form' %>
+  <%= render 'form' %>
+<% end %>

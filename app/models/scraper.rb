@@ -5,8 +5,8 @@ class Scraper
 
   class << self
     def parse_nfl_lines
-      # url = 'http://www.sportsinteraction.com/football/nfl-betting-lines/'
-      url = 'http://www.sportsinteraction.com/football/super-bowl-betting/'
+      url = 'http://www.sportsinteraction.com/football/nfl-betting-lines/'
+      # url = 'http://www.sportsinteraction.com/football/super-bowl-betting/'
 
       doc = Nokogiri::HTML(open(url))
 
@@ -62,8 +62,8 @@ class Scraper
     end
 
     def parse_nfl_scores(week = Week.current)
-      # url = "http://www.nfl.com/scores/2011/REG#{week.name}"
-      url = "http://www.nfl.com/scores/2011/POST#{week.name}"
+      url = "http://www.nfl.com/scores/2011/REG#{week.name}"
+      # url = "http://www.nfl.com/scores/2012/PRE#{week.name}"
 
       doc = Nokogiri::HTML(open(url))
 
@@ -83,6 +83,7 @@ class Scraper
         away_team = Team.find_by_nickname(parsed_away_team).games.where("week_id = ?", week.id).first.away
         away_team.score = away_score
         away_team.save
+
       end
     rescue Exception => e
       print e, "\n"

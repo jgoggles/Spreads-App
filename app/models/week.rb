@@ -7,10 +7,11 @@ class Week < ActiveRecord::Base
 
   def self.current
     if Time.now < Year.current.weeks.first.start_date
-      Year.current.weeks.first
+      week = Year.current.weeks.first
     else
-      where("start_date <= ?", Time.now).where(["end_date >= ?", Time.now]).first
+      week = Year.current.weeks.where("start_date <= ?", Time.now).where(["end_date >= ?", Time.now]).first
     end
+    week ||= Year.current.weeks.last
   end
 
   def self.previous

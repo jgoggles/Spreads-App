@@ -6,6 +6,7 @@ gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 group :development do
   gem 'mysql2'
+  gem 'pry'
 end
 
 
