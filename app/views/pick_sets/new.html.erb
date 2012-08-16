@@ -1,5 +1,7 @@
-<% if Time.now < Year.current.weeks.first.start_date %>
+<% if @week.is_offseason? && !@pool.over? %>
   Season hasn't started yet, bro.
+<% elsif @pool.over? %>
+  You can't pick games from seasons past, this is not Back to the Future II.
 <% else %>
   <h3>
     Picks for Week <%= @week.name %> in <%= @pool.name %><br />

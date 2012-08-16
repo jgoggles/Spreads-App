@@ -8,4 +8,5 @@ class Year < ActiveRecord::Base
   def self.previous
     self.where(:name => (current.name.to_i - 1).to_s).first
   end
+
 end

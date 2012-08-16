@@ -80,6 +80,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def picks_made(pool)
+    return 0 if pick_set_for_this_week(pool).nil?
+    pick_set_for_this_week(pool).picks.size
+  end
+
   def pick_set_for_this_week(pool)
     pick_sets.where('week_id = ?', Week.current).where('pool_id = ?', pool.id).first
   end

@@ -1,63 +1,85 @@
 <% if can? :read, @pool %>
   <section class="left">
   <div class="sub-container pick_set">
-    <h3>Week <%= Week.current.name rescue 'Offseason'%> Picks for <%= @pool.name %></h3>
-    <% if @pick_set.nil? or @pick_set.picks.empty? %>
-      <p>You haven't made any picks yet this week.</p>
+    <% if @pool.over? %>
+      <h3>This pool has ended</h3>
     <% else %>
+      <h3>Week <%= Week.current.name %> Picks for <%= @pool.name %></h3>
+      <% if @pick_set.nil? or @pick_set.picks.empty? %>
+        <p>You haven't made any picks yet this week.</p>
+      <% else %>
 
+        <table>
+          <thead>
+            <th>Record</th>
+            <th>Team</th>
+            <th>Spread</th>
+            <% if @pool.pool_type.allow_same_game %>
+              <th>Units</th>
+            <% end %>
+            <th>Result</th>
+          </thead>
+          <tbody>
+            <tr class="shade">
+              <td><%= @pick_set.record %></td>
+              <td></td>
+              <td></td>
+              <% if @pool.pool_type.allow_same_game %>
+                <td></td>
+              <% end %>
+              <td></td>
+            </tr>
+            <% @pick_set.picks.each do |pick| %>
+              <tr>
+                <td></td>
+                <% if pick.team.nil? %>
+                  <td>No pick</td>
+                  <td>n/a</td>
+                <% else %>
+                  <% if @pool.pool_type.allow_same_game %>
+                    <td><%= pick.team.nickname %></td>
+                  <% else %>
+                    <td><%= pick.team.nickname %><span>&nbsp;<%= pick.display_opponent %></span></td>
+                  <% end %>
+                  <td><%= pick.spread %></td>
+                <% end %>
+                <% if @pool.pool_type.allow_same_game %>
+                  <td><%= pick.count %></td>
+                <% end %>
+                <td class="<%= pick.result_in_words.downcase %>"><%= pick.result_in_words %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <% if can? :update, @pick_set %>
+          <% unless @pick_set.has_max_picks %>
+            <%= link_to 'Add picks for this week', edit_pool_pick_set_path(@pool, @pick_set) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% unless @pool.over? %>
+    <div class="sub-container pick_set">
+      <h3>Pick Count for Week <%= Week.current.name %></h3>
       <table>
         <thead>
-          <th>Record</th>
-          <th>Team</th>
-          <th>Spread</th>
-          <% if @pool.pool_type.allow_same_game %>
-            <th>Units</th>
-          <% end %>
-          <th>Result</th>
+          <th>Player</th>
+          <th>Picks</th>
         </thead>
         <tbody>
-          <tr class="shade">
-            <td><%= @pick_set.record %></td>
-            <td></td>
-            <td></td>
-            <% if @pool.pool_type.allow_same_game %>
-              <td></td>
-            <% end %>
-            <td></td>
-          </tr>
-          <% @pick_set.picks.each do |pick| %>
-            <tr>
-              <td></td>
-              <% if pick.team.nil? %>
-                <td>No pick</td>
-                <td>n/a</td>
-              <% else %>
-                <% if @pool.pool_type.allow_same_game %>
-                  <td><%= pick.team.nickname %></td>
-                <% else %>
-                  <td><%= pick.team.nickname %><span>&nbsp;<%= pick.display_opponent %></span></td>
-                <% end %>
-                <td><%= pick.spread %></td>
-              <% end %>
-              <% if @pool.pool_type.allow_same_game %>
-                <td><%= pick.count %></td>
-              <% end %>
-              <td class="<%= pick.result_in_words.downcase %>"><%= pick.result_in_words %></td>
+          <% @pool.users.each do |player| %>
+            <tr class=<%= cycle('shade', ' ') %>>
+              <td><%= player.display_name %></td>
+              <td><%= player.picks_made(@pool) %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-
-
-      <% if can? :update, @pick_set %>
-        <% unless @pick_set.has_max_picks %>
-          <%= link_to 'Add picks for this week', edit_pool_pick_set_path(@pool, @pick_set) %>
-        <% end %>
-      <% end %>
-    <% end %>
-
-  </div>
+    </div>
+  <% end %>
 
   <div class="sub-container">
     <h3>Pool Information</h3>

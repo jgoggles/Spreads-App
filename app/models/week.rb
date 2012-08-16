@@ -21,4 +21,19 @@ class Week < ActiveRecord::Base
       self.current
     end
   end
+
+  def is_week_one?
+    if self.year == Year.current
+      return self.name == '1'
+    end
+    false
+  end
+
+  def is_offseason?
+    Time.now < self.year.weeks.first.start_date || Time.now > self.year.weeks.last.end_date
+  end
+
+  def is_week_one_or_offseason?
+    is_week_one? || is_offseason?
+  end
 end

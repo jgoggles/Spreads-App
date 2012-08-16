@@ -1,4 +1,4 @@
-<% unless Week.current.name == "1" %>
+<% unless Week.current.is_week_one_or_offseason? && !@pool.over? %>
   <%= render 'week_list' %>
 
   <% if @standings %>
