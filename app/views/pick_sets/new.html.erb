@@ -1,5 +1,5 @@
 <% if @week.is_offseason? && !@pool.over? %>
-  Season hasn't started yet, bro.
+  Season hasn't started yet, bro. You can make picks beginning <%= Year::LINES_OPEN.strftime('%D') %>
 <% elsif @pool.over? %>
   You can't pick games from seasons past, this is not Back to the Future II.
 <% else %>
