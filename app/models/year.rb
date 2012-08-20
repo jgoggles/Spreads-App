@@ -1,5 +1,9 @@
+require 'chronic'
+
 class Year < ActiveRecord::Base
   has_many :weeks
+
+  LINES_OPEN = Chronic.parse('August 26, 2012') - 12.hours
 
   def self.current
     self.where(current: true).last

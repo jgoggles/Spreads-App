@@ -30,7 +30,7 @@ class Week < ActiveRecord::Base
   end
 
   def is_offseason?
-    Time.now < self.year.weeks.first.start_date || Time.now > self.year.weeks.last.end_date
+    (Time.now < self.year.weeks.first.start_date && Time.now < Year::LINES_OPEN) || Time.now > self.year.weeks.last.end_date
   end
 
   def is_week_one_or_offseason?
