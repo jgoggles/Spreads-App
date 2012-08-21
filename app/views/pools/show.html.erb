@@ -163,8 +163,16 @@
       <ul>
         <% @messages.each do |message| %>
           <li>
-          <%= link_to message.title, pool_topic_path(@pool, message) %>
-          from <%= message.user.display_name %>
+            <div>
+              <%= link_to message.title, pool_topic_path(@pool, message) %>
+              from <%= message.user.display_name %>
+            </div>
+            <div style="color: #999; font-size: 12px; padding-left: 10px;">
+              <% if !message.messages.empty? %>
+                <% last_reply = message.messages.last %>
+                last reply by <%= last_reply.user.display_name %> <%= time_ago_in_words(last_reply.created_at) %> ago
+              <% end %>
+            </div>
           </li>
         <% end %>
       </ul>

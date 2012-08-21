@@ -5,4 +5,12 @@ class Message < ActiveRecord::Base
   validates_presence_of :body
 
   attr_accessible :body
+
+  after_save :update_topic
+
+  private
+
+  def update_topic
+    self.topic.touch
+  end
 end
