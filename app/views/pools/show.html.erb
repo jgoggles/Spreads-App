@@ -171,6 +171,8 @@
               <% if !message.messages.empty? %>
                 <% last_reply = message.messages.last %>
                 last reply by <%= last_reply.user.display_name %> <%= time_ago_in_words(last_reply.created_at) %> ago
+              <% else %>
+                no replies
               <% end %>
             </div>
           </li>
