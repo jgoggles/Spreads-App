@@ -2,7 +2,7 @@ Spreads::Application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   resources :badges
 
@@ -25,8 +25,6 @@ Spreads::Application.routes.draw do
   match '/auth/:provider/callback' => 'authentications#create'
 
   resources :authentications, :games, :weeks, :pool_types, :pool_users, :messages
-
-  devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
