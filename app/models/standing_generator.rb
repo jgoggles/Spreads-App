@@ -10,15 +10,17 @@ class StandingGenerator
 
   class << self
     def generate_standings(process_non_picks = false)
+      return if Week.current.is_week_one_or_offseason?
+
       if process_non_picks
         User.all.each do |user|
-          user.pools.each do |pool|
+          user.active_pools.each do |pool|
             user.process_non_picks(pool)
           end
         end
       end
 
-      Pool.all.each do |pool|
+      Year.current.pools.each do |pool|
         if process_non_picks # only do these when the week is over, same as process non picks
           Delayed::Job.enqueue Badging.new(:pool, pool.id)
         end

@@ -2,6 +2,7 @@ require 'chronic'
 
 class Year < ActiveRecord::Base
   has_many :weeks
+  has_many :pools
 
   LINES_OPEN = Chronic.parse('August 26, 2012') - 12.hours
 
