@@ -14,6 +14,9 @@
     <%= f.password_field :password_confirmation %>
   <% end %>
 
+  <%= f.label :favorite_nfl_team_id %>
+  <%= f.select :favorite_nfl_team_id, Team.order("nickname").collect { |t| [t.nickname, t.id] }, :include_blank => true %> 
+
   <p><%= f.submit "Sign up" %></p>
 <% end %>
 
