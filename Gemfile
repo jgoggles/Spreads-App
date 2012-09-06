@@ -19,7 +19,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'devise'
+gem 'devise', "~> 1.4.8"
 gem 'cancan'
 gem 'nifty-generators'
 gem 'omniauth', '>= 0.2.6'
