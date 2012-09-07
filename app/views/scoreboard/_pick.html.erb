@@ -1,0 +1,21 @@
+<table>
+  <tr>
+    <th></th>
+    <th>Spread</th>
+    <th>Score</th>
+    <th>Adj. Score</th>
+    <th>Result</th>
+  </tr>
+  <tr class="picked_team">
+    <td><%= pick.team.nickname %></td>
+    <td></td>
+    <td>30</td>
+    <td>30</td>
+    <td class="game_result" rowspan="2">W</td>
+  </tr>
+  <tr>
+    <td><%= pick.opponent.nickname %></td>
+    <td><%= "+ #{pick.spread * -1}" %></td>
+    <td>20</td>
+    <td>28.5</td>
+  </tr>

@@ -1,5 +1,7 @@
 Spreads::Application.routes.draw do
 
+  get "scoreboard/live"
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   devise_for :users, :controllers => { :registrations => "users/registrations" }
@@ -20,6 +22,7 @@ Spreads::Application.routes.draw do
     member do
       get 'achievements', :as => 'achievements'
     end
+    match '/live' => 'scoreboard#live'
   end
 
   match '/auth/:provider/callback' => 'authentications#create'

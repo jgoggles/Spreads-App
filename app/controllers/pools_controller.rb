@@ -23,6 +23,8 @@ class PoolsController < ApplicationController
     @pick_set = current_user.pick_set_for_this_week(@pool)
     if !current_user.pools.include?(@pool)
       @pool_user = PoolUser.new
+    else
+      @pool_user = current_user.pools.where(id: @pool.id).first
     end
 
     respond_to do |format|

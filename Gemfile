@@ -33,6 +33,8 @@ gem 'thin'
 
 gem 'delayed_job'
 gem 'redis'
+gem 'pusher'
+
 # gem 'resque', :require => 'resque/server'
 # gem 'resque', :git => 'git://github.com/defunkt/resque.git', :require => 'resque/server'
 # gem 'resque-scheduler'
