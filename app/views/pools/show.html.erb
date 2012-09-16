@@ -70,7 +70,7 @@
           <th>Picks</th>
         </thead>
         <tbody>
-          <% @pool.users.each do |player| %>
+          <% @pool.users.sort { |a, b| b.picks_made(@pool) <=> a.picks_made(@pool) }.each do |player| %>
             <tr class=<%= cycle('shade', ' ') %>>
               <td><%= player.display_name %></td>
               <td><%= player.picks_made(@pool) %></td>
