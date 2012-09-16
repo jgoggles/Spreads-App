@@ -1,7 +1,11 @@
 <%# Pusher.log = (message) ->%>
 <%#   console.log message%>
 
-pusher = new Pusher("9919c79f1a6d362b15ee")
+<% if Rails.env == 'production' %>
+  pusher = new Pusher("90571ae84cb59a530519")
+<% else %>
+  pusher = new Pusher("9919c79f1a6d362b15ee")
+<% end %>
 channel = pusher.subscribe("scores")
 channel.bind "scores-update", (data) ->
   $("#picks_container").empty()

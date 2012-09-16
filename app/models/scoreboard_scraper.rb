@@ -2,9 +2,15 @@ require 'open-uri'
 require 'pusher'
 
 # TODO: move into config
-Pusher.app_id = '27253'
-Pusher.key    = '9919c79f1a6d362b15ee'
-Pusher.secret = '33cd2f68ed4b0cfb65db'
+if Rails.env == 'production'
+  Pusher.app_id = '27802'
+  Pusher.key    = '90571ae84cb59a530519'
+  Pusher.secret = 'bf21c9e9c54744ad0e50'
+else
+  Pusher.app_id = '27253'
+  Pusher.key    = '9919c79f1a6d362b15ee'
+  Pusher.secret = '33cd2f68ed4b0cfb65db'
+end
 
 class ScoreboardScraper
   attr_accessor :scores, :data
