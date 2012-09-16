@@ -1,21 +1,19 @@
-<table>
-  <tr>
-    <th></th>
-    <th>Spread</th>
-    <th>Score</th>
-    <th>Adj. Score</th>
-    <th>Result</th>
-  </tr>
+<table id="game_<%= pick.game.id %>">
   <tr class="picked_team">
+    <td><%= image_tag pick.team.logo, size: "24x24" %><td>
     <td><%= pick.team.nickname %></td>
+    <td class="pick_score" id="team_score_<%= pick.team.id %>">-</td>
     <td></td>
-    <td>30</td>
-    <td>30</td>
+    <td>-</td>
+    <td class="game_quarter">3rd</td>
     <td class="game_result" rowspan="2">W</td>
   </tr>
   <tr>
+    <td><%= image_tag pick.opponent.logo, size: "24x24" %><td>
     <td><%= pick.opponent.nickname %></td>
-    <td><%= "+ #{pick.spread * -1}" %></td>
-    <td>20</td>
-    <td>28.5</td>
+    <td class="opponent_score" id="team_score_<%= pick.opponent.id %>">-</td>
+    <td class="pick_spread"><%= "+ #{pick.spread * -1}" %></td>
+    <td class="opponent_adj_score">-</td>
+    <td class="game_time_remaining">3:23</td>
   </tr>
+</table>

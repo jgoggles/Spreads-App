@@ -1,3 +1,63 @@
-<h2>My Picks</h2>
+<script>
+  var current_user = <%= current_user.id%>
+</script>
 
-<%= render partial: 'pick', collection: @pick_set.picks%>
+<div id="live_picks">
+  <h2><span id="selected_user">Jayson Bailey</span>'s Picks</h2>
+  <div id="picks_container">
+    Waiting for first update.  Updates happen once a minute.
+  </div>
+</div>
+
+<div id="live_standings">
+  <h2>Live Standings</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="name_column">Player</th>
+        <th>Record</th>
+        <th>Points</th>
+        <th>This Week</th>
+        <th>This Week Points</th>
+        <th>Live Points</th>
+        <th>Games Remaining</th>
+      </tr>
+    </thead>
+    <tbody id="live_standings_body">
+    </tbody>
+  </table>
+</div>
+
+<script type="text/html" id="pick_template">
+  <table class="user_pick_{{user_id}} live_pick">
+    <tr class="picked_team">
+      <td class="logo"><img src="{{team.logo}}" height="24px" width="24px" /><td>
+      <td class="abbr">{{team.abbr}}</td>
+      <td>{{team.score}}</td>
+      <td></td>
+      <td>-</td>
+      <td>{{quarter}}</td>
+      <td class="game_result" rowspan="2">{{result}}</td>
+    </tr>
+    <tr>
+      <td class="logo"><img src="{{opponent.logo}}" height="24px" width="24px" /><td>
+      <td class="abbr">{{opponent.abbr}}</td>
+      <td>{{opponent.score}}</td>
+      <td>+ {{spread}}</td>
+      <td>{{opponent.adjusted_score}}</td>
+      <td>{{time_remaining}}</td>
+    </tr>
+  </table>
+</script>
+
+<script type="text/html" id="standing_template">
+  <tr id="live_standings_team_{{user_id}}">
+    <td class="name_column"><a href="#" class="user_filter" data-user-id="{{user_id}}">{{display_name}}</a></td>
+    <td>{{current_record}}</td>
+    <td>{{points}}</td>
+    <td>{{this_week}}</td>
+    <td>{{this_week_points}}</td>
+    <td>{{live_points}}</td>
+    <td>{{games_remaining}}</td>
+  <tr>
+</script>

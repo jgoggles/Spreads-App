@@ -6,4 +6,5 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require mustache
 //= require_tree .

@@ -1,0 +1,28 @@
+<%# Pusher.log = (message) ->%>
+<%#   console.log message%>
+
+pusher = new Pusher("9919c79f1a6d362b15ee")
+channel = pusher.subscribe("scores")
+channel.bind "scores-update", (data) ->
+  $("#picks_container").empty()
+  for pick_id, pick of data["live_scores"]
+    $("#picks_container").append Mustache.to_html($('#pick_template').html(), pick)
+
+  $("#live_standings_body").empty()
+  live_standings = data["live_standings"]
+  <%# live_standings.sort (x,y) ->%>
+  <%#   return if y.live_points >= x.live_points then 1 else -1%>
+  for s in live_standings
+    $("#live_standings_body").append Mustache.to_html($('#standing_template').html(), s)
+
+  current_user = window.current_user  
+  $("#live_standings_team_#{current_user}").addClass('user')
+  $(".live_pick").not(".user_pick_#{current_user}").hide()
+
+  $(".user_filter").click ->
+    user_id = $(this).data('user-id')
+    display_name = $(this).html()
+    $(".user_pick_#{user_id}").show()
+    $("#selected_user").html display_name
+    $(".live_pick").not(".user_pick_#{user_id}").hide()
+

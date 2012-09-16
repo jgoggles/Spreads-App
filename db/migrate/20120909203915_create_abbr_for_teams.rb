@@ -1,0 +1,40 @@
+class CreateAbbrForTeams < ActiveRecord::Migration
+  def up
+    Team.find_by_nickname("Broncos").update_attribute(:abbr, "DEN")
+    Team.find_by_nickname("Chiefs").update_attribute(:abbr, "KC")
+    Team.find_by_nickname("Raiders").update_attribute(:abbr, "OAK")
+    Team.find_by_nickname("Chargers").update_attribute(:abbr, "SD")
+    Team.find_by_nickname("Ravens").update_attribute(:abbr, "BAL")
+    Team.find_by_nickname("Steelers").update_attribute(:abbr, "PIT")
+    Team.find_by_nickname("Browns").update_attribute(:abbr, "CLE")
+    Team.find_by_nickname("Bengals").update_attribute(:abbr, "CIN")
+    Team.find_by_nickname("Texans").update_attribute(:abbr, "HOU")
+    Team.find_by_nickname("Titans").update_attribute(:abbr, "TEN")
+    Team.find_by_nickname("Jaguars").update_attribute(:abbr, "JAC")
+    Team.find_by_nickname("Colts").update_attribute(:abbr, "IND")
+    Team.find_by_nickname("Dolphins").update_attribute(:abbr, "MIA")
+    Team.find_by_nickname("Patriots").update_attribute(:abbr, "NE")
+    Team.find_by_nickname("Jets").update_attribute(:abbr, "NYJ")
+    Team.find_by_nickname("Bills").update_attribute(:abbr, "BUF")
+    Team.find_by_nickname("Seahawks").update_attribute(:abbr, "SEA")
+    Team.find_by_nickname("Cardinals").update_attribute(:abbr, "ARI")
+    Team.find_by_nickname("Rams").update_attribute(:abbr, "STL")
+    Team.find_by_nickname("49ers").update_attribute(:abbr, "SF")
+    Team.find_by_nickname("Lions").update_attribute(:abbr, "DET")
+    Team.find_by_nickname("Vikings").update_attribute(:abbr, "MIN")
+    Team.find_by_nickname("Packers").update_attribute(:abbr, "GB")
+    Team.find_by_nickname("Bears").update_attribute(:abbr, "CHI")
+    Team.find_by_nickname("Buccaneers").update_attribute(:abbr, "TB")
+    Team.find_by_nickname("Panthers").update_attribute(:abbr, "CAR")
+    Team.find_by_nickname("Falcons").update_attribute(:abbr, "ATL")
+    Team.find_by_nickname("Saints").update_attribute(:abbr, "NO")
+    Team.find_by_nickname("Giants").update_attribute(:abbr, "NYG")
+    Team.find_by_nickname("Eagles").update_attribute(:abbr, "PHI")
+    Team.find_by_nickname("Cowboys").update_attribute(:abbr, "DAL")
+    Team.find_by_nickname("Redskins").update_attribute(:abbr, "WAS")
+  end
+
+  def down
+    Team.update_all(abbr: nil)
+  end
+end

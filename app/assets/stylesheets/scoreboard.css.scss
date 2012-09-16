@@ -1,2 +1,9 @@
+#live_picks { float: left; width: 400px; }
+#picks_container { margin-top: 20px; }
+.live_pick { width: 400px; }
+.live_pick td { padding: 4px 12px; }
 .game_result { font-size: 30px; text-align: center; }
 .picked_team { font-weight: bold; }
+
+#live_standings { float: right; width: 500px; }
+#live_standings .name_column { width: 200px; }
