@@ -142,25 +142,33 @@ class ScoreboardScraper
     pushes = 0
     games_remaining = 0
 
-    pick_set.picks.each do |pick|
-      live_score = @data[:live_scores][pick.id]
-      pick_score = live_score['team']['score'].to_f
-      adj_opp_score = live_score['opponent']['adjusted_score'].to_f
-      if %w{1 2 3 4 Final}.include?(live_score['quarter']) == false
-        games_remaining += 1
-      elsif pick_score > adj_opp_score
-        wins += 1
-      elsif pick_score == adj_opp_score
-        pushes += 1
-      else
-        losses += 1
+    if !pick_set.nil?
+      pick_set.picks.each do |pick|
+        live_score = @data[:live_scores][pick.id]
+        pick_score = live_score['team']['score'].to_f
+        adj_opp_score = live_score['opponent']['adjusted_score'].to_f
+        if %w{1 2 3 4 Final}.include?(live_score['quarter']) == false
+          games_remaining += 1
+        elsif pick_score > adj_opp_score
+          wins += 1
+        elsif pick_score == adj_opp_score
+          pushes += 1
+        else
+          losses += 1
+        end
       end
+      result = {
+        "record" => "#{wins}-#{losses}-#{pushes}",
+        "points" => (wins - losses),
+        "games_remaining" => games_remaining
+      }
+    else
+      result = {
+        "record" => "0-0-0",
+        "points" => 0,
+        "games_remaining" => 3
+      }
     end
-    result = {
-      "record" => "#{wins}-#{losses}-#{pushes}",
-      "points" => (wins - losses),
-      "games_remaining" => games_remaining
-    }
     result
   end
 
