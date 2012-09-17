@@ -144,6 +144,7 @@ class ScoreboardScraper
     losses = 0
     pushes = 0
     games_remaining = 0
+    result = {}
 
     if !pick_set.nil?
       pick_set.picks.each do |pick|
@@ -162,7 +163,7 @@ class ScoreboardScraper
         result = {
           "record" => "#{wins}-#{losses}-#{pushes}",
           "points" => (wins - losses),
-            "games_remaining" => games_remaining
+          "games_remaining" => games_remaining
         }
       end
     else
