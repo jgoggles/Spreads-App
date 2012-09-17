@@ -2,9 +2,15 @@ require 'open-uri'
 require 'pusher'
 
 # TODO: move into config
-Pusher.app_id = '27253'
-Pusher.key    = '9919c79f1a6d362b15ee'
-Pusher.secret = '33cd2f68ed4b0cfb65db'
+if Rails.env == 'production'
+  Pusher.app_id = '27802'
+  Pusher.key    = '90571ae84cb59a530519'
+  Pusher.secret = 'bf21c9e9c54744ad0e50'
+else
+  Pusher.app_id = '27253'
+  Pusher.key    = '9919c79f1a6d362b15ee'
+  Pusher.secret = '33cd2f68ed4b0cfb65db'
+end
 
 class ScoreboardScraper
   attr_accessor :scores, :data
@@ -139,25 +145,33 @@ class ScoreboardScraper
     pushes = 0
     games_remaining = 0
 
-    pick_set.picks.each do |pick|
-      live_score = @data[:live_scores][pick.id]
-      pick_score = live_score['team']['score'].to_f
-      adj_opp_score = live_score['opponent']['adjusted_score'].to_f
-      if %w{1 2 3 4 Halftime Final}.include?(live_score['quarter']) == false
-        games_remaining += 1
-      elsif pick_score > adj_opp_score
-        wins += 1
-      elsif pick_score == adj_opp_score
-        pushes += 1
-      else
-        losses += 1
+    if !pick_set.nil?
+      pick_set.picks.each do |pick|
+        live_score = @data[:live_scores][pick.id]
+        pick_score = live_score['team']['score'].to_f
+        adj_opp_score = live_score['opponent']['adjusted_score'].to_f
+        if %w{1 2 3 4 Halftime Final}.include?(live_score['quarter']) == false
+          games_remaining += 1
+        elsif pick_score > adj_opp_score
+          wins += 1
+        elsif pick_score == adj_opp_score
+          pushes += 1
+        else
+          losses += 1
+        end
+        result = {
+          "record" => "#{wins}-#{losses}-#{pushes}",
+          "points" => (wins - losses),
+            "games_remaining" => games_remaining
+        }
       end
+    else
+      result = {
+        "record" => "0-0-0",
+        "points" => 0,
+        "games_remaining" => 3
+      }
     end
-    result = {
-      "record" => "#{wins}-#{losses}-#{pushes}",
-      "points" => (wins - losses),
-      "games_remaining" => games_remaining
-    }
     result
   end
 
