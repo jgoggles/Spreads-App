@@ -3,15 +3,15 @@
 
 pusher = new Pusher("9919c79f1a6d362b15ee")
 channel = pusher.subscribe("scores")
-channel.bind "scores-update", (data) ->
-  $("#picks_container").empty()
-  for pick_id, pick of data["live_scores"]
+channel.bind "pick-set-update", (data) ->
+  user_id = data[0].user_id
+  $(".user_pick_" + user_id).empty()
+  for pick_id, pick of data
     $("#picks_container").append Mustache.to_html($('#pick_template').html(), pick)
 
+channel.bind "standings-update", (data) ->
   $("#live_standings_body").empty()
-  live_standings = data["live_standings"]
-  <%# live_standings.sort (x,y) ->%>
-  <%#   return if y.live_points >= x.live_points then 1 else -1%>
+  live_standings = data
   for s in live_standings
     $("#live_standings_body").append Mustache.to_html($('#standing_template').html(), s)
 

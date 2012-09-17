@@ -19,10 +19,8 @@ class ScoreboardScraper
   def get_scores(pool)
     json = retrieve_scores
     build_scores_data json
-    build_pick_data pool
-    build_standings_data pool
-
-    Pusher['scores'].trigger('scores-update', @data.to_json)
+    send_pick_data pool
+    send_standings_data pool
   end
 
   def retrieve_scores
@@ -64,10 +62,11 @@ class ScoreboardScraper
     game_hash
   end
 
-  def build_pick_data(pool)
+  def send_pick_data(pool)
     # Build the live scores
     pick_sets = pool.pick_sets.where(week_id: Week.current.id)
     pick_sets.each do |ps|
+      pick_set_data = []
       ps.picks.each do |pick|
         pick_score = @scores[pick.game.id][pick.team.abbr].to_i rescue nil
         opp_score = @scores[pick.game.id][pick.opponent.abbr].to_i rescue nil 
@@ -78,25 +77,28 @@ class ScoreboardScraper
           "quarter" => @scores[pick.game.id]["quarter"],
           "time_remaining" => @scores[pick.game.id]["time_remaining"],
           "team" => {
-            "logo" => pick.team.logo,
+            "nickname" => pick.team.nickname.downcase,
             "abbr" => pick.team.abbr,
             "score" => pick_score
           },
           "opponent" => {
-            "logo" => pick.opponent.logo,
+            "nickname" => pick.opponent.nickname.downcase,
             "abbr" => pick.opponent.abbr,
             "score" => opp_score,
             "adjusted_score" => adjusted_score
           },
           "result" => result_string(pick_score, adjusted_score, @scores[pick.game.id]['quarter'])
         }
+        pick_set_data << live_score
         @data[:live_scores][pick.id] = live_score
       end
+      Pusher['scores'].trigger('pick-set-update', pick_set_data.to_json)
     end
   end
 
-  def build_standings_data(pool)
+  def send_standings_data(pool)
     current = JSON.parse(REDIS.get("season_standings_#{pool.id}_#{Rails.env}")).sort_by { |i| -i['points'] }
+    live_standings = []
     current.each do |s|
       user = User.find s['player']['id']
       pick_set = user.pick_sets.where(pool_id: pool.id, week_id: Week.current.id).first
@@ -112,14 +114,15 @@ class ScoreboardScraper
         "live_points" => (this_week['points'].to_i + s['points'].to_i),
         "games_remaining" => this_week['games_remaining']
       }
-      @data[:live_standings] << standings
+      live_standings << standings
     end
     # Sort the standings according to live points
-    @data[:live_standings].sort! { |x,y| y['live_points'] <=> x['live_points'] }
+    live_standings.sort! { |x,y| y['live_points'] <=> x['live_points'] }
+    Pusher['scores'].trigger('standings-update', live_standings.to_json)
   end
 
   def result_string(pick_score, adjusted_score, quarter)
-    if %w{1 2 3 4 Final}.include?(quarter) == false
+    if %w{1 2 3 4 Halftime Final}.include?(quarter) == false
       "-"
     elsif adjusted_score > pick_score
       "L"
@@ -140,7 +143,7 @@ class ScoreboardScraper
       live_score = @data[:live_scores][pick.id]
       pick_score = live_score['team']['score'].to_f
       adj_opp_score = live_score['opponent']['adjusted_score'].to_f
-      if %w{1 2 3 4 Final}.include?(live_score['quarter']) == false
+      if %w{1 2 3 4 Halftime Final}.include?(live_score['quarter']) == false
         games_remaining += 1
       elsif pick_score > adj_opp_score
         wins += 1

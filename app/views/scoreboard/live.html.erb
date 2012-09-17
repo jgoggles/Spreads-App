@@ -2,10 +2,13 @@
   var current_user = <%= current_user.id%>
 </script>
 
+<div>
+Updates happen once a minute while games are going on Saturday and Sunday.  There is no need to reload the page.
+</div>
+
 <div id="live_picks">
   <h2><span id="selected_user">Jayson Bailey</span>'s Picks</h2>
   <div id="picks_container">
-    Waiting for first update.  Updates happen once a minute.
   </div>
 </div>
 
@@ -13,14 +16,23 @@
   <h2>Live Standings</h2>
   <table>
     <thead>
+      <colgroup>
+        <col style="width: 200px;" />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+        <col />
+      </colgroup>
       <tr>
-        <th class="name_column">Player</th>
+        <th>Player</th>
         <th>Record</th>
         <th>Points</th>
         <th>This Week</th>
-        <th>This Week Points</th>
-        <th>Live Points</th>
-        <th>Games Remaining</th>
+        <th>This Week Pts</th>
+        <th>Live Pts</th>
+        <th>GM</th>
       </tr>
     </thead>
     <tbody id="live_standings_body">
@@ -31,7 +43,7 @@
 <script type="text/html" id="pick_template">
   <table class="user_pick_{{user_id}} live_pick">
     <tr class="picked_team">
-      <td class="logo"><img src="{{team.logo}}" height="24px" width="24px" /><td>
+      <td class="logo"><img src="http://i.cdn.turner.com/si/.e1d/img/4.0/global/football/nfl/logos/{{team.nickname}}_50.png" height="24px" width="24px" /><td>
       <td class="abbr">{{team.abbr}}</td>
       <td>{{team.score}}</td>
       <td></td>
@@ -40,7 +52,7 @@
       <td class="game_result" rowspan="2">{{result}}</td>
     </tr>
     <tr>
-      <td class="logo"><img src="{{opponent.logo}}" height="24px" width="24px" /><td>
+      <td class="logo"><img src="http://i.cdn.turner.com/si/.e1d/img/4.0/global/football/nfl/logos/{{opponent.nickname}}_50.png" height="24px" width="24px" /><td>
       <td class="abbr">{{opponent.abbr}}</td>
       <td>{{opponent.score}}</td>
       <td>+ {{spread}}</td>
@@ -52,7 +64,7 @@
 
 <script type="text/html" id="standing_template">
   <tr id="live_standings_team_{{user_id}}">
-    <td class="name_column"><a href="#" class="user_filter" data-user-id="{{user_id}}">{{display_name}}</a></td>
+    <td><a href="#" class="user_filter" data-user-id="{{user_id}}">{{display_name}}</a></td>
     <td>{{current_record}}</td>
     <td>{{points}}</td>
     <td>{{this_week}}</td>
