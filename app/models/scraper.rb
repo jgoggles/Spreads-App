@@ -15,7 +15,7 @@ class Scraper
 
       if rows
         rows.each do |a|
-          if !a.at_css('div ul[2] li[2] span span.handicap').nil?
+          if !a.at_css('div ul.runnerListRow li[2] span span.handicap').nil?
             # matchup = a.at_css('span.title a').content.match(/(.*)\s(at|v)\s(.*)/)
             matchup = a.at_css('span.title').content.match(/(.*)\s(at|v)\s(.*)/)
             away = $1.strip!
@@ -26,22 +26,23 @@ class Scraper
             home.gsub!("NY", "New York")
             home.gsub!(".", "")
 
-            line = a.at_css('div ul[2] li[2] span span.handicap').content
+            line = a.at_css('div ul.runnerListRow li[2] span span.handicap').content
             over_under = a.at_css('div ul.twoWay[3] li[2] span span.handicap').content
             # puts "home: #{home}"
             # puts "away: #{away}"
             # puts "line: #{line}"
+            # puts "o/u: #{over_under}"
 
             lines.push(Hash.new)
             lines[rows.index(a)]['game'] = {}
             lines[rows.index(a)]['game']['home'] = home
             lines[rows.index(a)]['game']['away'] = away
             lines[rows.index(a)]['game']['over_under'] = over_under.strip!.gsub("+", "")
-            if line.strip.size == 2 && a.at_css('div ul[2] li[2] span span.price').content.strip.size == 2
+            if line.strip.size == 2 && a.at_css('div ul.runnerListRow li[2] span span.price').content.strip.size == 2
               lines[rows.index(a)]['game']['line'] = :off
-            elsif a.at_css('div ul[2] li[2] span span.price').content == "Closed"
+            elsif a.at_css('div ul.runnerListRow li[2] span span.price').content == "Closed"
               lines[rows.index(a)]['game']['line'] = :off
-            elsif line.strip.size == 2 && a.at_css('div ul[2] li[2] span span.price').content != "Closed"
+            elsif line.strip.size == 2 && a.at_css('div ul.runnerListRow li[2] span span.price').content != "Closed"
               lines[rows.index(a)]['game']['line'] = "0"
             else
               lines[rows.index(a)]['game']['line'] = line.strip!
