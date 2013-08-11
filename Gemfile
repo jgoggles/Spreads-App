@@ -5,7 +5,6 @@ gem 'rails', '3.1.0'
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 group :development do
-  gem 'mysql2'
   gem 'pry'
 end
 
@@ -18,6 +17,7 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'pg'
 gem 'jquery-rails'
 gem 'devise', "~> 1.4.8"
 gem 'cancan'
@@ -38,10 +38,6 @@ gem 'pusher'
 # gem 'resque', :require => 'resque/server'
 # gem 'resque', :git => 'git://github.com/defunkt/resque.git', :require => 'resque/server'
 # gem 'resque-scheduler'
-
-group :production do
-  gem 'pg'
-end
 
 # Use unicorn as the web server
 # gem 'unicorn'

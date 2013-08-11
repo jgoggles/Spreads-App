@@ -8,81 +8,68 @@ NFL_SCHEDULE = 'db/NFL_2012_Complete.csv'
 # all envs #
 ############
 ## Pool Types
-PoolType.connection.execute("TRUNCATE pool_types")
-PoolType.create!(name: "Kamikaze", max_picks: nil, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
-PoolType.create!(name: "3 Pick Standard", max_picks: 3, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
-
-## Years
-Year.find_or_create_by_name(name: '2012', current: true)
-Year.previous.update_attribute(:current, false) if Year.count > 1
-
-# ## Weeks
-# # Week.connection.execute("TRUNCATE weeks")
-t = Chronic.parse("Sept 4, 2012") - 12.hours
-w = 0
-17.times do
-  Week.create!(:name => w += 1, :start_date => t, :end_date => t + 1.week - 1.second, year_id: Year.last.id)
-  t += 1.week
-end
+#PoolType.connection.execute("TRUNCATE pool_types")
+#PoolType.create!(name: "Kamikaze", max_picks: nil, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
+#PoolType.create!(name: "3 Pick Standard", max_picks: 3, min_picks: 3, spreads: true, over_under: false, is_tiebreaker: false)
 
 ## Leagues
-League.connection.execute("TRUNCATE leagues")
-League.create!(:name => NFL[:name], :sport => NFL[:sport])
+#League.connection.execute("TRUNCATE leagues")
+#League.create!(:name => NFL[:name], :sport => NFL[:sport])
 
-# ## Conferences
-Conference.connection.execute("TRUNCATE conferences")
-NFL[:conferences].each { |c| Conference.create!(:name => c[:name], :league_id => League.find_by_name(NFL[:name]).id) }
+## ## Conferences
+#Conference.connection.execute("TRUNCATE conferences")
+#NFL[:conferences].each { |c| Conference.create!(:name => c[:name], :league_id => League.find_by_name(NFL[:name]).id) }
 
-# ## Divisions
-Division.connection.execute("TRUNCATE divisions")
-NFL[:conferences].each do |c|
-  c[:divisions].each do |d|
-    Division.create!(:name => d[:name]) unless !Division.find_by_name(d[:name]).nil?
-  end
-end
+## ## Divisions
+#Division.connection.execute("TRUNCATE divisions")
+#NFL[:conferences].each do |c|
+  #c[:divisions].each do |d|
+    #Division.create!(:name => d[:name]) unless !Division.find_by_name(d[:name]).nil?
+  #end
+#end
 
-# ## Teams
-Team.connection.execute("TRUNCATE teams")
-NFL[:conferences].each do |c|
-  c[:divisions].each do |d|
-    d[:teams].each do |t|
-      Team.create!(:city => t[:city], :nickname => t[:nickname],
-                   :league_id => League.find_by_name(NFL[:name]),
-                   :conference_id => Conference.find_by_name(c[:name]).id,
-                   :division_id => Division.find_by_name(d[:name]).id)
-    end
-  end
-end
+## ## Teams
+#Team.connection.execute("TRUNCATE teams")
+#NFL[:conferences].each do |c|
+  #c[:divisions].each do |d|
+    #d[:teams].each do |t|
+      #Team.create!(:city => t[:city], :nickname => t[:nickname],
+                   #:league_id => League.find_by_name(NFL[:name]),
+                   #:conference_id => Conference.find_by_name(c[:name]).id,
+                   #:division_id => Division.find_by_name(d[:name]).id)
+    #end
+  #end
+#end
 
-## Games
-Game.connection.execute("TRUNCATE games")
-Game.connection.execute("TRUNCATE game_details")
-CSV.foreach(NFL_SCHEDULE, {:headers=>:first_row}) do |row|
-  puts row[16].strip
-  home = Team.find_by_nickname(row[16].strip)
-  puts row[15].strip
-  away = Team.find_by_nickname(row[15].strip)
-  date = Chronic.parse("#{row[0]} #{row[5]}")
-  week = Week.where("start_date <= ?", date).where("end_date >= ?", date).first
-  week_id = week.id
-  game = Game.create!(:week_id => week_id, :date => date)
-  GameDetail.create!(:game_id => game.id, :team_id => home.id, :is_home => true)
-  GameDetail.create!(:game_id => game.id, :team_id => away.id, :is_home => false)
-end
+### Games
+#Game.connection.execute("TRUNCATE games")
+#Game.connection.execute("TRUNCATE game_details")
+#CSV.foreach(NFL_SCHEDULE, {:headers=>:first_row}) do |row|
+  #puts row[16].strip
+  #home = Team.find_by_nickname(row[16].strip)
+  #puts row[15].strip
+  #away = Team.find_by_nickname(row[15].strip)
+  #date = Chronic.parse("#{row[0]} #{row[5]}")
+  #week = Week.where("start_date <= ?", date).where("end_date >= ?", date).first
+  #week_id = week.id
+  #game = Game.create!(:week_id => week_id, :date => date)
+  #GameDetail.create!(:game_id => game.id, :team_id => home.id, :is_home => true)
+  #GameDetail.create!(:game_id => game.id, :team_id => away.id, :is_home => false)
+#end
 
 
-## Roles
-Role.connection.execute("TRUNCATE roles")
-%w{Admin Member PoolAdmin}.each { |r| Role.create(name: r) }
+### Roles
+#Role.connection.execute("TRUNCATE roles")
+#%w{Admin Member PoolAdmin}.each { |r| Role.create(name: r) }
 
-# ## Badges
-Badge.connection.execute("TRUNCATE badges")
-Badge.create!(name: "Drunk Driver", desc: "Picking a game in which the Cincinnati Bengals are involved.", image: "drunk_driver")
-Badge.create!(name: "Homer", desc: "Picking your favorite team.", image: "homer")
-Badge.create!(name: "Toxic", desc: "Picking against your favorite team.", image: "traitor")
-Badge.create!(name: "Skin of Your Teeth", desc: "Winning by less than 3 point ATS.", image: "skin_of_your_teeth")
-Badge.create!(name: "Tough Luck", desc: "Losing by less than 3 points ATS", image: "tough_luck")
-Badge.create!(name: "Pusher", desc: "Pushing is hard.", image: "pusher")
+## ## Badges
+#Badge.connection.execute("TRUNCATE badges")
+#Badge.create!(name: "Drunk Driver", desc: "Picking a game in which the Cincinnati Bengals are involved.", image: "drunk_driver")
+#Badge.create!(name: "Homer", desc: "Picking your favorite team.", image: "homer")
+#Badge.create!(name: "Toxic", desc: "Picking against your favorite team.", image: "traitor")
+#Badge.create!(name: "Skin of Your Teeth", desc: "Winning by less than 3 point ATS.", image: "skin_of_your_teeth")
+#Badge.create!(name: "Tough Luck", desc: "Losing by less than 3 points ATS", image: "tough_luck")
+#Badge.create!(name: "Pusher", desc: "Pushing is hard.", image: "pusher")
 
 
 ###############
