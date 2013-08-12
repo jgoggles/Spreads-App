@@ -2,14 +2,14 @@ desc "Prepare database for 2013 NFL season."
 task :setup_2013 => :environment do
   NFL_SCHEDULE = 'db/NFL_2013_Complete.csv'
 
-  #puts 'Preparing database for 2013 NFL season...'
+  puts 'Preparing database for 2013 NFL season...'
 
-  ### Years
-  #puts 'Creating Year 2013 and setting to current...'
-  #Year.find_or_create_by_name(name: '2013', current: true)
-  #Year.previous.update_attribute(:current, false) if Year.count > 1
+  ## Years
+  puts 'Creating Year 2013 and setting to current...'
+  Year.find_or_create_by_name(name: '2013', current: true)
+  Year.previous.update_attribute(:current, false) if Year.count > 1
 
-  ### Weeks
+  ## Weeks
   puts 'Creating weeks...'
   t = Chronic.parse("Sept 3, 2013") - 12.hours
   w = 0
