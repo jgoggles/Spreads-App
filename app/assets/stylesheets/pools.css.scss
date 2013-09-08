@@ -1,3 +1,9 @@
-// Place all the styles related to the Pools controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.picks-alert { 
+  background: green; 
+  padding: 8px;
+  text-align: center;
+  
+  a { color: white;
+      font-weight: bold;
+    }
+}
