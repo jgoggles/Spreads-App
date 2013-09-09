@@ -1,4 +1,10 @@
 <% if can? :read, @pool %>
+  <% if @pool.all_picks_in && @pool.year == Year.current %>
+    <div class="picks-alert">
+      <%= link_to "All picks are in! Click here to view picks for this week", pool_standings_for_week_path(@pool, Week.current.name.to_i) %>
+    </div>
+  <% end %>
+
   <section class="left">
   <div class="sub-container pick_set">
     <% if @pool.over? %>
