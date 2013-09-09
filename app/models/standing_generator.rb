@@ -9,8 +9,8 @@ class StandingGenerator
   end
 
   class << self
-    def generate_standings(process_non_picks = false)
-      return if Week.current.is_week_one_or_offseason?
+    def generate_standings(process_non_picks = false, force = false)
+      return if Week.current.is_week_one_or_offseason? && !force
 
       if process_non_picks
         User.all.each do |user|
