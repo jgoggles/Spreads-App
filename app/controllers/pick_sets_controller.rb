@@ -8,6 +8,7 @@ class PickSetsController < ApplicationController
   before_filter :load_pool_rules
   before_filter :check_for_current_week_pick_set, :only => :new
   before_filter :check_for_paid
+  before_filter :check_for_pick_cutoff_time
 
   # GET /pick_sets/1
   # GET /pick_sets/1.json
@@ -121,6 +122,13 @@ class PickSetsController < ApplicationController
         redirect_to pool_path(@pool)
         flash[:notice] = "You need to pay your pool entry fee before being able to make picks."
       end
+    end
+  end
+
+  def check_for_pick_cutoff_time
+    if (Chronic.parse('this sunday 11am') < Week.previous.end_date) && (Chronic.parse('this sunday 11am') > Time.now)
+      redirect_to pool_path(@pool)
+      flash[:notice] = "You must make your picks before Sunday at 11am MST."
     end
   end
 end
