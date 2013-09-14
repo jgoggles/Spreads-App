@@ -2,6 +2,7 @@ class PoolsController < ApplicationController
   load_and_authorize_resource :except => [:show, :achievements]
 
   before_filter :authenticate_user!
+  before_filter :load_current_week
 
   # GET /pools
   # GET /pools.json
