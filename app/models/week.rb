@@ -36,4 +36,8 @@ class Week < ActiveRecord::Base
   def is_week_one_or_offseason?
     is_week_one? || is_offseason?
   end
+
+  def pick_cutoff_passed?
+    Date.today.sunday? && (Time.now > Chronic.parse('11am'))
+  end
 end
