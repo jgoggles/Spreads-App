@@ -126,7 +126,7 @@ class PickSetsController < ApplicationController
   end
 
   def check_for_pick_cutoff_time
-    if (Chronic.parse('this sunday 11am') < Week.previous.end_date) && (Chronic.parse('this sunday 11am') > Time.now)
+    if Date.today.sunday? && (Time.now > Chronic.parse('11am'))
       redirect_to pool_path(@pool)
       flash[:notice] = "You must make your picks before Sunday at 11am MST."
     end
