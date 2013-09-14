@@ -15,7 +15,7 @@ class StandingsController < ApplicationController
 
   def show
     unless @pool.over?
-      if (params[:week_id].to_i > Week.current.name.to_i) || ((!@week.pick_cutoff_passed || !@pool.all_picks_in) && params[:week_id].to_i == Week.current.name.to_i)
+      if (params[:week_id].to_i > Week.current.name.to_i) || ((!@week.pick_cutoff_passed? || !@pool.all_picks_in) && params[:week_id].to_i == Week.current.name.to_i)
         raise ActionController::RoutingError.new('Not Found')
       end
     end
