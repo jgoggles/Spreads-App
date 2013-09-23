@@ -155,4 +155,18 @@ class PickSet < ActiveRecord::Base
     return most_picked
   end
 
+  def self.team_breakdown(pick_sets)
+    teams = {}
+    Team.all.sort_by { |t| t.nickname }.each do |team|
+      teams[team.nickname] = []
+    end
+
+    pick_sets.each do |ps|
+      ps.picks.each do |p|
+        teams[p.team.nickname] << p
+      end
+    end
+
+    teams
+  end
 end

@@ -55,6 +55,8 @@
 
 <h3>Picks for Week <%= @week.name %></h3>
 
+<span id="player-breakdown"></span>
+<a href="#team-breakdown"> View Team Breakdown</a>
 <table>
   <thead>
     <th>Player</th>
@@ -93,6 +95,50 @@
             <td><%= pick.team.nickname %><span>&nbsp;<%= pick.display_opponent %></span></td>
             <td><%= pick.spread %></td>
           <% end %>
+          <% if @pool.pool_type.allow_same_game %>
+            <td><%= pick.count %></td>
+          <% end %>
+          <td class="<%= pick.result_in_words.downcase %>"><%= pick.result_in_words %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<span id="team-breakdown"></span>
+<a href="#player-breakdown"> View Player Breakdown</a>
+<table id="team-breakdown">
+  <thead>
+    <th>Team</th>
+    <th>Player</th>
+    <th>Spread</th>
+    <% if @pool.pool_type.allow_same_game %>
+      <th>Units</th>
+    <% end %>
+    <th>Result</th>
+  </thead>
+  <tbody>
+    <% @team_breakdown.each do |team, picks| %>
+      <tr class="shade">
+        <td><%= team %></td>
+        <td></td>
+        <td></td>
+        <% if @pool.pool_type.allow_same_game %>
+          <td></td>
+        <% end %>
+        <td></td>
+      </tr>
+      <% if picks.empty? %>
+        <tr>
+          <td></td>
+          <td>No picks</td>
+        </tr>
+      <% end %>
+      <% picks.each do |pick| %>
+        <tr>
+          <td></td>
+          <td><%= pick.pick_set.user.display_name %></span></td>
+          <td><%= pick.spread %></td>
           <% if @pool.pool_type.allow_same_game %>
             <td><%= pick.count %></td>
           <% end %>

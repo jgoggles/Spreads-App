@@ -30,6 +30,7 @@ class StandingsController < ApplicationController
     @favorite_vs_underdog = PickSet.favorite_vs_underdog(@pick_sets)
     @most_action = PickSet.most_action(@pick_sets)
     @most_picked = PickSet.most_picked(@pick_sets)
+    @team_breakdown = PickSet.team_breakdown(@pick_sets)
   end
 
   private
