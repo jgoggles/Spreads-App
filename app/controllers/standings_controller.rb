@@ -8,6 +8,7 @@ class StandingsController < ApplicationController
 
   def index
     unless Week.current.is_week_one_or_offseason? && !@pool.over?
+      #@standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}_production")).sort_by { |i| -i['points'] }
       @standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}_#{Rails.env}")).sort_by { |i| -i['points'] }
     end
     @pick_sets = current_user.pick_sets.where('pool_id = ?', @pool.id).order("created_at ASC")

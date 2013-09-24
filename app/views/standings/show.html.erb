@@ -120,7 +120,7 @@
   <tbody>
     <% @team_breakdown.each do |team, picks| %>
       <tr class="shade">
-        <td><%= team %></td>
+        <td><%= team %> - <%= picks.size%></td>
         <td></td>
         <td></td>
         <% if @pool.pool_type.allow_same_game %>
