@@ -20,7 +20,7 @@ class StandingsController < ApplicationController
         raise ActionController::RoutingError.new('Not Found')
       end
 
-      if !@pool.all_picks_in && !@week.pick_cutoff_passed?
+      if !@pool.all_picks_in && !@week.pick_cutoff_passed? && (params[:week_id].to_i == Week.current.name.to_i)
         raise ActionController::RoutingError.new('Not Found')
       end
     end
