@@ -163,7 +163,7 @@ class PickSet < ActiveRecord::Base
 
     pick_sets.each do |ps|
       ps.picks.each do |p|
-        teams[p.team.nickname] << p
+        teams[p.team.nickname] << p rescue next
       end
     end
 
