@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120909203915) do
+ActiveRecord::Schema.define(:version => 20131004214532) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -153,9 +153,9 @@ ActiveRecord::Schema.define(:version => 20120909203915) do
     t.string   "name"
     t.boolean  "free"
     t.integer  "cost"
-    t.integer  "first_place_payout"
-    t.integer  "second_place_payout"
-    t.integer  "third_place_payout"
+    t.float    "first_place_payout"
+    t.float    "second_place_payout"
+    t.float    "third_place_payout"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "hashed_id"
@@ -164,6 +164,8 @@ ActiveRecord::Schema.define(:version => 20120909203915) do
     t.integer  "max_players"
     t.integer  "min_players"
     t.integer  "year_id"
+    t.float    "fourth_place_payout"
+    t.float    "fifth_place_payout"
   end
 
   create_table "rails_admin_histories", :force => true do |t|
