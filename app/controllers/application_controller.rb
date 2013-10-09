@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_filter :load_current_week
 
   # rescue_from CanCan::AccessDenied do |exception|
   #   flash[:error] = exception.message
