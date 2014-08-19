@@ -54,6 +54,7 @@ class PoolsController < ApplicationController
   # POST /pools.json
   def create
     @pool = Pool.new(params[:pool])
+    @pool.year = Year.current
 
     respond_to do |format|
       if @pool.save

@@ -55,7 +55,7 @@ GEM
       sass-rails (~> 3.1)
     builder (3.0.3)
     cancan (1.6.5)
-    chronic (0.7.0)
+    chronic (0.10.2)
     coderay (1.0.7)
     coffee-rails (3.1.0)
       coffee-script (>= 2.2.0)
