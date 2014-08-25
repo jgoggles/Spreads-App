@@ -11,7 +11,7 @@ task :setup_2014 => :environment do
 
   ## Weeks
   puts 'Creating weeks...'
-  t = Chronic.parse("Sept 2, 2013") - 12.hours
+  t = Chronic.parse("Sept 2, 2014") - 12.hours
   w = 0
   17.times do
     Week.create!(:name => w += 1, :start_date => t, :end_date => t + 1.week - 1.second, year_id: Year.last.id)

@@ -4,7 +4,7 @@ class Year < ActiveRecord::Base
   has_many :weeks
   has_many :pools
 
-  LINES_OPEN = Chronic.parse('August 22, 2013') - 12.hours
+  LINES_OPEN = Chronic.parse('August 22, 2014') - 12.hours
 
   def self.current
     self.where(current: true).last

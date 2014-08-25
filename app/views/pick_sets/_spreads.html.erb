@@ -1,5 +1,5 @@
 <% if game.spread != :picked %>
-  <div id="<%= game.away.team.id %>" class="team-line away" data-behaviors='pick-values'>
+  <div id="team_<%= game.away.team.id %>" class="team-line away" data-behaviors='pick-values'>
     <div class="click-to-pick">Click to select</div>
     <span class="team"><%= image_tag game.away.team.logo, :class => "team_logo" %><%= game.away.team.nickname %></span>
     <span class="spread">
@@ -11,7 +11,7 @@
     </span>
   </div>
   <p class="at">at</p>
-  <div id="<%= game.home.team.id %>" class="team-line home" data-behaviors='pick-values'>
+  <div id="team_<%= game.home.team.id %>" class="team-line home" data-behaviors='pick-values'>
     <div class="click-to-pick">Click to select</div>
     <span class="team"><%= image_tag game.home.team.logo, :class => "team_logo" %><%= game.home.team.nickname %></span>
     <span class="spread"><%= game.spread.to_f > 0 ? '+' : '' %><%= game.spread.to_f %></span>

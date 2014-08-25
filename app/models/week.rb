@@ -38,7 +38,8 @@ class Week < ActiveRecord::Base
   end
 
   def pick_cutoff_passed?
-    return true if Date.today.sunday? && (Time.now > Chronic.parse('11am'))
+    return false if Time.now < Year.last.weeks.first.start_date
+    return true if Date.today.sunday? && (Time.now > Chronic.parse('10am'))
     return true if Date.today.monday?
     false
   end

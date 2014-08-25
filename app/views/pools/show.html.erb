@@ -1,5 +1,5 @@
 <% if can? :read, @pool %>
-  <% if (@week.pick_cutoff_passed? || @pool.all_picks_in) && @pool.year == Year.current %>
+  <% if (@week.pick_cutoff_passed? || @pool.all_picks_in) && !@pool.preseason? %>
     <div class="picks-alert">
       <%= link_to "All picks are in! Click here to view picks for this week", pool_standings_for_week_path(@pool, Week.current.name.to_i) %>
     </div>

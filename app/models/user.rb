@@ -84,6 +84,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def admin?
+    role?(:admin)
+  end
+
   def picks_made(pool)
     pick_set_for_this_week(pool).picks.size rescue 0
   end

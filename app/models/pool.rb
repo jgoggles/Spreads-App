@@ -21,6 +21,14 @@ class Pool < ActiveRecord::Base
     !self.year.current? || Time.now > self.year.weeks.last.end_date
   end
 
+  def started?
+    self.year.current? && Time.now > self.year.weeks.first.start_date
+  end
+
+  def preseason?
+    !over? && !started?
+  end
+
   def cost_if_not_free
     if !free and cost.nil?
       errors[:base] << "You must enter a cost for your paid league"
