@@ -100,10 +100,12 @@ class PickSetsController < ApplicationController
     if request.post?
       @pick_set = current_user.pick_set_for_this_week(@pool)
       @pick_set ||= current_user.pick_sets.create(pool_id: @pool.id, week_id: @week.id)
-      @picks = params[:_json]
-      @picks.each do |pick|
-        unless @pick_set.contains_pick(pick[:game_id], pick[:team_id])
-          @pick_set.picks.create pick
+      unless @pick_set.picks.size == 3
+        @picks = params[:_json]
+        @picks.each do |pick|
+          unless @pick_set.contains_pick(pick[:game_id], pick[:team_id])
+            @pick_set.picks.create pick
+          end
         end
       end
       respond_to do |format|
