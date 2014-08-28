@@ -2,7 +2,7 @@ class PickSetsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_current_week
   load_and_authorize_resource :pool
-  load_and_authorize_resource :pick_set, :through => :pool, :except => [:show, :edit, :update]
+  load_and_authorize_resource :pick_set, :through => :pool, :except => [:show, :edit, :update, :user, :build]
 
   before_filter :load_pool_and_title
   before_filter :load_pool_rules
