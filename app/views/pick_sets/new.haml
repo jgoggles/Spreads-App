@@ -1,0 +1,35 @@
+:javascript
+  var poolID = "#{@pool.hashed_id}";
+
+%div{"ng-controller" => "PickSetsController", "ng-init" => "loadData()"}
+  %table#pick_set_games
+    %thead
+      %th
+      %th
+        Away
+      %th
+        Spread
+      %th
+      %th
+        Home
+      %th
+        Spead
+    %tbody
+      %tr{"ng-repeat" => "game in games", "ng-class" => "{disabled: disabled(game)}"}
+        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"} 
+          %img{"ng-src" => "{{game.away.logo}}"}
+        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"} 
+          {{game.away.nickname}}
+        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"} 
+          {{game.away.spread}}
+        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"} 
+          %img{"ng-src" => "{{game.home.logo}}"}
+        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"} 
+          {{game.home.nickname}}
+        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"} 
+          {{game.home.spread}}
+        %td{"ng-show" => "gameAlreadyPicked(game)"} You picked this game.
+  %button{"ng-click" => "submitPicks()"}
+    Submit
+      
+
