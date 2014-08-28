@@ -6,5 +6,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require mustache
+//= require angular
+//= require angular-resource
+//= require underscore-min
+//= require main
 //= require_tree .

@@ -69,4 +69,12 @@ class Game < ActiveRecord::Base
     !home.score.nil? and !away.score.nil?
   end
 
+  def display_spread(home = true)
+    if spread.to_f >= 0
+      return home ? spread : (spread.gsub('+', '-'))
+    else
+      return home ? spread : (spread.gsub('-', '+'))
+    end
+  end
+
 end

@@ -5,6 +5,8 @@ class Pick < ActiveRecord::Base
   has_many :earned_badges
   before_create :set_count
 
+  attr_accessible :spread, :pick_set_id, :team_id, :game_id
+
   def generate_result
     unless game_id == 0
       if game.has_scores and game.has_started

@@ -6,13 +6,11 @@
   <%= f.label :email %>
   <%= f.email_field :email %>
 
-  <% if @user.password_required? %>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
 
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  <% end %>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
 
   <%= f.label :favorite_nfl_team_id %>
   <%= f.select :favorite_nfl_team_id, Team.order("nickname").collect { |t| [t.nickname, t.id] }, :include_blank => true %> 
@@ -20,4 +18,4 @@
   <p><%= f.submit "Sign up" %></p>
 <% end %>
 
-<%= render :partial => "devise/shared/links" %>
+<%#= render :partial => "devise/shared/links" %>

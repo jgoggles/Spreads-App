@@ -46,6 +46,11 @@ class PickSet < ActiveRecord::Base
     end
   end
 
+  def contains_pick(game_id, team_id)
+    pick = [game_id, team_id]
+    self.picks.map { |p| [p.game_id, p.team_id] }.include? pick
+  end
+
   def has_max_picks
     max = pool.pool_type.max_picks
     if max.nil?

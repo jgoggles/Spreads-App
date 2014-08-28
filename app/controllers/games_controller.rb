@@ -3,6 +3,9 @@ class GamesController < ApplicationController
 
   before_filter :authenticate_user!
 
+  def load
+    @games = Game.with_spreads
+  end
   def index
     @games = Game.order("week_id")
   end

@@ -23,7 +23,7 @@
   <%= yield :head %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body ng-app="app">
   <div id="header-container">
     <header id="header" class="group">
       <h1 id="header-home"><%= link_to "Spreads +/-", root_path %></h1>
@@ -33,7 +33,7 @@
             <li><%= link_to "Account", edit_user_registration_path %></li>
             <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
           <% else %>
-            <li><%= link_to "Login/Signup", authentications_path %></li>
+            <li><%= link_to "Login/Signup", new_user_session_path %></li>
           <% end %>
         </ul>
       </nav>

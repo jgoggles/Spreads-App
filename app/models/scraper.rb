@@ -27,7 +27,7 @@ class Scraper
             home.gsub!(".", "")
 
             line = a.at_css('div ul.runnerListRow li.runner[2] span span.handicap').content
-            over_under = a.at_css('div ul.twoWay[3] li.runner[2] span span.handicap').content
+            over_under = a.css('div ul.twoWay')[2].at_css('li.runner[2] span span.handicap').content
             # puts "home: #{home}"
             # puts "away: #{away}"
             # puts "line: #{line}"
@@ -38,11 +38,11 @@ class Scraper
             lines[rows.index(a)]['game']['home'] = home
             lines[rows.index(a)]['game']['away'] = away
             lines[rows.index(a)]['game']['over_under'] = over_under.strip!.gsub("+", "")
-            if line.strip.size == 2 && a.at_css('div ul.runnerListRow li.runner[2] span span.price').content.strip.size == 2
+            if line.strip.size == 1 && a.at_css('div ul.runnerListRow li.runner[2] span span.price').content.strip.size == 1
               lines[rows.index(a)]['game']['line'] = :off
             elsif a.at_css('div ul.runnerListRow li.runner[2] span span.price').content == "Closed"
               lines[rows.index(a)]['game']['line'] = :off
-            elsif line.strip.size == 2 && a.at_css('div ul.runnerListRow li.runner[2] span span.price').content != "Closed"
+            elsif line.strip.size == 1 && a.at_css('div ul.runnerListRow li.runner[2] span span.price').content != "Closed"
               lines[rows.index(a)]['game']['line'] = "0"
             else
               lines[rows.index(a)]['game']['line'] = line.strip!
@@ -59,12 +59,12 @@ class Scraper
 
       REDIS.set("lines", lines.to_json)
     rescue Exception => e
-      print e, "\n"
+      #print e, "\n"
     end
 
     def parse_nfl_scores(week = Week.current)
-      #url = "http://www.nfl.com/scores/2013/REG#{week.name}"
-      url = "http://www.nfl.com/scores/2014/PRE#{week.name}"
+      url = "http://www.nfl.com/scores/2014/REG#{week.name}"
+      #url = "http://www.nfl.com/scores/2014/PRE3"
 
       doc = Nokogiri::HTML(open(url))
 
@@ -76,6 +76,7 @@ class Scraper
         parsed_away_team = score_div.at_css('div.away-team p.team-name a').content
         home_score = score_div.at_css('div.home-team p.total-score').content
         away_score = score_div.at_css('div.away-team p.total-score').content
+        puts "#{parsed_away_team} #{away_score} - #{parsed_home_team} #{home_score}"
 
         home_team = Team.find_by_nickname(parsed_home_team).games.where("week_id = ?", week.id).first.home
         home_team.score = home_score

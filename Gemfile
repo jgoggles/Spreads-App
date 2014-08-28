@@ -1,28 +1,30 @@
 source 'http://rubygems.org'
 
-# gem 'rails', :git => "git://github.com/rails/rails.git", :branch => "3-1-stable"
-gem 'rails', '3.1.0'
+ruby '2.0.0'
+gem 'rails', '~> 4.0.3'
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+
+gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'haml'
+gem 'rabl'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'jquery-ui-rails'
+gem 'jquery-datatables-rails'
+gem 'uglifier'
+gem 'angularjs-rails'
+
+gem 'jquery-rails'
 
 group :development do
   gem 'pry'
 end
 
-
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails', "  ~> 3.1.0.rc"
-  gem 'coffee-rails', "~> 3.1.0.rc"
-  gem 'uglifier'
-end
-
 gem 'pg'
-gem 'jquery-rails'
-gem 'devise', "~> 1.4.8"
+gem 'devise', '3.0.0'
 gem 'cancan'
 gem 'nifty-generators'
-gem 'omniauth', '>= 0.2.6'
+#gem 'omniauth', '>= 0.2.6'
 gem 'nokogiri'
 gem 'chronic'
 gem 'mongrel', '1.2.0.pre2'
@@ -31,25 +33,15 @@ gem 'newrelic_rpm'
 
 gem 'thin'
 
-gem 'delayed_job'
+gem 'delayed_job_active_record'
 gem 'redis'
 gem 'pusher'
-
-# gem 'resque', :require => 'resque/server'
-# gem 'resque', :git => 'git://github.com/defunkt/resque.git', :require => 'resque/server'
-# gem 'resque-scheduler'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
 
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
   gem "mocha"
 end
+
+gem 'protected_attributes'
+gem 'rails-observers'

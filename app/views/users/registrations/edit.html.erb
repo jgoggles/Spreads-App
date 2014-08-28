@@ -16,21 +16,18 @@
   <%= f.label :favorite_nfl_team_id %>
   <%= f.select :favorite_nfl_team_id, Team.order("nickname").collect { |t| [t.nickname, t.id] }, :include_blank => true %> 
 
-  <% if current_user.authentications.empty? %>
-    <label>Password <i>(leave blank if you don't want to change it)</i></label>
-    <%= f.password_field :password %>
+  <label>Password <i>(leave blank if you don't want to change it)</i></label>
+  <%= f.password_field :password %>
 
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
 
-    <label>Current password<i>(we need your current password to confirm your changes)</i></label>
-    <%= f.password_field :current_password %>
-  <% end %>
+  <label>Current password<i>(we need your current password to confirm your changes)</i></label>
+  <%= f.password_field :current_password %>
 
   <p><%= f.submit "Update" %></p>
 <% end %>
 
-<p><%= link_to "Third party services", authentications_path %></p>
 <%#= link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete %>
 
 <%= link_to "Back", :back %>

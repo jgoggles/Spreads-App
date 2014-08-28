@@ -6,7 +6,7 @@ class PickSetsController < ApplicationController
 
   before_filter :load_pool_and_title
   before_filter :load_pool_rules
-  before_filter :check_for_current_week_pick_set, :only => :new
+  #before_filter :check_for_current_week_pick_set, :only => :new
   before_filter :check_for_paid
   before_filter :check_for_pick_cutoff_time
 
@@ -96,6 +96,29 @@ class PickSetsController < ApplicationController
     end
   end
 
+  def build
+    if request.post?
+      @pick_set = current_user.pick_set_for_this_week(@pool)
+      @pick_set ||= current_user.pick_sets.create(pool_id: @pool.id, week_id: @week.id)
+      @picks = params[:_json]
+      @picks.each do |pick|
+        unless @pick_set.contains_pick(pick[:game_id], pick[:team_id])
+          @pick_set.picks.create pick
+        end
+      end
+      respond_to do |format|
+        format.html {redirect_to :back}
+        format.json {render json: @params}
+      end
+    end
+  end
+
+  def user
+    @user = current_user
+    @pick_set = current_user.pick_set_for_this_week(@pool)
+    @picks = @pick_set.nil? ? [] : @pick_set.picks
+  end
+
   private
   def load_pool_and_title
     @pool = Pool.find(params[:pool_id])
@@ -128,7 +151,7 @@ class PickSetsController < ApplicationController
   def check_for_pick_cutoff_time
     if @week.pick_cutoff_passed?
       redirect_to pool_path(@pool)
-      flash[:notice] = "You must make your picks before Sunday at 11am MST."
+      flash[:notice] = "You must make your picks before Sunday at 10am MST."
     end
   end
 end
