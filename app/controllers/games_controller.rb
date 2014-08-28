@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :game, except: [:load]
 
   before_filter :authenticate_user!
 
