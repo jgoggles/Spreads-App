@@ -1,5 +1,8 @@
 collection @games
-attributes :id
+attributes :id,:date
+node(:has_started) do |g|
+  g.has_started
+end
 node(:home) do |g|
   game_detail = g.game_details.where(is_home: true).first
   team = game_detail.team
