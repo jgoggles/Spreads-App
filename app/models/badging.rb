@@ -46,7 +46,7 @@ class Badging
   def pick_check_for_drunk_driver(pick)
     badge = Badge.find_by_name("Drunk Driver")
     b = Team.find_by_nickname("Bengals")
-    if pick.game.teams.include?(b)
+    if pick.game.teams.map(&:id).include?(b.id)
       Badging.create_for_pick(badge, pick)
     end
   end
@@ -54,7 +54,7 @@ class Badging
   def pick_check_for_bungled(pick)
     badge = Badge.find_by_name("Bungled")
     b = Team.find_by_nickname("Bengals")
-    if pick.game.teams.include?(b) and pick.loss?
+    if pick.game.teams.map(&:id).include?(b.id) and pick.loss?
       Badging.create_for_pick(badge, pick)
     end
   end
