@@ -5,7 +5,7 @@ class Pick < ActiveRecord::Base
   has_many :earned_badges
   before_create :set_count
 
-  attr_accessible :spread, :pick_set_id, :team_id, :game_id
+  attr_accessible :spread, :pick_set_id, :team_id, :game_id, :result
 
   def generate_result
     unless game_id == 0
