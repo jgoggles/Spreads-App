@@ -74,7 +74,7 @@ class PoolsController < ApplicationController
     @pool = Pool.find(params[:id])
 
     respond_to do |format|
-      if @pool.update_attributes(params[:pool])
+      if @pool.update_attributes!(params[:pool])
         format.html { redirect_to @pool, notice: 'Pool was successfully updated.' }
         format.json { head :ok }
       else
@@ -101,4 +101,3 @@ class PoolsController < ApplicationController
     # @badges = current_user.earned_badges.where("pool_id = ?", @pool.id).select("DISTINCT(badge_id)")
     @badges = current_user.earned_badges.where("pool_id = ?", @pool.id)
   end
-end

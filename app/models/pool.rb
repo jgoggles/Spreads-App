@@ -17,6 +17,8 @@ class Pool < ActiveRecord::Base
   validate :cost_if_not_free
   validate :password_if_private
 
+  attr_accessible :name, :pool_type_id, :min_players, :max_players, :private, :password, :free, :cost, :first_place_payout, :second_place_payout, :third_place_payout, :fourth_place_payout, :fifth_place_payout
+
   def over?
     !self.year.current? || Time.now > self.year.weeks.last.end_date
   end
