@@ -1,5 +1,5 @@
 class PoolsController < ApplicationController
-  load_and_authorize_resource :except => [:show, :achievements]
+  load_and_authorize_resource :except => [:show, :achievements, :rules]
 
   before_filter :authenticate_user!
   before_filter :load_current_week
@@ -103,6 +103,5 @@ class PoolsController < ApplicationController
   end
 
   def rules
-
   end
 end
