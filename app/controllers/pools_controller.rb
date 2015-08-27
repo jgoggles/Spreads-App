@@ -103,5 +103,6 @@ class PoolsController < ApplicationController
   end
 
   def rules
+    @pool = Pool.find(params[:id])
   end
 end
