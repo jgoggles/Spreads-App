@@ -219,7 +219,7 @@
     <% end %>
 
     <% if @pool.private? %>
-      <%= f.label :password %>
+      <%= f.label "Pool Password" %>
       <%= f.password_field :password %>
     <% end %>
     <%= f.hidden_field :pool_id, :value => @pool.hashed_id %>
