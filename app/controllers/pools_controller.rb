@@ -101,4 +101,8 @@ class PoolsController < ApplicationController
     # @badges = current_user.earned_badges.where("pool_id = ?", @pool.id).select("DISTINCT(badge_id)")
     @badges = current_user.earned_badges.where("pool_id = ?", @pool.id)
   end
+
+  def rules
+
+  end
 end

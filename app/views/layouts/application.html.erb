@@ -26,6 +26,9 @@
 <body ng-app="app">
   <div id="header-container">
     <header id="header" class="group">
+      <h4 id="reminder">
+        REMINDER: Picks must be made by 10AM Mountain Standard Time each Sunday.
+      </h4>
       <h1 id="header-home"><%= link_to "Spreads +/-", root_path %></h1>
       <nav id="primary-nav" class="group">
         <ul class="primaryNav group">
@@ -40,7 +43,7 @@
     </header>
   </div>
   <div id="container">
-    <% if (controller.controller_name == "pools" and controller.action_name =~ /show|achievements/ ) or !params[:pool_id].nil? %>
+    <% if (controller.controller_name == "pools" and controller.action_name =~ /show|achievements|rules/ ) or !params[:pool_id].nil? %>
       <%= render 'pool_nav' %>
     <% end %>
 

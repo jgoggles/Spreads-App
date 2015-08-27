@@ -57,14 +57,15 @@ class Scraper
         end
       end
 
-      REDIS.set("lines", lines.to_json)
+      #REDIS.set("lines", lines.to_json)
+      puts lines
     rescue Exception => e
-      #print e, "\n"
+      print e, "\n"
     end
 
     def parse_nfl_scores(week = Week.current)
-      url = "http://www.nfl.com/scores/2014/REG#{week.name}"
-      #url = "http://www.nfl.com/scores/2014/PRE3"
+      url = "http://www.nfl.com/scores/2015/REG#{week.name}"
+      #url = "http://www.nfl.com/scores/2015/PRE2"
 
       doc = Nokogiri::HTML(open(url))
 

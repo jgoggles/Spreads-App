@@ -9,6 +9,7 @@ class PickSetsController < ApplicationController
   #before_filter :check_for_current_week_pick_set, :only => :new
   before_filter :check_for_paid
   before_filter :check_for_pick_cutoff_time
+  before_filter :check_for_pick_access, :only => [:new, :edit]
 
   # GET /pick_sets/1
   # GET /pick_sets/1.json
@@ -138,6 +139,13 @@ class PickSetsController < ApplicationController
     unless current_user.pick_set_for_this_week(@pool).nil?
       pick_set = current_user.pick_set_for_this_week(@pool)
       redirect_to edit_pool_pick_set_path(@pool, pick_set)
+    end
+  end
+
+  def check_for_pick_access
+    if !current_user.can_make_picks?(@week, @pool)
+      redirect_to pool_path(@pool)
+      flash[:notice] = "You cannot make picks at this time."
     end
   end
 

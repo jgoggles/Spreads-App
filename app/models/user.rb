@@ -136,6 +136,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def can_make_picks?(week, pool)
+    return false if week.pick_cutoff_passed?
+    pick_set = self.pick_set_for_this_week(pool)
+    return false if pick_set && pick_set.has_max_picks
+    return false if Time.now < Year::LINES_OPEN
+    return false if pool.over?
+    true
+  end
+
+
   private
   def add_default_role
     self.roles << Role.find_or_create_by_name("Member")

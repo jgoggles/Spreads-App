@@ -113,6 +113,7 @@ a:hover { color: $grey-blue; }
   header { margin: 0 auto; padding: 3px 0; width: $width;
     #header-home a { font-weight: 400; letter-spacing: 5px; padding: 2px 4px; text-transform: uppercase; }
     #header-home a:hover { background: $dark-blue; }
+    #reminder { background: red; color: white; padding: 3px; text-align: center; }
   }
   #primary-nav {
     float: right;

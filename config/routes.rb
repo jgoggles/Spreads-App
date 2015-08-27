@@ -24,6 +24,7 @@ Spreads::Application.routes.draw do
     match 'update_pool_users' => 'pools/players#update_pool_users', :as => "update_players", via: [:get, :post]
     member do
       get 'achievements', :as => 'achievements'
+      get 'rules', :as => 'rules'
     end
     get '/live' => 'scoreboard#live'
   end

@@ -1,10 +1,12 @@
 require 'chronic'
 
 class Year < ActiveRecord::Base
-  has_many :weeks
+  has_many :weeks, dependent: :destroy
   has_many :pools
 
-  LINES_OPEN = Chronic.parse('August 22, 2014') - 12.hours
+  attr_accessible :name, :current
+
+  LINES_OPEN = Chronic.parse('September 1, 2015') - 12.hours
 
   def self.current
     self.where(current: true).last

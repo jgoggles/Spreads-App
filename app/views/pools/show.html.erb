@@ -5,6 +5,13 @@
     </div>
   <% end %>
 
+  <% if Time.now < Year::LINES_OPEN %>
+    <div class="picks-alert">
+      <%= "You will be able to make picks on #{Year::LINES_OPEN.strftime("%m/%d/%Y")}." %>
+    </div>
+  <% end %>
+
+
   <section class="left">
   <div class="sub-container pick_set">
     <% if @pool.over? %>

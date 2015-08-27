@@ -2,7 +2,7 @@
   <ul id="pool-nav" class="group">
     <li><%= link_to "Pool Dashboard", @pool %></li>
     <li><%= link_to "Standings", pool_standings_path(@pool) %></li>
-    <% unless @week.pick_cutoff_passed? || (current_user.pick_set_for_this_week(@pool) and current_user.pick_set_for_this_week(@pool).has_max_picks) %>
+    <% if current_user.can_make_picks?(@week, @pool) %>
       <li><%= link_to "Make Picks", new_pool_pick_set_path(@pool) %></li>
     <% end %>
     <% if can? :update, @pool %>
@@ -10,6 +10,7 @@
     <% end %>
     <li><%= link_to "Message Board", pool_topics_path(@pool) %></li>
     <li><%= link_to "Achievements", achievements_pool_path(@pool) %></li>
+    <li><%= link_to "Rules", rules_pool_path(@pool) %></li>
     <% if current_user.pools.size > 1 %>
       <li><%= link_to "Your Pools", root_path %></li>
     <% end %>
