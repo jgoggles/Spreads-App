@@ -27,16 +27,18 @@ Spreads::Application.configure do
 
   config.assets.debug = true
 
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :host => "localhost", :port => 1025 }
+
 end
 
-ActionMailer::Base.smtp_settings = {
-  :address        => "smtp.sendgrid.net",
-  :port           => "25",
-  :authentication => :plain,
-  :user_name      => "app856603@heroku.com",
-  :password       => "vnwqz1s4",
-  :domain         => "heroku.com"
-}
+#ActionMailer::Base.smtp_settings = {
+  #:address        => "smtp.sendgrid.net",
+  #:port           => "25",
+  #:authentication => :plain,
+  #:user_name      => "app856603@heroku.com",
+  #:password       => "vnwqz1s4",
+  #:domain         => "heroku.com"
+#}
 
 ENV["REDISTOGO_URL"] = 'redis://redistogo:58a4c99e7b26cc1b68388fb11d3be646@icefish.redistogo.com:9417/'

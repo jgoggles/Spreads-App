@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body style="width: 500px;">
+    <div>
+      <%= image_tag attachments['logo.png'].url %>
+    </div>
+    <h2>Dont forget to make your football picks</h2>
+    <p>
+    Our records indicate you have not yet made all of your picks this week for <%= @pool.name %>.
+    You need to make 3 picks every week, otherwise you will get a -1 in the 
+    standings for every nonpick you have.
+    </p>
+   
+    <h4 style="text-transform: uppercase;"><%= link_to "Make your picks here", new_pool_pick_set_url(@pool) %></h4>
+    <%= image_tag attachments['reminder.jpg'].url %>
+  </body>
+</html>

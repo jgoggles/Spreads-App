@@ -19,6 +19,10 @@ class Pool < ActiveRecord::Base
 
   attr_accessible :name, :pool_type_id, :min_players, :max_players, :private, :password, :free, :cost, :first_place_payout, :second_place_payout, :third_place_payout, :fourth_place_payout, :fifth_place_payout
 
+  def self.current 
+    where(year: Year.current)
+  end
+
   def over?
     !self.year.current? || Time.now > self.year.weeks.last.end_date
   end
