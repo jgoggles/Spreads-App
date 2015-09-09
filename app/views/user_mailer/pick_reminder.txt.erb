@@ -1,2 +1,9 @@
-Make your picks, <%= @user.name %>
+Dont forget to make your football picks
+
+Our records indicate you have not yet made all of your picks this week for <%= @pool.name %>.
+You need to make 3 picks every week, otherwise you will get a -1 in the 
+standings for every nonpick you have.
+
+
+<%= link_to "Make your picks here", new_pool_pick_set_url(@pool) %>
 
