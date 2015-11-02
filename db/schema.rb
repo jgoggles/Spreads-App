@@ -9,11 +9,14 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131004214532) do
+ActiveRecord::Schema.define(version: 20151102164025) do
 
-  create_table "authentications", :force => true do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "authentications", force: true do |t|
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
@@ -21,24 +24,25 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.datetime "updated_at"
   end
 
-  create_table "badges", :force => true do |t|
+  create_table "badges", force: true do |t|
     t.string   "name"
     t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
+    t.string   "level"
   end
 
-  create_table "conferences", :force => true do |t|
+  create_table "conferences", force: true do |t|
     t.string   "name"
     t.integer  "league_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0
+    t.integer  "attempts",   default: 0
     t.text     "handler"
     t.text     "last_error"
     t.datetime "run_at"
@@ -49,15 +53,15 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "divisions", :force => true do |t|
+  create_table "divisions", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "earned_badges", :force => true do |t|
+  create_table "earned_badges", force: true do |t|
     t.integer  "badge_id"
     t.integer  "user_id"
     t.integer  "pool_id"
@@ -68,7 +72,7 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.datetime "updated_at"
   end
 
-  create_table "game_details", :force => true do |t|
+  create_table "game_details", force: true do |t|
     t.integer  "game_id"
     t.integer  "team_id"
     t.boolean  "is_home"
@@ -77,26 +81,26 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.datetime "updated_at"
   end
 
-  create_table "games", :force => true do |t|
+  create_table "games", force: true do |t|
     t.datetime "date"
     t.integer  "week_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "leagues", :force => true do |t|
+  create_table "leagues", force: true do |t|
     t.string   "name"
     t.string   "sport"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "leagues_pools", :id => false, :force => true do |t|
+  create_table "leagues_pools", id: false, force: true do |t|
     t.integer "league_id"
     t.integer "pool_id"
   end
 
-  create_table "messages", :force => true do |t|
+  create_table "messages", force: true do |t|
     t.integer  "user_id"
     t.integer  "topic_id"
     t.text     "body"
@@ -104,7 +108,7 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.datetime "updated_at"
   end
 
-  create_table "pick_sets", :force => true do |t|
+  create_table "pick_sets", force: true do |t|
     t.integer  "user_id"
     t.integer  "pool_id"
     t.integer  "week_id"
@@ -113,7 +117,7 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.string   "hashed_id"
   end
 
-  create_table "picks", :force => true do |t|
+  create_table "picks", force: true do |t|
     t.float    "spread"
     t.integer  "result"
     t.integer  "game_id"
@@ -127,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.integer  "count"
   end
 
-  create_table "pool_types", :force => true do |t|
+  create_table "pool_types", force: true do |t|
     t.string   "name"
     t.integer  "max_picks"
     t.integer  "min_picks"
@@ -139,7 +143,7 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.boolean  "allow_same_game"
   end
 
-  create_table "pool_users", :force => true do |t|
+  create_table "pool_users", force: true do |t|
     t.integer  "pool_id"
     t.integer  "user_id"
     t.boolean  "pool_admin"
@@ -148,7 +152,7 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.boolean  "paid"
   end
 
-  create_table "pools", :force => true do |t|
+  create_table "pools", force: true do |t|
     t.integer  "pool_type_id"
     t.string   "name"
     t.boolean  "free"
@@ -166,33 +170,36 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.integer  "year_id"
     t.float    "fourth_place_payout"
     t.float    "fifth_place_payout"
+    t.float    "sixth_place_payout"
+    t.float    "seventh_place_payout"
+    t.float    "eighth_place_payout"
   end
 
-  create_table "rails_admin_histories", :force => true do |t|
+  create_table "rails_admin_histories", force: true do |t|
     t.text     "message"
     t.string   "username"
     t.integer  "item"
     t.string   "table"
-    t.integer  "month",      :limit => 2
-    t.integer  "year",       :limit => 8
+    t.integer  "month",      limit: 2
+    t.integer  "year",       limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
+  add_index "rails_admin_histories", ["item", "table", "month", "year"], name: "index_rails_admin_histories", using: :btree
 
-  create_table "roles", :force => true do |t|
+  create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "roles_users", :id => false, :force => true do |t|
+  create_table "roles_users", id: false, force: true do |t|
     t.integer "role_id"
     t.integer "user_id"
   end
 
-  create_table "standings", :force => true do |t|
+  create_table "standings", force: true do |t|
     t.integer  "user_id"
     t.integer  "pool_id"
     t.integer  "week_id"
@@ -206,7 +213,7 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.integer  "pick_set_id"
   end
 
-  create_table "teams", :force => true do |t|
+  create_table "teams", force: true do |t|
     t.string   "city"
     t.string   "nickname"
     t.integer  "league_id"
@@ -218,7 +225,7 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.string   "abbr"
   end
 
-  create_table "topics", :force => true do |t|
+  create_table "topics", force: true do |t|
     t.integer  "pool_id"
     t.integer  "user_id"
     t.string   "title"
@@ -226,13 +233,13 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.datetime "updated_at"
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+  create_table "users", force: true do |t|
+    t.string   "email",                              default: "", null: false
+    t.string   "encrypted_password",     limit: 128, default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                         :default => 0
+    t.integer  "sign_in_count",                      default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -245,10 +252,10 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.integer  "favorite_nfl_team_id"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "weeks", :force => true do |t|
+  create_table "weeks", force: true do |t|
     t.string   "name"
     t.datetime "start_date"
     t.datetime "end_date"
@@ -257,7 +264,7 @@ ActiveRecord::Schema.define(:version => 20131004214532) do
     t.integer  "year_id"
   end
 
-  create_table "years", :force => true do |t|
+  create_table "years", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
