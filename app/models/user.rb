@@ -110,25 +110,23 @@ class User < ActiveRecord::Base
       end
     else # if there is a pick set but < the min picks needed, create losses for each non pick
       week_pick_sets.each do |ps|
-        if ps.week.end_date < Week.current.start_date
-          if ps.unit_size < min_picks
-            losses = min_picks - ps.unit_size
-            losses.times { ps.picks.create(:spread => 0, :result => -1, :team_id => 0, :game_id => 0, :over_under => o_u, :over_under_result => o_u_result)}
-          end
+        if ps.unit_size < min_picks
+          losses = min_picks - ps.unit_size
+          losses.times { ps.picks.create(:spread => 0, :result => -1, :team_id => 0, :game_id => 0, :over_under => o_u, :over_under_result => o_u_result)}
+        end
 
-          # for o/u leagues, create a loss for each spread or o/u non pick
-          if pool.pool_type.over_under?
-            ps.picks.each do |p|
-              unless p.complete?
-                if p.spread.nil?
-                  p.spread = 0
-                  p.result = -1
-                else
-                  p.over_under = 0
-                  pover_under_result = -1
-                end
-                p.save
+        # for o/u leagues, create a loss for each spread or o/u non pick
+        if pool.pool_type.over_under?
+          ps.picks.each do |p|
+            unless p.complete?
+              if p.spread.nil?
+                p.spread = 0
+                p.result = -1
+              else
+                p.over_under = 0
+                pover_under_result = -1
               end
+              p.save
             end
           end
         end

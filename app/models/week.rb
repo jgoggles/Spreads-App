@@ -18,11 +18,11 @@ class Week < ActiveRecord::Base
   end
 
   def self.previous
-    if current.name.to_i > 1
-      week = find(current.id - 1)
-    else
-      self.current
+    week = self.current
+    if week.name.to_i > 1 || week.is_last_week_of_season?
+      week = find_by(name: (week.name.to_i - 1).to_s)
     end
+    week
   end
 
   def is_week_one?
@@ -30,6 +30,10 @@ class Week < ActiveRecord::Base
       return self.name == '1'
     end
     false
+  end
+
+  def is_last_week_of_season?
+    self.name.to_i == 17
   end
 
   def is_offseason?
