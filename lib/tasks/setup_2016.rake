@@ -9,6 +9,12 @@ task :setup_2016 => :environment do
   year = Year.create(name: '2016', current: true)
   Year.previous.update(current: false) if Year.count > 1
 
+  puts  'Moving the Rams...'
+  rams = Team.where(nickname: 'Rams').last
+  rams.city =  'Los Angeles'
+  rams.abbr = 'LA'
+  rams.save!
+
   ## Weeks
   puts 'Creating weeks...'
   time = Chronic.parse("Sept 6, 2016") - 12.hours
@@ -20,11 +26,12 @@ task :setup_2016 => :environment do
 
   ### Games
   CSV.foreach(NFL_SCHEDULE, {:headers=>:first_row}) do |row|
-    puts row[5].strip
-    home = Team.all.find { |team| team.full_name == row[5].strip }
-    puts row[3].strip
+    puts "Home: #{row[6].strip}"
+    home = Team.all.find { |team| team.full_name == row[6].strip }
+    puts "Away: #{row[3].strip}"
     away = Team.all.find { |team| team.full_name == row[3].strip }
-    date = Chronic.parse("#{row[2]} #{row[6]}")
+    date = Chronic.parse("#{row[2]} #{row[8]}")
+    puts date
     week = Week.where(name: row[0], year_id: year.id).first
     week_id = week.id
     game = Game.create!(:week_id => week_id, :date => date)
