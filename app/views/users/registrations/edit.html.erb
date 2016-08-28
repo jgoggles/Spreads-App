@@ -14,7 +14,7 @@
   <%= f.email_field :email %>
 
   <%= f.label :favorite_nfl_team_id %>
-  <%= f.select :favorite_nfl_team_id, Team.order("nickname").collect { |t| [t.nickname, t.id] }, :include_blank => true %> 
+  <%= f.select :favorite_nfl_team_id, Team.order("nickname").collect { |t| [t.nickname, t.id] }, :include_blank => true %>
 
   <label>Password <i>(leave blank if you don't want to change it)</i></label>
   <%= f.password_field :password %>
@@ -27,6 +27,13 @@
 
   <p><%= f.submit "Update" %></p>
 <% end %>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
 
 <%#= link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete %>
 
