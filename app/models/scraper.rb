@@ -5,7 +5,7 @@ class Scraper
 
   class << self
     def parse_nfl_lines
-      url = 'http://www.sportsinteraction.com/football/nfl-betting-lines/'
+      url = 'https://www.sportsinteraction.com/football/nfl-betting-lines/'
       # url = 'http://www.sportsinteraction.com/football/super-bowl-betting/'
 
       doc = Nokogiri::HTML(open(url))
@@ -58,14 +58,14 @@ class Scraper
       end
 
       REDIS.set("lines", lines.to_json)
-      #puts lines
+      puts lines
     rescue Exception => e
       print e, "\n"
     end
 
     def parse_nfl_scores(week = Week.current)
-      url = "http://www.nfl.com/scores/2015/REG#{week.name}"
-      #url = "http://www.nfl.com/scores/2015/PRE2"
+      url = "http://www.nfl.com/scores/2016/REG#{week.name}"
+      # url = "http://www.nfl.com/scores/2016/PRE1"
 
       doc = Nokogiri::HTML(open(url))
 
@@ -86,7 +86,6 @@ class Scraper
         away_team = Team.find_by_nickname(parsed_away_team).games.where("week_id = ?", week.id).first.away
         away_team.score = away_score
         away_team.save
-
       end
     rescue Exception => e
       print e, "\n"
