@@ -84,4 +84,47 @@ class Standing < ActiveRecord::Base
     return season_standings
   end
 
+  def self.all_time
+    users = User.all
+    results = []
+    users.each do |u|
+      #data = {name: u.display_name }
+      data = [u.display_name]
+      user_standings = u.standings.where.not(pool_id: [4, 6, 11]).group_by { |s| s.pool_id }
+      wins = user_standings.inject([]) { |a, (pool_id, data_array)| a << data_array.map(&:wins).sum }
+      losses = user_standings.inject([]) { |a, (pool_id, data_array)| a << data_array.map(&:losses).sum }
+      pushes = user_standings.inject([]) { |a, (pool_id, data_array)| a << data_array.map(&:pushes).sum }
+      totals = user_standings.inject([]) { |a, (pool_id, data_array)| a << data_array.map(&:wins).sum - data_array.map(&:losses).sum }
+
+
+      data << wins.sum
+      data << losses.sum
+      data << pushes.sum
+      data << wins.max
+      data << wins.min
+      data << losses.max
+      data << losses.min
+      data << totals.max
+      data << totals.min
+      #data[:wins] = wins.sum
+      #data[:losses] = losses.sum
+      #data[:pushes] = pushes.sum
+      #data[:most_wins] = wins.max
+      #data[:least_wins] = wins.min
+      #data[:most_losses] = losses.max
+      #data[:least_losses] = losses.min
+      #data[:best_finish] = totals.max
+      #data[:worst_finish] = totals.min
+
+      results << data
+    end
+
+    CSV.open("#{Rails.root}/all_time.csv", "wb") do |csv|
+      csv << ["Name", "Total Wins", "Total Losses", "Total Pushes", "Most Wins", "Least Wins", "Most Losses", "Least Losses", "Best Total", "Worst Total"]
+      results.each do |r|
+        csv << r
+      end
+    end
+  end
+
 end
