@@ -6,3 +6,4 @@ tmp/
 *.swp
 *.swo
 todo
+.DS_Store
