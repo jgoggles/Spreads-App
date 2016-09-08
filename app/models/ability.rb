@@ -4,7 +4,10 @@ class Ability
   def initialize(user)
     @user = user || User.new
 
-    if user.role? :admin
+    if user.role? :god
+      can :manage, :all
+      can :access, :rails_admin
+    elsif user.role? :admin
       can :manage, :all
       can :access, :rails_admin
     elsif user.role? :pool_admin

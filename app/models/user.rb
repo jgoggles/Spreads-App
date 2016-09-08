@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
 
   after_create :add_default_role
 
+  def god?
+    role? :god
+  end
+
   def active_pools
     self.pools.select { |p| p.year == Year.current }
   end

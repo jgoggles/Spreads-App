@@ -1,4 +1,4 @@
-<% if current_user.pools.include?(@pool) %>
+<% if current_user.pools.include?(@pool) || current_user.role?(:god) %>
   <ul id="pool-nav" class="group">
     <li><%= link_to "Pool Dashboard", @pool %></li>
     <li><%= link_to "Standings", pool_standings_path(@pool) %></li>

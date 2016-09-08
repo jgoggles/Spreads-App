@@ -150,6 +150,7 @@ class PickSetsController < ApplicationController
   end
 
   def check_for_paid
+    return true if current_user.role? :god
     if !@pool.free? and !current_user.pool_admin?(@pool)
       if !@pool.pool_users.where("user_id = ?", current_user.id).first.paid?
         redirect_to pool_path(@pool)

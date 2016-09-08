@@ -7,7 +7,11 @@ class PoolsController < ApplicationController
   # GET /pools
   # GET /pools.json
   def index
-    @pools = current_user.pools
+    if current_user.god?
+      @pools = Pool.all
+    else
+      @pools = current_user.pools
+    end
 
     respond_to do |format|
       format.html # index.html.erb
