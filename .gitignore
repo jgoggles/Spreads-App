@@ -7,3 +7,4 @@ tmp/
 *.swo
 todo
 .DS_Store
+*.csv

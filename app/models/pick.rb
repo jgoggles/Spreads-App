@@ -7,6 +7,8 @@ class Pick < ActiveRecord::Base
 
   attr_accessible :spread, :pick_set_id, :team_id, :game_id, :result
 
+  validate :gametime
+
   def generate_result
     unless game_id == 0
       if game.has_scores and game.has_started
@@ -115,6 +117,12 @@ class Pick < ActiveRecord::Base
   def set_count
     if self.count.nil?
       self.count = 1
+    end
+  end
+
+  def gametime
+    if game.date < Time.now
+      errors.add(:date, "can't be in the past")
     end
   end
 

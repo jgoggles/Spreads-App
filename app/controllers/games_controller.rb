@@ -6,6 +6,7 @@ class GamesController < ApplicationController
   def load
     @games = Game.with_spreads
   end
+  
   def index
     @games = Game.order("week_id")
   end
@@ -16,7 +17,7 @@ class GamesController < ApplicationController
 
   def new
     @game = Game.new
-    2.times { @game.game_details.build }  
+    2.times { @game.game_details.build }
   end
 
   def create

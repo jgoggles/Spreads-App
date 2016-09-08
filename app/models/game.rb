@@ -59,7 +59,7 @@ class Game < ActiveRecord::Base
           end
         end
       end
-      return games
+      return games.reject { |g| g.date < Time.now }
     # rescue
     #   return false
     # end
