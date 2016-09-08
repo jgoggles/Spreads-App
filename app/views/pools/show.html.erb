@@ -94,6 +94,45 @@
     </div>
   <% end %>
 
+  </section>
+
+  <section class="left">
+  <div class="sub-container">
+    <h3>Your Achievements</h3>
+    <% if @badges.empty? %>
+      <p>You haven't earned any badges because you suck</p>
+    <% else %>
+      <% @badges.each do |badge| %>
+        <%= link_to (image_tag "badges/#{badge.badge.image}_64.png"),achievements_pool_path %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="sub-container">
+    <h3>Latest Message Board Activity</h3>
+    <% if @messages.empty? %>
+      <p>No messages have been posted</p>
+    <% else %>
+      <ul>
+        <% @messages.each do |message| %>
+          <li>
+            <div>
+              <%= link_to message.title, pool_topic_path(@pool, message) %>
+              from <%= message.user.display_name %>
+            </div>
+            <div style="color: #999; font-size: 12px; padding-left: 10px;">
+              <% if !message.messages.empty? %>
+                <% last_reply = message.messages.last %>
+                last reply by <%= last_reply.user.display_name %> <%= time_ago_in_words(last_reply.created_at) %> ago
+              <% else %>
+                no replies
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
   <div class="sub-container">
     <h3>Pool Information</h3>
     <p>
@@ -177,45 +216,6 @@
 
     <% if can? :update, @pool %>
       <%= link_to 'Edit', edit_pool_path(@pool) %>
-    <% end %>
-  </div>
-  </section>
-
-  <section class="left">
-  <div class="sub-container">
-    <h3>Your Achievements</h3>
-    <% if @badges.empty? %>
-      <p>You haven't earned any badges because you suck</p>
-    <% else %>
-      <% @badges.each do |badge| %>
-        <%= link_to (image_tag "badges/#{badge.badge.image}_64.png"),achievements_pool_path %>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="sub-container">
-    <h3>Latest Message Board Activity</h3>
-    <% if @messages.empty? %>
-      <p>No messages have been posted</p>
-    <% else %>
-      <ul>
-        <% @messages.each do |message| %>
-          <li>
-            <div>
-              <%= link_to message.title, pool_topic_path(@pool, message) %>
-              from <%= message.user.display_name %>
-            </div>
-            <div style="color: #999; font-size: 12px; padding-left: 10px;">
-              <% if !message.messages.empty? %>
-                <% last_reply = message.messages.last %>
-                last reply by <%= last_reply.user.display_name %> <%= time_ago_in_words(last_reply.created_at) %> ago
-              <% else %>
-                no replies
-              <% end %>
-            </div>
-          </li>
-        <% end %>
-      </ul>
     <% end %>
   </div>
   </section>
