@@ -7,7 +7,7 @@ class Pick < ActiveRecord::Base
 
   attr_accessible :spread, :pick_set_id, :team_id, :game_id, :result
 
-  validate :gametime
+  validate :gametime, on: :create
 
   def generate_result
     unless game_id == 0
