@@ -121,6 +121,7 @@ class Pick < ActiveRecord::Base
   end
 
   def gametime
+    return if is_non_pick?
     if game.date < Time.now
       errors.add(:date, "can't be in the past")
     end
