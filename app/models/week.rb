@@ -20,7 +20,7 @@ class Week < ActiveRecord::Base
   def self.previous
     week = self.current
     if week.name.to_i > 1 && !week.is_last_week_of_season?
-      week = find_by(name: (week.name.to_i - 1).to_s)
+      week = Year.current.weeks.find_by(name: (week.name.to_i - 1).to_s)
     end
     week
   end
