@@ -50,7 +50,7 @@ class PickSetsController < ApplicationController
     @pick_set = current_user.pick_sets.build(params[:pick_set])
     @pick_set.week_id = @week.id
     @pick_set.pool_id = @pool.id
-    @games = Game.with_spreads
+    # @games = Game.with_spreads
     @units_remaining = @pool.pool_type.max_picks
 
     respond_to do |format|
@@ -70,7 +70,7 @@ class PickSetsController < ApplicationController
   # PUT /pick_sets/1.json
   def update
     @pick_set = PickSet.find(params[:id])
-    @games = Game.with_spreads(current_user, @pool)
+    # @games = Game.with_spreads(current_user, @pool)
     authorize! :update, @pick_set
     @units_remaining = @pick_set.units_remaining
 

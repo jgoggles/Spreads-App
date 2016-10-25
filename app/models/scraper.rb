@@ -15,6 +15,8 @@ class Scraper
 
       if rows
         rows.each do |a|
+          # date = row.at_css('.gameHeader span.time')['content']
+
           if !a.at_css('div ul.runnerListRow li.runner[2] span span.handicap').nil?
             # matchup = a.at_css('span.title a').content.match(/(.*)\s(at|v)\s(.*)/)
             matchup = a.at_css('span.title').content.match(/(.*)\s(at|v)\s(.*)/)
@@ -35,6 +37,7 @@ class Scraper
 
             lines.push(Hash.new)
             lines[rows.index(a)]['game'] = {}
+            # lines[rows.index(a)]['game']['date'] = date
             lines[rows.index(a)]['game']['home'] = home
             lines[rows.index(a)]['game']['away'] = away
             lines[rows.index(a)]['game']['over_under'] = over_under.strip!.gsub("+", "")
@@ -50,6 +53,7 @@ class Scraper
           else
             lines.push(Hash.new)
             lines[rows.index(a)]['game'] = {}
+            # lines[rows.index(a)]['game']['date'] = date
             lines[rows.index(a)]['game']['home'] = :off
             lines[rows.index(a)]['game']['away'] = :off
             lines[rows.index(a)]['game']['line'] = :off
