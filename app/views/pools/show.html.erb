@@ -67,7 +67,7 @@
 
         <% if can? :update, @pick_set %>
           <% if @pick_set.has_max_picks %>
-            <%= link_to 'See current spreads', new_pool_pick_set_path(@pool) %>
+            <%= link_to 'See current point spreads', new_pool_pick_set_path(@pool) %>
           <% else %>
             <%= link_to 'Add picks for this week', new_pool_pick_set_path(@pool) %>
           <% end %>

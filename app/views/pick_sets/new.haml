@@ -45,6 +45,6 @@
           {{game.home.nickname}}
         %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
           {{game.home.spread}}
-- if current_user.can_make_picks?(@week, @pool)
-  %button{"ng-click" => "submitPicks()"}
-    Submit
+  - if current_user.can_make_picks?(@week, @pool)
+    %button{"ng-click" => "submitPicks()"}
+      Submit
