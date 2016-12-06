@@ -29,7 +29,7 @@
         game_id: game.id,
         team_id: game.away.id,
         spread: game.away.spread
-    
+
     saved_pick = _.find($scope.savedPickedGames, (saved) ->
       saved.game_id == pick.game_id
     )
@@ -37,7 +37,7 @@
     match = _.find($scope.pickedGames, (picked) ->
       picked.game_id == pick.game_id
     )
-    
+
     unless saved_pick || pick.spread == "off"
       if match
         if match.team_id == pick.team_id
@@ -59,6 +59,11 @@
       location.assign("/pools/" + window.poolID)
     ).error (data, status) ->
       alert "no"
+
+  $scope.pickDetails = (game) ->
+    pick = _.find $scope.savedPickedGames, (pick) -> pick.game_id is game.id
+    if pick
+      "You picked the " + pick.team_name + " at " + $scope.humanSpread(pick.spread)
 
   $scope.gameAlreadyPicked = (game) ->
     picked_ids = _.map($scope.savedPickedGames, (pick) ->
@@ -85,4 +90,10 @@
 
   $scope.sameGame = (pick1, pick2) ->
     pick1.game_id == pick2.game_id
+
+  $scope.humanSpread = (spread) ->
+    if spread > 0
+      "+" + spread
+    else
+      spread
 ]

@@ -9,7 +9,7 @@ class PickSetsController < ApplicationController
   #before_filter :check_for_current_week_pick_set, :only => :new
   before_filter :check_for_paid
   before_filter :check_for_pick_cutoff_time
-  before_filter :check_for_pick_access, :only => [:new, :edit]
+  # before_filter :check_for_pick_access, :only => [:new, :edit]
 
   # GET /pick_sets/1
   # GET /pick_sets/1.json

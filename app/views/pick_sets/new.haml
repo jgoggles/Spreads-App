@@ -1,13 +1,14 @@
 :javascript
   var poolID = "#{@pool.hashed_id}";
 %h3
-  Picks for Week
+  Point spreads for Week
   =@week.name
-  in
-  = @pool.name
+  \-
+  = Time.now.strftime("%m/%d -%l:%M%P %Z")
 
-%div
-  Click a team to toggle your selection. To finalize your pick(s) click Submit at the bottom of the page.
+- if current_user.can_make_picks?(@week, @pool)
+  %div
+    Click a team to toggle your selection. To finalize your pick(s) click Submit at the bottom of the page.
 
 %div{"ng-controller" => "PickSetsController", "ng-init" => "loadData()"}
   %table#pick_set_games
@@ -24,8 +25,10 @@
         Home
       %th
         Spead
-    %tbody
-      %tr{"ng-repeat" => "game in games", "ng-class" => "{disabled: disabled(game)}"}
+    %tbody{"ng-repeat" => "game in games", "ng-class" => "{disabled: disabled(game)}"}
+      %tr.user{"ng-show" => "gameAlreadyPicked(game)"}
+        %td{colspan: "7"} {{pickDetails(game)}}
+      %tr
         %td
           {{game.gamedate}}
           %br
@@ -42,6 +45,6 @@
           {{game.home.nickname}}
         %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
           {{game.home.spread}}
-        %td{"ng-show" => "gameAlreadyPicked(game)"} You picked this game.
+- if current_user.can_make_picks?(@week, @pool)
   %button{"ng-click" => "submitPicks()"}
     Submit
