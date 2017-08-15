@@ -4,7 +4,7 @@ class Year < ActiveRecord::Base
   has_many :weeks, dependent: :destroy
   has_many :pools
 
-  attr_accessible :name, :current
+  #attr_accessible :name, :current
 
   LINES_OPEN = Chronic.parse('August 25, 2016') - 12.hours
 

@@ -5,7 +5,7 @@ class Week < ActiveRecord::Base
   has_many :standings
   has_many :earned_badges
 
-  attr_accessible :name, :start_date, :end_date, :year_id
+  #attr_accessible :name, :start_date, :end_date, :year_id
 
 
   def self.current

@@ -5,7 +5,7 @@ class Standing < ActiveRecord::Base
   belongs_to :week
   belongs_to :pick_set
 
-  attr_accessible :user_id, :week_id, :pool_id, :pick_set_id, :wins, :losses, :pushes, :points, :over_under_points
+  #attr_accessible :user_id, :week_id, :pool_id, :pick_set_id, :wins, :losses, :pushes, :points, :over_under_points
 
   def self.generate(pick_sets)
     pick_sets.each do |ps|

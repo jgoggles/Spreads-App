@@ -1,10 +1,8 @@
 source 'http://rubygems.org'
 
-ruby '2.0.0'
-gem 'rails', '~> 4.0.3'
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+ruby '2.3.3'
+gem 'rails', '~> 5.0.0'
 
-gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'haml'
 gem 'rabl'
 gem 'sass-rails'
@@ -21,13 +19,13 @@ group :development do
 end
 
 gem 'pg'
-gem 'devise', '3.0.0'
+gem 'devise', '4.0.0'
+gem 'devise-jwt', '~> 0.3.0'
 gem 'cancan'
 gem 'nifty-generators'
 #gem 'omniauth', '>= 0.2.6'
 gem 'nokogiri'
 gem 'chronic'
-gem 'mongrel', '1.2.0.pre2'
 gem 'redcarpet'
 gem 'newrelic_rpm'
 
@@ -43,5 +41,5 @@ group :test do
   gem "mocha"
 end
 
-gem 'protected_attributes'
+# gem 'protected_attributes'
 gem 'rails-observers'

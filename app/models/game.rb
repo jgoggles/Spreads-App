@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 class Game < ActiveRecord::Base
-  attr_accessible :date, :week_id, :game_details_attributes, :spread, :over_under
+  #attr_accessible :date, :week_id, :game_details_attributes, :spread, :over_under
   attr_accessor :spread, :over_under
 
   belongs_to :week

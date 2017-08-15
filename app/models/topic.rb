@@ -5,7 +5,7 @@ class Topic < ActiveRecord::Base
 
   validates_presence_of :title
 
-  attr_accessible :title
+  #attr_accessible :title
 
   accepts_nested_attributes_for :messages
 end

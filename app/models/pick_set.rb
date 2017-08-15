@@ -8,7 +8,7 @@ class PickSet < ActiveRecord::Base
   has_many :picks, :dependent => :destroy
   has_many :earned_badges
 
-  attr_accessible :picks_attributes, :week_id, :pool_id, :user_id
+  #attr_accessible :picks_attributes, :week_id, :pool_id, :user_id
 
   accepts_nested_attributes_for :picks, :reject_if => lambda { |a| a[:is_home].blank? && a[:spread].blank? && a[:over_under].blank? && a[:is_over].blank? }
   validate :number_of_picks

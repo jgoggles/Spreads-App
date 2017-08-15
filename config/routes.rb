@@ -2,8 +2,6 @@ Spreads::Application.routes.draw do
 
   get "scoreboard/live"
 
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
-
   devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   resources :badges

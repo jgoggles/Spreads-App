@@ -3,7 +3,7 @@ class PoolUser < ActiveRecord::Base
   belongs_to :user
 
   attr_accessor :password
-  attr_accessible :pool_id, :pool_admin, :password
+  #attr_accessible :pool_id, :pool_admin, :password
 
   validate :check_password
 
