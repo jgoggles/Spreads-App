@@ -6,65 +6,39 @@ class Scraper
   class << self
     def parse_nfl_lines
       url = 'https://www.sportsinteraction.com/football/nfl-betting-lines/'
-      # url = 'http://www.sportsinteraction.com/football/super-bowl-betting/'
 
       doc = Nokogiri::HTML(open(url))
 
       rows = doc.css('div.game')
       lines = []
 
-      if rows
-        rows.each do |a|
-          # date = row.at_css('.gameHeader span.time')['content']
+      rows.each do |a|
+        line_node = a.css('div.gameBettingContent a.gameLink div.betTypeContent')[0].css('ul.runnerListColumn li')[0].at_css('span')
 
-          if !a.at_css('div ul.runnerListRow li.runner[2] span span.handicap').nil?
-            # matchup = a.at_css('span.title a').content.match(/(.*)\s(at|v)\s(.*)/)
-            matchup = a.at_css('span.title').content.match(/(.*)\s(at|v)\s(.*)/)
-            away = $1.strip!
-            home = $3.strip!
+        matchup = a.at_css('span.title').content.match(/(.*)\s(at|v)\s(.*)/)
+        away = $1.strip!
+        home = $3.strip!
 
-            away.gsub!("NY", "New York")
-            away.gsub!(".", "")
-            home.gsub!("NY", "New York")
-            home.gsub!(".", "")
+        [home, away].each { |t| t.gsub!("NY", "New York") }
 
-            line = a.at_css('div ul.runnerListRow li.runner[2] span span.handicap').content
-            over_under = a.css('div ul.twoWay')[2].at_css('li.runner[2] span span.handicap').content
-            # puts "home: #{home}"
-            # puts "away: #{away}"
-            # puts "line: #{line}"
-            # puts "o/u: #{over_under}"
-
-            lines.push(Hash.new)
-            lines[rows.index(a)]['game'] = {}
-            # lines[rows.index(a)]['game']['date'] = date
-            lines[rows.index(a)]['game']['home'] = home
-            lines[rows.index(a)]['game']['away'] = away
-            lines[rows.index(a)]['game']['over_under'] = over_under.strip!.gsub("+", "")
-            if line.strip.size == 1 && a.at_css('div ul.runnerListRow li.runner[2] span span.price').content.strip.size == 1
-              lines[rows.index(a)]['game']['line'] = :off
-            elsif a.at_css('div ul.runnerListRow li.runner[2] span span.price').content == "Closed"
-              lines[rows.index(a)]['game']['line'] = :off
-            elsif line.strip.size == 1 && a.at_css('div ul.runnerListRow li.runner[2] span span.price').content != "Closed"
-              lines[rows.index(a)]['game']['line'] = "0"
-            else
-              lines[rows.index(a)]['game']['line'] = line.strip!
-            end
-          else
-            lines.push(Hash.new)
-            lines[rows.index(a)]['game'] = {}
-            # lines[rows.index(a)]['game']['date'] = date
-            lines[rows.index(a)]['game']['home'] = :off
-            lines[rows.index(a)]['game']['away'] = :off
-            lines[rows.index(a)]['game']['line'] = :off
-          end
+        if line_node.at_css('span')["class"] == "price wide"
+          line = 0
+        elsif line_node.at_css('span')["class"].strip == "handicap"
+          line = line_node.at_css('span.handicap').content.strip
+        elsif line_node["class"].split.include?("closed")
+          line = :off
         end
+
+        game_data = {game: {}}
+        game_data[:game][:home] = home
+        game_data[:game][:away] = away
+        game_data[:game][:over_under] = nil
+        game_data[:game][:line] = line
+        lines.push(game_data)
       end
 
       REDIS.set("lines", lines.to_json)
-      puts lines
-    rescue Exception => e
-      print e, "\n"
+      lines
     end
 
     def parse_nfl_scores(week = Week.current)

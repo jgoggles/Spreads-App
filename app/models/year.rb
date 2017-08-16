@@ -6,7 +6,7 @@ class Year < ActiveRecord::Base
 
   attr_accessible :name, :current
 
-  LINES_OPEN = Chronic.parse('August 25, 2016') - 12.hours
+  LINES_OPEN = Chronic.parse('August 25, 2017') - 12.hours
 
   def self.current
     self.where(current: true).last
