@@ -10,7 +10,7 @@ class PoolUser < ActiveRecord::Base
   after_save :process_admins
   after_create :mark_as_paid
 
-  scope :paid, :conditions => {:paid => true}
+  scope :paid, -> { where(paid: true) }
 
   def check_password
     if pool.private? and password != pool.password and new_record?

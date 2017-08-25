@@ -70,7 +70,6 @@ class PickSetsController < ApplicationController
   # PUT /pick_sets/1.json
   def update
     @pick_set = PickSet.find(params[:id])
-    # @games = Game.with_spreads(current_user, @pool)
     authorize! :update, @pick_set
     @units_remaining = @pick_set.units_remaining
 
@@ -102,10 +101,10 @@ class PickSetsController < ApplicationController
       @pick_set = current_user.pick_set_for_this_week(@pool)
       @pick_set ||= current_user.pick_sets.create(pool_id: @pool.id, week_id: @week.id)
       unless @pick_set.picks.size == 3
-        @picks = params[:_json]
+        @picks = params[:pick_set][:picks]
         @picks.each do |pick|
           unless @pick_set.contains_pick(pick[:game_id], pick[:team_id])
-            @pick_set.picks.create pick
+            @pick_set.picks.create pick_params[:picks]
           end
         end
       end
@@ -123,6 +122,11 @@ class PickSetsController < ApplicationController
   end
 
   private
+
+  def pick_params
+    params.require(:pick_set).permit({:picks => [:game_id, :team_id, :spread]})
+  end
+
   def load_pool_and_title
     @pool = Pool.find(params[:pool_id])
     @title = "Week #{@week.name} picks"

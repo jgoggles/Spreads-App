@@ -48,16 +48,16 @@
       else
         #check set size
         if $scope.pickedGames.length + $scope.savedPickedGames.length == 3
-          alert "You've already picked 3 games."
+          alert "You can only pick a maximum of 3 games."
         #add pick
         else
           $scope.pickedGames.push(pick)
 
   $scope.submitPicks = ->
-    $http.post("/pools/" + window.poolID + "/pick_sets/build.json", $scope.pickedGames
-    ).success((data, status, headers, config) ->
+    $http.post("/pools/" + window.poolID + "/pick_sets/build.json", {pick_set: {picks: $scope.pickedGames}}
+    ).then((data, status, headers, config) ->
       location.assign("/pools/" + window.poolID)
-    ).error (data, status) ->
+    ).catch (data, status) ->
       alert "no"
 
   $scope.pickDetails = (game) ->
