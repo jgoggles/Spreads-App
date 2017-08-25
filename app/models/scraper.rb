@@ -13,7 +13,7 @@ class Scraper
       lines = []
 
       rows.each do |a|
-        line_node = a.css('div.gameBettingContent a.gameLink div.betTypeContent')[0].css('ul.runnerListColumn li')[0].at_css('span')
+        line_node = a.css('div.gameBettingContent a.gameLink div.betTypeContent')[0].css('ul.runnerListColumn li')[1].at_css('span')
 
         matchup = a.at_css('span.title').content.match(/(.*)\s(at|v)\s(.*)/)
         away = $1.strip!
@@ -22,7 +22,7 @@ class Scraper
         [home, away].each { |t| t.gsub!("NY", "New York") }
 
         if line_node.at_css('span')["class"] == "price wide"
-          line = 0
+          line = '0.0'
         elsif line_node.at_css('span')["class"].strip == "handicap"
           line = line_node.at_css('span.handicap').content.strip
         elsif line_node["class"].split.include?("closed")

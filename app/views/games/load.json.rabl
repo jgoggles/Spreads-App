@@ -1,5 +1,5 @@
 collection @games
-attributes :id,:date
+attributes :id, :date
 node(:gamedate) do |g|
   g.date.strftime("%A, %m/%d")
 end
