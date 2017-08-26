@@ -61,7 +61,7 @@ class Scraper
         end
       end
 
-      REDIS.set("lines", lines.to_json)
+      REDIS.set("#{Rails.env}_lines", lines.to_json)
       puts lines
     rescue Exception => e
       print e, "\n"
