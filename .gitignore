@@ -7,5 +7,4 @@ tmp/
 *.swo
 todo
 .DS_Store
-*.csv
-.env
+users.csv
