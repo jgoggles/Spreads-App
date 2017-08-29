@@ -2,7 +2,7 @@ class TopicsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_pool
   load_and_authorize_resource :pool
-  load_and_authorize_resource :topic, :through => :pool
+  # load_and_authorize_resource :topic, :through => :pool
 
   # GET /topics
   # GET /topics.json
@@ -47,7 +47,7 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
-    @topic = current_user.topics.build(params[:topic])
+    @topic = current_user.topics.build(topic_params)
     @topic.pool_id = @pool.id
 
     respond_to do |format|
@@ -67,7 +67,7 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
 
     respond_to do |format|
-      if @topic.update_attributes(params[:topic])
+      if @topic.update_attributes(topic_params)
         format.html { redirect_to [@pool, @topic], notice: 'Topic was successfully updated.' }
         format.json { head :ok }
       else
@@ -90,6 +90,10 @@ class TopicsController < ApplicationController
   end
 
   private
+  def topic_params
+    params.require(:topic).permit(:title)
+  end
+
   def load_pool
     @pool = Pool.find(params[:pool_id])
   end

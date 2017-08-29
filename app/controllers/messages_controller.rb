@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   def create
-    @message = current_user.messages.build(params[:message])
+    @message = current_user.messages.build(message_params)
     @topic = Topic.find(params[:message][:topic_id])
     @message.topic_id = @topic.id
 
@@ -14,6 +14,12 @@ class MessagesController < ApplicationController
         # format.html { render :template => "/topics/show", :locals => { :topic_id => @topic.id, :message => @message } }
       end
     end
+  end
+
+  private
+
+  def message_params
+    params.require(:message).permit(:body)
   end
 
 end
