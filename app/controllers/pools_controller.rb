@@ -57,7 +57,7 @@ class PoolsController < ApplicationController
   # POST /pools
   # POST /pools.json
   def create
-    @pool = Pool.new(params[:pool])
+    @pool = Pool.new(pool_params)
     @pool.year = Year.current
 
     respond_to do |format|
@@ -78,7 +78,7 @@ class PoolsController < ApplicationController
     @pool = Pool.find(params[:id])
 
     respond_to do |format|
-      if @pool.update_attributes!(params[:pool])
+      if @pool.update_attributes!(pool_params)
         format.html { redirect_to @pool, notice: 'Pool was successfully updated.' }
         format.json { head :ok }
       else
@@ -108,5 +108,11 @@ class PoolsController < ApplicationController
 
   def rules
     @pool = Pool.find(params[:id])
+  end
+
+  private
+
+  def pool_params
+    params.require(:pool).permit(:name, :pool_type_id, :min_players, :max_players, :private, :password, :free, :cost, :first_place_payout, :second_place_payout, :third_place_payout, :fourth_place_payout, :fifth_place_payout)
   end
 end

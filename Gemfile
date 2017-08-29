@@ -21,7 +21,7 @@ end
 gem 'pg'
 gem 'devise', '4.0.0'
 gem 'devise-jwt', '~> 0.3.0'
-gem 'cancan'
+gem "cancancan"
 gem 'nifty-generators'
 #gem 'omniauth', '>= 0.2.6'
 gem 'nokogiri'

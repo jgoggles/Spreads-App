@@ -2,7 +2,7 @@ class TopicsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_pool
   load_and_authorize_resource :pool
-  # load_and_authorize_resource :topic, :through => :pool
+  load_and_authorize_resource :topic, :through => :pool
 
   # GET /topics
   # GET /topics.json
