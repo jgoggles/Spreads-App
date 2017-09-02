@@ -1,6 +1,6 @@
 class PoolUsersController < ApplicationController
   def create
-    @pool_user = current_user.pool_users.build(params[:pool_user])
+    @pool_user = current_user.pool_users.build(pool_user_params)
     @pool = Pool.find(params[:pool_user][:pool_id])
     @pool_user.pool_id = @pool.id
     @pool_user.password = params[:pool_user][:password]

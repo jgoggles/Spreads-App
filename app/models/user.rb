@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
 
   private
   def add_default_role
-    self.roles << Role.find_or_create_by_name("Member")
+    self.roles << Role.find_or_create_by(name: "Member")
   end
 
 end
