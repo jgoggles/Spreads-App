@@ -11,7 +11,6 @@ class Scraper
 
       rows = doc.css('div.game')
       lines = []
-
       rows.each do |a|
         line_node = a.css('div.gameBettingContent a.gameLink div.betTypeContent')[0].css('ul.runnerListColumn li')[1].at_css('span')
 

@@ -45,8 +45,19 @@ class Game < ActiveRecord::Base
           game = (Team.find_by_city(line['game']['home']).games.where("week_id = ?", week.id).first) rescue nil
         end
         unless game.nil?
-          game.update_attributes(:spread => line['game']['line'], :over_under => line['game']['over_under'])
-          games << game
+          if line['game']['home'] == game.home.team.city && line['game']['away'] == game.away.team.city
+            game.update_attributes(:spread => line['game']['line'], :over_under => line['game']['over_under'])
+            games << game
+          elsif line['game']['home'] == game.home.team.full_name && line['game']['away'] == game.away.team.city
+            game.update_attributes(:spread => line['game']['line'], :over_under => line['game']['over_under'])
+            games << game
+          elsif line['game']['home'] == game.home.team.city && line['game']['away'] == game.away.team.full_name
+            game.update_attributes(:spread => line['game']['line'], :over_under => line['game']['over_under'])
+            games << game
+          elsif line['game']['home'] == game.home.team.full_name && line['game']['away'] == game.away.team.full_name
+            game.update_attributes(:spread => line['game']['line'], :over_under => line['game']['over_under'])
+            games << game
+          end
         end
       end
 
