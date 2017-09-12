@@ -20,12 +20,12 @@ class Scraper
 
         [home, away].each { |t| t.gsub!("NY", "New York") }
 
-        if line_node.at_css('span')["class"] == "price wide"
-          line = '0.0'
+        if line_node["class"].split.include?("closed")
+          line = :off
         elsif line_node.at_css('span')["class"].strip == "handicap"
           line = line_node.at_css('span.handicap').content.strip
-        elsif line_node["class"].split.include?("closed")
-          line = :off
+        elsif line_node.at_css('span')["class"] == "price wide"
+          line = '0.0'
         end
 
         game_data = {game: {}}
