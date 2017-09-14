@@ -39,6 +39,8 @@ class Game < ActiveRecord::Base
           game = Team.find_by_nickname("Jets").games.where("week_id = ?", week.id).first
         elsif line['game']['home'] == "New York Giants"
           game = Team.find_by_nickname("Giants").games.where("week_id = ?", week.id).first
+        elsif line['game']['home'] == "Los Angeles Chargers"
+          game = Team.find_by_nickname("Chargers").games.where("week_id = ?", week.id).first
         elsif line['game']['home'] == "Los Angeles Rams"
           game = Team.find_by_nickname("Rams").games.where("week_id = ?", week.id).first
         else
