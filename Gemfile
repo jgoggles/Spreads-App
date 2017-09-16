@@ -16,6 +16,7 @@ gem 'jquery-rails'
 
 group :development do
   gem 'pry'
+  gem 'meta_request'
 end
 
 gem 'pg'

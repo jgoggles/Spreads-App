@@ -43,6 +43,7 @@ GEM
     arel (7.1.4)
     bcrypt (3.1.11)
     builder (3.2.3)
+    callsite (0.0.11)
     cancancan (1.15.0)
     chronic (0.10.2)
     coderay (1.1.1)
@@ -102,6 +103,10 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.6)
       mime-types (>= 1.16, < 4)
+    meta_request (0.4.0)
+      callsite (~> 0.0, >= 0.0.11)
+      rack-contrib (~> 1.1)
+      railties (>= 3.0.0, < 5.1.0)
     metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (3.1)
@@ -131,6 +136,8 @@ GEM
     rabl (0.13.1)
       activesupport (>= 2.3.14)
     rack (2.0.3)
+    rack-contrib (1.2.0)
+      rack (>= 0.9.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.4)
@@ -219,6 +226,7 @@ DEPENDENCIES
   jquery-datatables-rails
   jquery-rails
   jquery-ui-rails
+  meta_request
   mocha
   newrelic_rpm
   nifty-generators
