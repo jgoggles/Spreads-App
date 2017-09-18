@@ -6,10 +6,8 @@ class PickSetsController < ApplicationController
 
   before_filter :load_pool_and_title
   before_filter :load_pool_rules
-  #before_filter :check_for_current_week_pick_set, :only => :new
   before_filter :check_for_paid
-  before_filter :check_for_pick_cutoff_time
-  # before_filter :check_for_pick_access, :only => [:new, :edit]
+  # before_filter :check_for_pick_cutoff_time
 
   # GET /pick_sets/1
   # GET /pick_sets/1.json
@@ -98,8 +96,13 @@ class PickSetsController < ApplicationController
 
   def build
     if request.post?
-      @pick_set = current_user.pick_set_for_this_week(@pool)
-      @pick_set ||= current_user.pick_sets.create(pool_id: @pool.id, week_id: @week.id)
+      if @week.pick_cutoff_passed?
+        @pick_set = current_user.pick_set_for_next_week(@pool)
+        @pick_set ||= current_user.pick_sets.create(pool_id: @pool.id, week_id: Week.next.id)
+      else
+        @pick_set = current_user.pick_set_for_this_week(@pool)
+        @pick_set ||= current_user.pick_sets.create(pool_id: @pool.id, week_id: @week.id)
+      end
       unless @pick_set.picks.size == 3
         @picks = params[:pick_set][:picks]
         @picks.each do |pick|
@@ -117,7 +120,11 @@ class PickSetsController < ApplicationController
 
   def user
     @user = current_user
-    @pick_set = current_user.pick_set_for_this_week(@pool)
+    if @week.pick_cutoff_passed?
+      @pick_set = current_user.pick_set_for_next_week(@pool)
+    else
+      @pick_set = current_user.pick_set_for_this_week(@pool)
+    end
     @picks = @pick_set.nil? ? [] : @pick_set.picks
   end
 

@@ -30,8 +30,13 @@ class Game < ActiveRecord::Base
 
   def self.with_spreads(user=nil, pool=nil)
     lines = JSON.parse(REDIS.get("#{Rails.env}_lines"))
-    puts lines
-    week = Week.current
+    
+    if Week.current.pick_cutoff_passed?
+      week = Week.next
+    else
+      week = Week.current
+    end
+
     games = []
     # begin
       lines.each do |line|

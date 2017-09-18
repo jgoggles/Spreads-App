@@ -1,0 +1,42 @@
+<table>
+  <thead>
+    <th>Record</th>
+    <th>Team</th>
+    <th>Spread</th>
+    <% if @pool.pool_type.allow_same_game %>
+      <th>Units</th>
+    <% end %>
+    <th>Result</th>
+  </thead>
+  <tbody>
+    <tr class="shade">
+      <td><%= pick_set.record %></td>
+      <td></td>
+      <td></td>
+      <% if @pool.pool_type.allow_same_game %>
+        <td></td>
+      <% end %>
+      <td></td>
+    </tr>
+    <% pick_set.picks.each do |pick| %>
+      <tr>
+        <td></td>
+        <% if pick.team.nil? %>
+          <td>No pick</td>
+          <td>n/a</td>
+        <% else %>
+          <% if @pool.pool_type.allow_same_game %>
+            <td><%= pick.team.nickname %></td>
+          <% else %>
+            <td><%= pick.team.nickname %><span>&nbsp;<%= pick.display_opponent %></span></td>
+          <% end %>
+          <td><%= pick.spread %></td>
+        <% end %>
+        <% if @pool.pool_type.allow_same_game %>
+          <td><%= pick.count %></td>
+        <% end %>
+        <td class="<%= pick.result_in_words.downcase %>"><%= pick.result_in_words %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

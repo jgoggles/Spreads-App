@@ -93,6 +93,10 @@ class User < ActiveRecord::Base
     pick_sets.where('week_id = ?', Week.current).where('pool_id = ?', pool.id).first
   end
 
+  def pick_set_for_next_week(pool)
+    pick_sets.where('week_id = ?', Week.next).where('pool_id = ?', pool.id).first
+  end
+
   def process_non_picks(pool, options = { :week => Week.previous })
     week = options[:week]
     min_picks = pool.min_picks
@@ -139,8 +143,11 @@ class User < ActiveRecord::Base
   end
 
   def can_make_picks?(week, pool)
-    return false if week.pick_cutoff_passed?
-    pick_set = self.pick_set_for_this_week(pool)
+    if week.pick_cutoff_passed?
+      pick_set = self.pick_set_for_next_week(pool)
+    else
+      pick_set = self.pick_set_for_this_week(pool)
+    end
     return false if pick_set && pick_set.has_max_picks
     return false if Time.now < Year::LINES_OPEN
     return false if pool.over?

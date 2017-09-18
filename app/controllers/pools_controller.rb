@@ -26,6 +26,7 @@ class PoolsController < ApplicationController
     @badges = current_user.earned_badges.where("pool_id = ?", @pool.id).select("DISTINCT(badge_id)")
     @messages = @pool.topics.order("updated_at DESC")
     @pick_set = current_user.pick_set_for_this_week(@pool)
+    @next_week_pick_set = current_user.pick_set_for_next_week(@pool)
     @users = @pool.users.map { |u| {name: u.display_name, picks_made: u.picks_made(@pool)} }.sort_by { |h| -h[:picks_made] }
     if !current_user.pools.include?(@pool)
       @pool_user = PoolUser.new
