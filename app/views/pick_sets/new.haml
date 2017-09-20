@@ -15,40 +15,49 @@
     Click a team to toggle your selection. To finalize your pick(s) click Submit at the bottom of the page.
 
 %div{"ng-controller" => "PickSetsController", "ng-init" => "loadData()"}
-  %table#pick_set_games
-    %thead
-      %th
-        Date
-      %th
-      %th
-        Away
-      %th
-        Spread
-      %th
-      %th
-        Home
-      %th
-        Spead
-    %tbody{"ng-repeat" => "game in games", "ng-class" => "{disabled: disabled(game)}"}
-      %tr.user{"ng-show" => "gameAlreadyPicked(game)"}
-        %td{colspan: "7"} {{pickDetails(game)}}
-      %tr
-        %td
-          {{game.gamedate}}
-          %br
-          {{game.gametime}}
-        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"}
-          %img{"ng-src" => "{{game.away.logo}}"}
-        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"}
-          {{game.away.nickname}}
-        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"}
-          {{game.away.spread}}
-        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
-          %img{"ng-src" => "{{game.home.logo}}"}
-        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
-          {{game.home.nickname}}
-        %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
-          {{game.home.spread}}
-  - if current_user.can_make_picks?(@week, @pool)
-    %button.pick_set{type: 'submit', "ng-click" => "submitPicks()"}
-      Submit Picks
+  %div{"ng-show" => "games.length == 0"}
+    %table#pick_set_games
+      %thead
+        %th
+      %tbody
+        %tr
+          %td
+            No games to display, check back later
+  %div{"ng-show" => "games.length > 0"}
+    %table#pick_set_games
+      %thead
+        %th
+          Date
+        %th
+        %th
+          Away
+        %th
+          Spread
+        %th
+        %th
+          Home
+        %th
+          Spead
+      %tbody{"ng-repeat" => "game in games", "ng-class" => "{disabled: disabled(game)}"}
+        %tr.user{"ng-show" => "gameAlreadyPicked(game)"}
+          %td{colspan: "7"} {{pickDetails(game)}}
+        %tr
+          %td
+            {{game.gamedate}}
+            %br
+            {{game.gametime}}
+          %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"}
+            %img{"ng-src" => "{{game.away.logo}}"}
+          %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"}
+            {{game.away.nickname}}
+          %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"}
+            {{game.away.spread}}
+          %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
+            %img{"ng-src" => "{{game.home.logo}}"}
+          %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
+            {{game.home.nickname}}
+          %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
+            {{game.home.spread}}
+    - if current_user.can_make_picks?(@week, @pool)
+      %button.pick_set{type: 'submit', "ng-click" => "submitPicks()"}
+        Submit Picks
