@@ -25,7 +25,7 @@
           <%= render 'pick_glance', pick_set: @pick_set %>
         <% end %>
       </div>
-      <% if @week.pick_cutoff_passed? %>
+      <% if @week.pick_cutoff_passed? && !@week.is_last_week_of_season? %>
         <div style="margin-top: 10px;">
           <h3>Week <%= Week.next.name %> Picks</h3>
           <% if @next_week_pick_set.nil? or @next_week_pick_set.picks.empty? %>
