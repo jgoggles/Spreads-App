@@ -49,6 +49,7 @@
 
     <div id="main" class="group" role="main">
       <% flash.each do |key, msg| %>
+        <% next unless msg.is_a? String %>
         <%= content_tag :div, msg, :class => [key, "message"], :id => "notice_#{key}" %>
       <% end %>
 
@@ -62,4 +63,3 @@
 
 </body>
 </html>
-
