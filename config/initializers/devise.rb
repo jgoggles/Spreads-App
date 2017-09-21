@@ -4,7 +4,7 @@ Devise.setup do |config|
   config.secret_key = 'e1ed80122df63160b68ca57015b12b3e8e34127a482a08ff6fe487ef8bb4b1eb95904bbfdc07a4f5f340ec3efb6a6b863667711f6224cda7f4f1a4f12dfbbbdd'
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "reset-password@spreads.herokuapp.com"
+  config.mailer_sender = "reset-password@spreads.com"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
