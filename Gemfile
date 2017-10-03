@@ -30,6 +30,7 @@ gem 'nokogiri'
 gem 'chronic'
 gem 'redcarpet'
 gem 'newrelic_rpm'
+gem 'rails-observers'
 
 gem 'thin'
 
