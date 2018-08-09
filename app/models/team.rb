@@ -6,8 +6,7 @@ class Team < ActiveRecord::Base
   has_many :games, :through => :game_details
   has_many :picks
 
-  def full_name
+  def _full_name
     [city, nickname].join(" ")
   end
-
 end
