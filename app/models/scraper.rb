@@ -41,8 +41,8 @@ class Scraper
     end
 
     def parse_nfl_scores(week = Week.current)
-      url = "http://www.nfl.com/scores/2017/REG#{week.name}"
-      # url = "http://www.nfl.com/scores/2017/PRE1"
+      url = "http://www.nfl.com/scores/2018/REG#{week.name}"
+      #url = "http://www.nfl.com/scores/2018/PRE1"
 
       doc = Nokogiri::HTML(open(url))
 
