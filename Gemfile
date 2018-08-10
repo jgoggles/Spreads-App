@@ -11,6 +11,7 @@ gem 'jquery-ui-rails'
 gem 'jquery-datatables-rails'
 gem 'uglifier'
 gem 'angularjs-rails'
+gem 'sprockets', '~>3.7.2'
 
 gem 'jquery-rails'
 
@@ -45,4 +46,3 @@ group :test do
 end
 
 # gem 'protected_attributes'
-gem 'rails-observers'
