@@ -20,7 +20,7 @@
       <div>
         <h3>Week <%= Week.current.name %> Picks</h3>
         <% if @pick_set.nil? or @pick_set.picks.empty? %>
-          <p>You haven't made any picks this week</p>
+          <p>You haven't made any picks this week!</p>
         <% else %>
           <%= render 'pick_glance', pick_set: @pick_set %>
         <% end %>
