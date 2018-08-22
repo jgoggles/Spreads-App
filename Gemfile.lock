@@ -87,6 +87,9 @@ GEM
       tilt
     httpclient (2.8.3)
     i18n (0.8.6)
+    jbuilder (2.6.1)
+      activesupport (>= 3.0.0, < 5.1)
+      multi_json (~> 1.2)
     jquery-datatables-rails (3.4.0)
       actionpack (>= 3.1)
       jquery-rails
@@ -248,6 +251,7 @@ DEPENDENCIES
   devise (= 4.0.0)
   devise-jwt (~> 0.3.0)
   haml
+  jbuilder
   jquery-datatables-rails
   jquery-rails
   jquery-ui-rails
