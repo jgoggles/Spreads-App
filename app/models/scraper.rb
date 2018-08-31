@@ -19,6 +19,7 @@ class Scraper
         home = $3.strip!
 
         [home, away].each { |t| t.gsub!("NY", "New York") }
+        [home, away].each { |t| t.gsub!("Buccanneers", "Buccaneers") }
 
         if line_node["class"].split.include?("closed")
           line = :off
