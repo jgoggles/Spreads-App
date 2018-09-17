@@ -12,6 +12,8 @@ class PickSet < ActiveRecord::Base
   validate :number_of_picks
   validate :number_of_units
   # validate :spread
+  
+  attr_accessor :points
 
   def number_of_picks
     max = pool.pool_type.max_picks
