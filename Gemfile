@@ -12,6 +12,7 @@ gem 'jquery-datatables-rails'
 gem 'uglifier'
 gem 'angularjs-rails'
 gem 'sprockets', '~>3.7.2'
+gem 'jbuilder'
 
 gem 'jquery-rails'
 

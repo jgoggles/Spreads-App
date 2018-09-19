@@ -1,5 +1,13 @@
 Spreads::Application.routes.draw do
 
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      get "games", to: "games#index"
+      get "picks", to: "picks#index"
+      get "standings", to: "standings#index"
+    end
+  end
+
   get "scoreboard/live"
 
   devise_for :users, :controllers => { :registrations => "users/registrations" }
