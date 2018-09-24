@@ -154,6 +154,19 @@ class User < ActiveRecord::Base
     true
   end
 
+  def remove_from_pool(users, pool)
+    week_ids = Year.current.weeks.map(&:id)
+    
+    users.each do |user|
+      pool.pool_users.find_by(user_id: user.id).destroy
+      PickSet.where(week_id: week_ids, user_id: user.id).destroy_all
+      Standing.where(week_id: week_ids, user_id: user.id).destroy_all
+    end
+
+    standings = Standing.for_season(pool.users, pool)
+    REDIS.set("season_standings_#{pool.id}_#{Rails.env}", standings.to_json)
+  end
+
 
   private
   def add_default_role
