@@ -154,7 +154,7 @@ class User < ActiveRecord::Base
     true
   end
 
-  def remove_from_pool(users, pool)
+  def self.remove_unpaid_from_pool(users, pool)
     week_ids = Year.current.weeks.map(&:id)
     
     users.each do |user|
