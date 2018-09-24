@@ -163,7 +163,7 @@ class User < ActiveRecord::Base
       Standing.where(week_id: week_ids, user_id: user.id).destroy_all
     end
 
-    standings = Standing.for_season(pool.users, pool)
+    standings = Standing.for_season(pool.reload.users, pool)
     REDIS.set("season_standings_#{pool.id}_#{Rails.env}", standings.to_json)
   end
 
