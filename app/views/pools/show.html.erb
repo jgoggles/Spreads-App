@@ -4,7 +4,7 @@
       <%= link_to "All picks are in! Click here to view picks for this week", pool_standings_for_week_path(@pool, Week.current.name.to_i) %>
     </div>
     <div>
-      <%= link_to "Checkout the new Live Scoreboard!", "#{ENV['SCOREBOARD_URL']}?pool_id=#{@pool.hashed_id}&user=#{current_user.hashed_id}", target: "_blank" %>
+      <%= link_to "Checkout the new Live Scoreboard!", "#{ENV['SCOREBOARD_URL']}?pool=#{@pool.hashed_id}&user=#{current_user.hashed_id}", target: "_blank" %>
     </div>
   <% end %>
 
