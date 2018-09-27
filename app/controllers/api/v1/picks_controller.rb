@@ -1,6 +1,7 @@
 class Api::V1::PicksController < Api::BaseController
   def index
-    @pool = Pool.find params[:pool_id]
+    @pool = Pool.find_by(hashed_id: params[:pool])
+    @user = User.find_by(hashed_id: params[:user])
     @standings = JSON.parse(REDIS.get("season_standings_#{@pool.id}_#{Rails.env}")).sort_by { |i| -i['points'] }
     @pick_sets = @pool.pick_sets.where(week: Week.current)
     @pick_sets = @pick_sets.map do |pick_set| 

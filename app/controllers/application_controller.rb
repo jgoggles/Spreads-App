@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :load_current_week
+  before_action :load_current_week
 
   rescue_from CanCan::AccessDenied, :with => :not_found
 

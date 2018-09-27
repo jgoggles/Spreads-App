@@ -8,8 +8,6 @@ Spreads::Application.routes.draw do
     end
   end
 
-  get "scoreboard/live"
-
   devise_for :users, :controllers => { :registrations => "users/registrations" }
 
   resources :badges

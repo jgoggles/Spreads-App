@@ -14,3 +14,4 @@ json.picks pick_set.picks do |pick|
   json.team pick.team.full_name
   json.spread pick.spread.to_f
 end
+json.current pick_set.user_id == @user.id
