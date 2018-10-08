@@ -42,30 +42,25 @@ class Scraper
     end
 
     def parse_nfl_scores(week = Week.current)
-      url = "https://www.nfl.com/scores/2018/REG#{week.name}"
-      #url = "http://www.nfl.com/scores/2018/PRE1"
+      url = "http://www.nfl.com/liveupdate/scores/scores.json"
 
-      doc = Nokogiri::HTML(open(url))
+      data = JSON.load(open(url))
 
-      score_divs = doc.css('div.new-score-box')
-      games = []
-
-      score_divs.each do |score_div|
-        parsed_home_team = score_div.at_css('div.home-team p.team-name a').content
-        parsed_away_team = score_div.at_css('div.away-team p.team-name a').content
-        home_score = score_div.at_css('div.home-team p.total-score').content
-        away_score = score_div.at_css('div.away-team p.total-score').content
+      data.each do |k, v|
+        parsed_home_team = v["home"]["abbr"]
+        home_score = v["home"]["score"]["T"]
+        parsed_away_team = v["away"]["abbr"]
+        away_score = v["away"]["score"]["T"]
         puts "#{parsed_away_team} #{away_score} - #{parsed_home_team} #{home_score}"
 
-        home_team = Team.find_by_nickname(parsed_home_team).games.where("week_id = ?", week.id).first.home
+        home_team = Team.find_by(abbr: parsed_home_team).games.where("week_id = ?", week.id).first.home
         home_team.score = home_score
         home_team.save
 
-        away_team = Team.find_by_nickname(parsed_away_team).games.where("week_id = ?", week.id).first.away
+        away_team = Team.find_by(abbr: parsed_away_team).games.where("week_id = ?", week.id).first.away
         away_team.score = away_score
         away_team.save
       end
     end
-
   end
 end

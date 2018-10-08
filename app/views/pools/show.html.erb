@@ -68,7 +68,7 @@
   <div class="sub-container">
     <h3>Your Achievements</h3>
     <% if @badges.empty? %>
-      <p>You haven't earned any badges because you suck</p>
+      <p>You haven't earned any badges</p>
     <% else %>
       <% @badges.each do |badge| %>
         <%= link_to (image_tag "badges/#{badge.badge.image}_64.png"),achievements_pool_path %>
