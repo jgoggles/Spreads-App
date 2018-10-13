@@ -6,6 +6,7 @@ Spreads::Application.routes.draw do
       get "picks", to: "picks#index"
       get "standings", to: "standings#index"
       get "access", to: "access#picks_available"
+      get "stats", to: "stats#index"
     end
   end
 
