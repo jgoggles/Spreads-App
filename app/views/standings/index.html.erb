@@ -2,7 +2,10 @@
 <% unless Week.current.is_week_one_or_offseason? && !@pool.over? %>
 
   <% if @standings %>
-    <h3>Season Standings</h3>
+    <h3>
+      Season Standings
+      <small style="font-size: 10px; font-weight: normal;">Updates every Tuesday</small>
+    </h3>
     <table>
       <thead>
         <tr>
