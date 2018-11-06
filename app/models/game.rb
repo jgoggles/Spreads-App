@@ -40,18 +40,19 @@ class Game < ActiveRecord::Base
     games = []
     # begin
       lines.each do |line|
-        if line['game']['home'] == "New York Jets"
-          game = Team.find_by_nickname("Jets").games.where("week_id = ?", week.id).first
-        elsif line['game']['home'] == "New York Giants"
-          game = Team.find_by_nickname("Giants").games.where("week_id = ?", week.id).first
-        elsif line['game']['home'] == "Los Angeles Chargers"
-          game = Team.find_by_nickname("Chargers").games.where("week_id = ?", week.id).first
-        elsif line['game']['home'] == "Los Angeles Rams"
-          game = Team.find_by_nickname("Rams").games.where("week_id = ?", week.id).first
-        else
-          # game = (Team.find_by_city(line['game']['home']).games.where("week_id = ?", week.id).first) rescue nil
-          game = (Team.find_by(city: line['game']['home']).games.where(week_id: week.id).first) rescue nil
-        end
+        # if line['game']['home'] == "New York Jets"
+        #   game = Team.find_by_nickname("Jets").games.where("week_id = ?", week.id).first
+        # elsif line['game']['home'] == "New York Giants"
+        #   game = Team.find_by_nickname("Giants").games.where("week_id = ?", week.id).first
+        # elsif line['game']['home'] == "Los Angeles Chargers"
+        #   game = Team.find_by_nickname("Chargers").games.where("week_id = ?", week.id).first
+        # elsif line['game']['home'] == "Los Angeles Rams"
+        #   game = Team.find_by_nickname("Rams").games.where("week_id = ?", week.id).first
+        # else
+        #   # game = (Team.find_by_city(line['game']['home']).games.where("week_id = ?", week.id).first) rescue nil
+        #   game = (Team.find_by(city: line['game']['home']).games.where(week_id: week.id).first) rescue nil
+        # end
+        game = (Team.find_by(full_name: line['game']['home']).games.where(week_id: week.id).first) rescue nil
         unless game.nil?
           if line['game']['home'] == game.home.team.city && line['game']['away'] == game.away.team.city
             game.update_attributes(:spread => line['game']['line'], :over_under => line['game']['over_under'])
