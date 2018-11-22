@@ -9,9 +9,10 @@ class Scraper
 
       doc = Nokogiri::HTML(open(url))
 
-      rows = doc.css('div.game')
+      rows = doc.css('div#innerEventsWrapper div.game')
       lines = []
       rows.each do |a|
+
         line_node = a.css('div.gameBettingContent a.gameLink div.betTypeContent')[0].css('ul.runnerListColumn li')[1].at_css('span')
 
         matchup = a.at_css('span.title').content.match(/(.*)\s(at|v)\s(.*)/)
