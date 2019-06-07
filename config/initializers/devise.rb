@@ -102,7 +102,9 @@ Devise.setup do |config|
   # config.password_length = 6..128
 
   # Regex to use to validate the email address
-  # config.email_regexp = /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i
+  config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
+
+  config.reconfirmable = false
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
@@ -187,6 +189,8 @@ Devise.setup do |config|
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
+
+  config.skip_session_storage = []
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting

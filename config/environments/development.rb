@@ -40,5 +40,3 @@ end
   #:password       => "vnwqz1s4",
   #:domain         => "heroku.com"
 #}
-
-ENV["REDISTOGO_URL"] = 'redis://redistogo:58a4c99e7b26cc1b68388fb11d3be646@icefish.redistogo.com:9417/'

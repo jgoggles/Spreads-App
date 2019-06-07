@@ -23,8 +23,12 @@ group :development do
   gem 'mailcatcher'
 end
 
+group :development, :test do
+  gem 'rspec-rails', '~> 3.8'
+end
+
 gem 'pg'
-gem 'devise', '4.0.0'
+gem 'devise'
 gem 'devise-jwt', '~> 0.3.0'
 gem "cancancan"
 gem 'nifty-generators'
@@ -40,8 +44,6 @@ gem 'thin'
 gem 'delayed_job_active_record'
 gem 'redis'
 gem 'pusher'
-
-gem 'rspec', '~>3.0'
 
 group :test do
   # Pretty printed test output

@@ -193,10 +193,6 @@ GEM
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
-    rspec (3.8.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
     rspec-expectations (3.8.3)
@@ -204,6 +200,14 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-mocks (3.8.0)
       diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.8.0)
+    rspec-rails (3.8.2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.8.0)
+      rspec-expectations (~> 3.8.0)
+      rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     sass (3.4.25)
@@ -266,7 +270,7 @@ DEPENDENCIES
   chronic
   coffee-rails
   delayed_job_active_record
-  devise (= 4.0.0)
+  devise
   devise-jwt (~> 0.3.0)
   dotenv-rails
   haml
@@ -288,7 +292,7 @@ DEPENDENCIES
   rails-observers
   redcarpet
   redis
-  rspec (~> 3.0)
+  rspec-rails (~> 3.8)
   sass-rails
   sprockets (~> 3.7.2)
   thin
