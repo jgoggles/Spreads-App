@@ -41,6 +41,8 @@ gem 'delayed_job_active_record'
 gem 'redis'
 gem 'pusher'
 
+gem 'rspec', '~>3.0'
+
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
