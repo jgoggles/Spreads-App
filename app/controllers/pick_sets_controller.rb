@@ -7,6 +7,7 @@ class PickSetsController < ApplicationController
   before_filter :load_pool_and_title
   before_filter :load_pool_rules
   before_filter :check_for_paid
+  before_filter :check_for_pick_access
   # before_filter :check_for_pick_cutoff_time
 
   # GET /pick_sets/1

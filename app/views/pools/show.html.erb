@@ -36,7 +36,9 @@
         </div>
       <% end %>
     <% end %>
-    <%= link_to 'See current point spreads', new_pool_pick_set_path(@pool) %>
+    <% if Time.now > Year::LINES_OPEN && !@pool.over? %>
+      <%= link_to 'See current point spreads', new_pool_pick_set_path(@pool) %>
+    <% end %>
   </div>
 
   <% unless @pool.over? %>

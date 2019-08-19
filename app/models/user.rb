@@ -143,12 +143,6 @@ class User < ActiveRecord::Base
   end
 
   def can_make_picks?(week, pool)
-    if week.pick_cutoff_passed?
-      pick_set = self.pick_set_for_next_week(pool)
-    else
-      pick_set = self.pick_set_for_this_week(pool)
-    end
-    return false if pick_set && pick_set.has_max_picks
     return false if Time.now < Year::LINES_OPEN
     return false if pool.over?
     true
