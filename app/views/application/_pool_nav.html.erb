@@ -9,7 +9,7 @@
       <li><%= link_to "Players", pool_players_path(@pool) %></li>
     <% end %>
     <li><%= link_to "Message Board", pool_topics_path(@pool) %></li>
-    <li><%= link_to "Achievements", achievements_pool_path(@pool) %></li>
+    <% if false %><li><%= link_to "Achievements", achievements_pool_path(@pool) %></li><% end %>
     <li><%= link_to "Rules", rules_pool_path(@pool) %></li>
     <% if current_user.pools.size > 1 %>
       <li><%= link_to "Your Pools", root_path %></li>

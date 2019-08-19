@@ -62,6 +62,7 @@
   </section>
 
   <section class="left">
+  <% if false %>
   <div class="sub-container">
     <h3>Your Achievements</h3>
     <% if @badges.empty? %>
@@ -72,6 +73,7 @@
       <% end %>
     <% end %>
   </div>
+  <% end %>
 
   <div class="sub-container">
     <h3>Latest Message Board Activity</h3>
@@ -122,62 +124,6 @@
     <%= @pool.total_players %>
     </p>
     <p>
-
-    <b>Min picks:</b>
-    <%= @pool.min_picks %>
-    </p>
-
-    <p>
-    <b>Max picks:</b>
-    <%= @pool.max_picks %>
-    </p>
-
-    <% unless @pool.free? %>
-      <p>
-      <b>Cost:</b>
-      <%= @pool.cost %>
-      </p>
-
-      <p>
-      <b>First place payout:</b>
-      <%= @pool.first_place_payout %>
-      </p>
-
-      <p>
-      <b>Second place payout:</b>
-      <%= @pool.second_place_payout %>
-      </p>
-
-      <p>
-      <b>Third place payout:</b>
-      <%= @pool.third_place_payout %>
-      </p>
-
-      <p>
-      <b>Fourth place payout:</b>
-      <%= @pool.fourth_place_payout %>
-      </p>
-
-      <p>
-      <b>Fifth place payout:</b>
-      <%= @pool.fifth_place_payout %>
-      </p>
-
-      <p>
-      <b>Sixth place payout:</b>
-      <%= @pool.sixth_place_payout %>
-      </p>
-
-      <p>
-      <b>Seventh place payout:</b>
-      <%= @pool.seventh_place_payout %>
-      </p>
-
-      <p>
-      <b>Eighth place payout:</b>
-      <%= @pool.eighth_place_payout %>
-      </p>
-    <% end %>
 
     <% if can? :update, @pool %>
       <%= link_to 'Edit', edit_pool_path(@pool) %>
