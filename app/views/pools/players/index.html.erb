@@ -1,7 +1,4 @@
-<button class="clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#emails">
-    Copy All Emails To Clipboard
-</button>
-
+<label>All Emails</label>
 <textarea id="emails" "><%= @emails %></textarea>
 
 
@@ -14,7 +11,7 @@
       <th>Favorite Team</th>
       <th>Admin</th>
     </tr>
-    <% @pool.pool_users.sort_by { |pu| pu.user.display_name }.each do |pu| %>
+    <% @pool.pool_users.sort_by { |pu| pu.user.display_name.downcase }.each do |pu| %>
       <%= fields_for "pool_user[]", pu do |pu_fields| %>
     <tr>
       <td><%= pu.user.display_name %></td>
