@@ -1,6 +1,8 @@
-<button class="clipboard-btn" data-clipboard-action="copy" data-clipboard-text=<%= "#{@emails}" %>>
+<button class="clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#emails">
     Copy All Emails To Clipboard
 </button>
+
+<textarea id="emails" "><%= @emails %></textarea>
 
 
 
