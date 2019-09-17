@@ -9,5 +9,7 @@
 //= require angular
 //= require angular-resource
 //= require underscore-min
+//= require clipboard
 //= require main
+//= require spreads_clipboard
 //= require_tree .

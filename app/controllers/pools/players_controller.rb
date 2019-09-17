@@ -2,6 +2,7 @@ class Pools::PlayersController < ApplicationController
   before_filter :load_pool
   def index
     authorize! :update, @pool
+    @emails = @pool.pool_users.map(&:user).sort_by { |u| u.display_name }.map(&:email).join(",")
   end
 
   def update_pool_users

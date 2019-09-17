@@ -1,24 +1,26 @@
+<button class="clipboard-btn" data-clipboard-action="copy" data-clipboard-text=<%= "#{@emails}" %>>
+    Copy All Emails To Clipboard
+</button>
+
+
+
 <%= form_for :pool_user, :url => {:action => 'update_pool_users'} do -%>
   <table>
     <tr>
       <th>Player</th>
+      <th>Email</th>
       <th>Favorite Team</th>
-      <% unless @pool.free? %>
-        <th>Paid</th>
-      <% end %>
       <th>Admin</th>
     </tr>
-    <% @pool.pool_users.each do |pu| %>
+    <% @pool.pool_users.sort_by { |pu| pu.user.display_name }.each do |pu| %>
       <%= fields_for "pool_user[]", pu do |pu_fields| %>
     <tr>
       <td><%= pu.user.display_name %></td>
+      <td><%= pu.user.email %></td>
       <% if pu.user.favorite_nfl_team_id.nil? %>
         <td>---</td>
       <% else %>
         <td><%= Team.find(pu.user.favorite_nfl_team_id).nickname %></td>
-      <% end %>
-      <% unless @pool.free? %>
-        <td><%= pu_fields.check_box :paid %></td>
       <% end %>
       <% if pu.user == current_user %>
         <td><%= pu_fields.check_box :pool_admin, :disabled => true  %></td>
@@ -33,5 +35,3 @@
  </td></tr>
   </table>
 <% end %>
-
-
