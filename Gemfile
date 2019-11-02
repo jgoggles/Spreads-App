@@ -25,7 +25,7 @@ group :development do
 end
 
 gem 'pg'
-gem 'devise', '4.0.0'
+gem 'devise', '4.7.1'
 gem 'devise-jwt', '~> 0.3.0'
 gem "cancancan"
 gem 'nifty-generators'
