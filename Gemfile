@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.3.3'
+ruby '2.7.3'
 gem 'rails', '~> 5.0.0'
 
 gem 'clipboard-rails'
@@ -25,7 +25,7 @@ group :development do
 end
 
 gem 'pg'
-gem 'devise', '4.0.0'
+gem 'devise'
 gem 'devise-jwt', '~> 0.3.0'
 gem "cancancan"
 gem 'nifty-generators'
