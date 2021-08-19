@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 ruby '2.7.3'
 gem 'rails', '~> 5.0.0'
 
+gem 'attr_extras'
 gem 'clipboard-rails'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'haml'

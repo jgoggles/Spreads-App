@@ -45,3 +45,48 @@ task :setup_2021 => :environment do
   end
 end
 
+
+desc "Prepare database for 2021 NFL season."
+task :sync_espn_team_data => :environment do
+  ActiveRecord::Base.transaction do
+    raw_team_data = JSON.load(URI.open('https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams?limit=32'))
+    
+    espn_teams = raw_team_data["sports"].first["leagues"].first["teams"].map { _1["team"] }
+
+    espn_teams.each do |espn_team|
+      puts espn_team["displayName"]
+      team = Team.where(city: espn_team["location"])
+
+      if team.one?
+        update_team(team.first, espn_team)
+      elsif espn_team["location"] == "New York"
+        if espn_team["name"] == "Jets"
+          jets = team.find { _1.conference.name == "AFC"}
+          update_team(jets, espn_team)
+        else
+          giants = team.find { _1.conference.name == "NFC"}
+          update_team(giants, espn_team)
+        end
+      elsif espn_team["location"] == "Los Angeles"
+        if espn_team["name"] == "Chargers"
+          chargers = team.find { _1.conference.name == "AFC"}
+          update_team(chargers, espn_team)
+        else
+          rams = team.find { _1.conference.name == "NFC"}
+          update_team(rams, espn_team)
+        end
+      else
+        raise "what the fuck"
+      end
+    end
+  end
+end
+
+def update_team(team, espn_team)
+  team.update!(
+    nickname: espn_team["name"], 
+    abbr: espn_team["abbreviation"],
+    full_name: espn_team["displayName"],
+    logo: espn_team["logos"].first["href"]
+  )
+end

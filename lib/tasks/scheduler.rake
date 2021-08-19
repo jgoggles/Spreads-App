@@ -1,7 +1,7 @@
 desc "Grabs lines"
 task :update_nfl_lines => :environment do
   puts "Updating lines..."
-  Scraper.parse_nfl_lines
+  Lines::Update.call
   puts "done."
 end
 

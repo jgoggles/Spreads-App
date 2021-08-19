@@ -9,13 +9,15 @@ task :setup_2021_preseason => :environment do
 
     puts 'Creating Year 2021 and setting to current...'
     Year.current.update!(current: false)
-    year = Year.create!(name: '2021 preseason', current: true)
+    year = Year.find_by(name: '2021 preseason')
+    year ||= Year.create!(name: '2021 preseason', current: true)
+    year.update!(current: true)
 
     ## Weeks
     puts 'Creating weeks...'
     time = Chronic.parse("Aug 3, 2021 at 12am") #tues
     w = 0
-    13.times do
+    4.times do
       Week.create!(name: w += 1, start_date: time, end_date: time + 1.week - 1.second, year_id: year.id)
       time += 1.week
     end

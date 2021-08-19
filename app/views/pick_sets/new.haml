@@ -47,13 +47,13 @@
             %br
             {{game.gametime}}
           %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"}
-            %img{"ng-src" => "{{game.away.logo}}"}
+            %img{"ng-src" => "{{game.away.logo}}", height: "75px"}
           %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"}
             {{game.away.nickname}}
           %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, false)", "ng-class" => "{picked: markedPicked(game.away.id)}"}
             {{game.away.spread}}
           %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
-            %img{"ng-src" => "{{game.home.logo}}"}
+            %img{"ng-src" => "{{game.home.logo}}", height: "75px"}
           %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
             {{game.home.nickname}}
           %td.team{"ng-model" => "pick", "ng-click" => "setPick(game, true)", "ng-class" => "{picked: markedPicked(game.home.id)}"}
