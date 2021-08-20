@@ -8,7 +8,7 @@ module Lines
 
     def call
       lines = games.map do |game|
-        away, home = teams(game)
+        away, home = teams(game).map(&:strip)
         game_data = {game: {}}
         game_data[:game][:home] = home
         game_data[:game][:away] = away
@@ -55,6 +55,8 @@ module Lines
       game["competitions"].
         first["odds"].
         first["details"]
+    rescue
+      nil
     end
 
     def team_abbr_map
