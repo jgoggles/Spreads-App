@@ -2,7 +2,7 @@ require 'open-uri'
 
 module Espn
   module EspnIngestable
-    BASE_URL = "http://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+    BASE_URL = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
 
     private
 

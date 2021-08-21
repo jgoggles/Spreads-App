@@ -22,7 +22,7 @@ class StandingGenerator
 
       Year.current.pools.each do |pool|
         if process_non_picks # only do these when the week is over, same as process non picks
-          Delayed::Job.enqueue Badging.new(:pool, pool.id)
+          # Delayed::Job.enqueue Badging.new(:pool, pool.id)
           Standing.generate(pool.pick_sets.where(week_id: Week.previous.id))
         else
           Standing.generate(pool.pick_sets.where(week_id: Week.current.id))
