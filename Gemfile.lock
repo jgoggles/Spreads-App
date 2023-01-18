@@ -158,7 +158,7 @@ GEM
     rabl (0.14.5)
       activesupport (>= 2.3.14)
     racc (1.5.2)
-    rack (2.2.3)
+    rack (2.2.6.2)
     rack-contrib (2.3.0)
       rack (~> 2.0)
     rack-protection (2.1.0)
